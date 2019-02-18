@@ -1,7 +1,7 @@
-% Latens
+# Latens
 
-An Unsupervised Learning approach to uniform sampling.
+An Unsupervised Learning approach to active learning.
 
-# Installation
+## Installation
 
-# Demo
+## Demo
