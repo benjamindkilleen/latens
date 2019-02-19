@@ -34,13 +34,13 @@ def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
   dat.convert_from_npz(args.input[0])
-  
+
   
 def cmd_train(args):
   """Run training."""
-  data = dat.Data(args.input, num_parallel_calls=args.cores[0])
-  train_set, dev_set, eval_set = data.split(
-    *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+  train_set = dat.TrainDataInput(args.input, num_parallel_calls=args.cores[0])
+  # train_set, dev_set, eval_set = data.split(
+  #   *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
   model = mod.ConvAutoEncoder(
     args.image_shape,
@@ -49,7 +49,7 @@ def cmd_train(args):
     l2_reg=args.l2_reg[0])
 
   model.train(
-    train_set,
+    args.input,
     overwrite=args.overwrite,
     num_epochs=args.epochs[0],
     eval_secs=args.eval_secs[0])

@@ -114,16 +114,15 @@ def convert_from_npz(fname, features_key='data', labels_key='labels',
 
   writer.close()
 
-  
-def _load_dataset(record_name,
-                  parse_entry=_mnist_example_from_proto,
-                  num_parallel_calls=None,
-                  **kwargs):
+def load_dataset(record_name,
+                 parse_entry=_mnist_example_from_proto,
+                 num_parallel_calls=None,
+                 **kwargs):
   """Load the record_name as a tf.data.Dataset"""
   dataset = tf.data.TFRecordDataset(record_name)
   return dataset.map(parse_entry, num_parallel_calls=num_parallel_calls)
 
-
+  
 class Data(object):
   def __init__(self, data, **kwargs):
     """Holds data. Subclass for data input or augmentation.
@@ -140,10 +139,9 @@ class Data(object):
       self._dataset = data
     elif type(data) in [str, list, tuple]:
       # Loading tfrecord files
-      self._dataset = _load_dataset(data, **kwargs)
+      self._dataset = load_dataset(data, **kwargs)
     else:
       raise ValueError(f"unrecognized data '{data}'")
-
 
   def split(self, *splits, types=None):
     """Split the dataset into different sets.
@@ -187,9 +185,8 @@ class DataInput(Data):
       self._dataset
       .batch(self._batch_size)
       .prefetch(self._prefetch_buffer_size)
-      # .make_one_shot_iterator()
-      # .get_next()
-    )
+      .make_one_shot_iterator()
+      .get_next())
 
   def __call__(self, *args, **kwargs):
     return self.make_input(*args, **kwargs)
@@ -209,8 +206,7 @@ class TrainDataInput(DataInput):
       .repeat(num_epochs)
       .batch(self._batch_size)
       .prefetch(self._prefetch_buffer_size)
-      # .make_one_shot_iterator()
-      # .get_next()
-    )
+      .make_one_shot_iterator()
+      .get_next())
 
   

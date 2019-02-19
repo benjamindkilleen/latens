@@ -1,5 +1,6 @@
 import tensorflow as tf
 from shutil import rmtree
+from latens.utils import dat
 import os
 import numpy as np
 import logging
@@ -41,7 +42,7 @@ class Model:
     """
     raise NotImplementedError
 
-  def train(self, train_data_input, eval_data_input=None, overwrite=False,
+  def train(self, record_name, eval_data_input=None, overwrite=False,
             num_epochs=1, eval_secs=600, save_steps=100, log_steps=5,
             cores=None):
     """Train the model with train_data_input.
@@ -86,9 +87,19 @@ class Model:
                                    params=self._params,
                                    config=run_config)
 
+    def input_fn():
+      dataset = dat.load_dataset(record_name)
+      return (dataset
+              .shuffle(10000)
+              .repeat(num_epochs)
+              .batch(4)
+              .prefetch(4)
+              .make_one_shot_iterator()
+              .get_next())
+    
     if eval_data_input is None:
       logger.info("train...")
-      model.train(input_fn=train_data_input(num_epochs=num_epochs))
+      model.train(input_fn=input_fn)
     else:
       logger.info("train and evaluate...")
       train_spec = tf.estimator.TrainSpec(
@@ -220,7 +231,7 @@ class ConvAutoEncoder(AutoEncoder):
   def down_level(self, inputs, filters, **kwargs):
     """Apply level_depth convolutional layers, then a 2x2 pooling layer."""
     for _ in range(self.level_depth):
-      inputs = self.conv(inputs, filters **kwargs)
+      inputs = self.conv(inputs, filters, **kwargs)
     return self.pool(inputs)
   
   def up_level(self, inputs, filters, **kwargs):
@@ -236,7 +247,7 @@ class ConvAutoEncoder(AutoEncoder):
     stddev = np.sqrt(2 / (np.prod(conv_kernel_size) * filters))
     initializer = tf.initializers.random_normal(stddev=stddev)
 
-    output = tf.layers.conv2d(
+    output = tf.keras.layers.conv2d(
       inputs=inputs,
       filters=filters,
       kernel_size=conv_kernel_size,
@@ -246,7 +257,7 @@ class ConvAutoEncoder(AutoEncoder):
       kernel_regularizer=self.regularizer)
 
     # normalize the weights in the kernel
-    output = tf.layers.batch_normalization(
+    output = tf.keras.layers.batch_normalization(
       inputs=output,
       axis=-1,
       momentum=0.9,
@@ -259,7 +270,8 @@ class ConvAutoEncoder(AutoEncoder):
 
   def pool(self, inputs, **kwargs):
     """Apply 2x2 maxpooling."""
-    return tf.layers.max_pooling2d(inputs=inputs, pool_size=[2, 2], pool_strides=2)
+    return tf.keras.layers.max_pooling2d(
+      inputs=inputs, size=[2, 2], strides=2)
   
   def deconv(inputs, filters, deconv_padding='same', **kwargs):
     """Perform "de-convolution" or "up-conv" to the inputs, increasing shape."""
