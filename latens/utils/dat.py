@@ -54,8 +54,6 @@ def _mnist_example_from_proto(proto):
       'label' : tf.FixedLenFeature([1], tf.int64),
     })
 
-  logger.debug(f"features: {features}")
-  
   image = tf.decode_raw(features['image'], tf.float32)
   image = tf.reshape(image, features['image_shape'], name='reshape_image_string')
   label = features['label']
