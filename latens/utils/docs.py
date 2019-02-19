@@ -35,8 +35,8 @@ eval_secs_help = """Evaluate model every EVAL_SECS during training. Default is
 eval_mins_help = """See EVAL_SECS. Default is 20 minutes (1200 seconds)"""
 
 splits_help = """Number of examples to use for splits on the dataset. Must
-define at least two splits for training and validation sets. Default is '60000
-10000' for MNIST."""
+define three splits for training, validation, and test sets. Default is '50000
+10000 10000' for MNIST."""
 
 cores_help = """Number of CPU cores to use when parallelizing. Default, -1,
 parallelizes across all visible processors."""

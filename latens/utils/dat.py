@@ -143,6 +143,38 @@ class Data(object):
     else:
       raise ValueError(f"unrecognized data '{data}'")
 
+    self.num_parallel_calls = kwargs.get('num_parallel_calls')
+    self._kwargs = kwargs
+
+  def postprocess_dataset(self, dataset):
+    return dataset
+    
+  @property
+  def dataset(self):
+    return self.postprocess_dataset(self._dataset)
+
+  @property
+  def supervised(self):
+    return self.dataset
+
+  @property
+  def self_supervised(self):
+    return self.postprocess_dataset(
+      self._dataset.map(lambda x,y : (x,x),
+                        num_parallel_calls=self.num_parallel_calls))
+
+  def __iter__(self):
+    iterator = self._dataset.make_one_shot_iterator()
+    next_example = iterator.get_next()
+    sess = tf.Session()
+    while True:
+      try:
+        example = sess.run(next_example)
+        yield example
+      except tf.errors.OutOfRangeError:
+        break
+    
+        
   def split(self, *splits, types=None):
     """Split the dataset into different sets.
 
@@ -156,15 +188,14 @@ class Data(object):
     """
     
     datas = []
-    if types is not None:
-      assert len(types) == len(splits)
-      
     for i, n in enumerate(splits):
       dataset = self._dataset.skip(sum(splits[:i])).take(n)
-      if types is None:
-        datas.append(Data(dataset))
+      if types[i] is None:
+        datas.append(None)
+      elif types is None or i <= len(types):
+        datas.append(type(self)(dataset, **self._kwargs))
       else:
-        datas.append(types[i](dataset))
+        datas.append(types[i](dataset, **self._kwargs))
       
     return datas
 
@@ -179,34 +210,21 @@ class DataInput(Data):
     super().__init__(*args, **kwargs)
     self._prefetch_buffer_size = kwargs.get('prefetch_buffer_size', 1)
     self._batch_size = kwargs.get('batch_size', 4)
-    
-  def make_input(self):
-    return lambda : (
-      self._dataset
-      .batch(self._batch_size)
-      .prefetch(self._prefetch_buffer_size)
-      .make_one_shot_iterator()
-      .get_next())
 
-  def __call__(self, *args, **kwargs):
-    return self.make_input(*args, **kwargs)
+  def postprocess_dataset(self, dataset):
+    return (dataset.batch(self._batch_size)
+            .prefetch(self._prefetch_buffer_size))
 
   
 class TrainDataInput(DataInput):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self._num_shuffle = kwargs.get('num_shuffle', 100000)
-    self.num_epochs = kwargs.get('num_epochs', 1)
 
-  def make_input(self, num_epochs=1):
+  def postprocess_dataset(self, dataset):
     # TODO: allow for augmentation?
-    return lambda : (
-      self._dataset
-      .shuffle(self._num_shuffle)
-      .repeat(num_epochs)
-      .batch(self._batch_size)
-      .prefetch(self._prefetch_buffer_size)
-      .make_one_shot_iterator()
-      .get_next())
+    return (dataset.shuffle(self._num_shuffle)
+            .repeat()
+            .batch(self._batch_size)
+            .prefetch(self._prefetch_buffer_size))
 
-  
