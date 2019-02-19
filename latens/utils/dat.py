@@ -1,0 +1,218 @@
+import tensorflow as tf
+import numpy as np
+import os
+import logging
+
+logger = logging.getLogger('latens')
+
+def _bytes_feature(value):
+  # Helper function for writing a string to a tfrecord
+  return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+def _int64_feature(value):
+  # Helper function for writing an array to a tfrecord
+  return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
+
+def _mnist_proto_from_example(example):
+  """Create a tf proto from the image, label pair.
+
+  Stores data in the desired format. Images are float32 in [0,1] and labels are
+  int64.
+
+  :param example: tuple containing image and label, as numpy arrays.
+
+  """
+  image, label = example
+  image = np.atleast_3d(image)
+  if image.dtype in [np.float32, np.float64]:
+    image = image.astype(np.float32)
+  if image.dtype in [np.uint8, np.int32, np.int64]:
+    image = image.astype(np.float32) / 255.
+  else:
+    raise NotImplementedError
+
+  image_string = image.tostring()
+  
+  feature = {
+    'image' : _bytes_feature(image_string),
+    'image_shape' : _int64_feature(image.shape),
+    'label' : _int64_feature([label])}
+
+  features = tf.train.Features(feature=feature)
+  example = tf.train.Example(features=features)
+  return example.SerializeToString()
+
+def _mnist_example_from_proto(proto):
+  """Convert a serialized example to an mnist tensor example."""
+
+  features = tf.parse_single_example(
+    proto,
+    # Defaults are not specified since both keys are required.
+    features={
+      'image': tf.FixedLenFeature([], tf.string),
+      'image_shape': tf.FixedLenFeature([3], tf.int64),
+      'label' : tf.FixedLenFeature([1], tf.int64),
+    })
+
+  logger.debug(f"features: {features}")
+  
+  image = tf.decode_raw(features['image'], tf.float32)
+  image = tf.reshape(image, features['image_shape'], name='reshape_image_string')
+  label = features['label']
+
+  logger.debug(f'label: {label}')
+
+  return image, label
+
+def _dataset_from_tfrecord(data, **kwargs):
+  raise NotImplementedError
+
+def _dataset_from_arrays(features, labels, **kwargs):
+  """Create an in-memory dataset.
+
+  :param features: array of features
+  :param labels: array of labels
+
+  """
+  assert features.shape[0] == labels.shape[0]
+  
+  features_placeholder = tf.placeholder(features.dtype, features.shape)
+  labels_placeholder = tf.placeholder(labels.dtype, labels.shape)
+  return tf.data.Dataset.from_tensor_slices((features_placeholder, labels_placeholder))
+
+def _dataset_from_npy(features_file, labels_file, **kwargs):
+  """Create a tf.data.Dataset from data in numpy files.
+
+  Assumes the data is large enough to fit in memory.
+  TODO: allow otherwise.
+
+  :param features_file: name of the .npy data file
+  :param labels_file: name of the .npy labels file
+  :returns: tf.data.Dataset
+  """
+  features = np.load(features_file)
+  labels = np.load(labels_file)
+  return _dataset_from_arrays(features, labels, **kwargs)
+
+def convert_from_npz(fname, features_key='data', labels_key='labels',
+                     proto_from_example=_mnist_proto_from_example, **kwargs):
+  """Convert a dataset from an npz file containing data and labels to a tfrecord.
+
+  :param fname: .npz file
+  :param features_key: name of the key containing data
+  :param labels_key: name of the key containing labels
+  :param proto_from_example: function that encodes an (image,label) pair
+  """
+  
+  with np.load(fname) as data:
+    features = data[features_key]
+    labels = data[labels_key]
+
+  output_fname = os.path.splitext(fname)[0] + '.tfrecord'
+  logger.info(f"Writing tfrecord to {output_fname}...")
+  writer = tf.python_io.TFRecordWriter(output_fname)
+  for example in zip(features, labels):
+    writer.write(proto_from_example(example))
+
+  writer.close()
+
+  
+def _load_dataset(record_name,
+                  parse_entry=_mnist_example_from_proto,
+                  num_parallel_calls=None,
+                  **kwargs):
+  """Load the record_name as a tf.data.Dataset"""
+  dataset = tf.data.TFRecordDataset(record_name)
+  return dataset.map(parse_entry, num_parallel_calls=num_parallel_calls)
+
+
+class Data(object):
+  def __init__(self, data, **kwargs):
+    """Holds data. Subclass for data input or augmentation.
+
+    :param data: tf.data.Dataset OR .tfrecord filename(s) (as a list) OR tuple
+    of .npy file namess containing examples and labels OR .npz file containing
+    data and labels.
+
+    """
+
+    if issubclass(type(data), Data):
+      self._fname = data._dataset
+    elif issubclass(type(data), tf.data.Dataset):
+      self._dataset = data
+    elif type(data) in [str, list, tuple]:
+      # Loading tfrecord files
+      self._dataset = _load_dataset(data, **kwargs)
+    else:
+      raise ValueError(f"unrecognized data '{data}'")
+
+
+  def split(self, *splits, types=None):
+    """Split the dataset into different sets.
+
+    Pass in the number of examples for each split. Returns a new Data object
+    with datasets of the corresponding number of examples.
+
+    :param types: optional list of Data subclasses to instantiate the splits
+    :returns: list of Data objects with datasets of the corresponding sizes.
+    :rtype: [Data]
+
+    """
+    
+    datas = []
+    if types is not None:
+      assert len(types) == len(splits)
+      
+    for i, n in enumerate(splits):
+      dataset = self._dataset.skip(sum(splits[:i])).take(n)
+      if types is None:
+        datas.append(Data(dataset))
+      else:
+        datas.append(types[i](dataset))
+      
+    return datas
+
+  
+class DataInput(Data):
+  def __init__(self, *args, **kwargs):
+    """Used to feed a dataset into a model using the input_function attribute.
+
+    This baseclass is good for eval and dev sets.
+
+    """
+    super().__init__(*args, **kwargs)
+    self._prefetch_buffer_size = kwargs.get('prefetch_buffer_size', 1)
+    self._batch_size = kwargs.get('batch_size', 4)
+    
+  def make_input(self):
+    return lambda : (
+      self._dataset
+      .batch(self._batch_size)
+      .prefetch(self._prefetch_buffer_size)
+      # .make_one_shot_iterator()
+      # .get_next()
+    )
+
+  def __call__(self, *args, **kwargs):
+    return self.make_input(*args, **kwargs)
+
+  
+class TrainDataInput(DataInput):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self._num_shuffle = kwargs.get('num_shuffle', 100000)
+    self.num_epochs = kwargs.get('num_epochs', 1)
+
+  def make_input(self, num_epochs=1):
+    # TODO: allow for augmentation?
+    return lambda : (
+      self._dataset
+      .shuffle(self._num_shuffle)
+      .repeat(num_epochs)
+      .batch(self._batch_size)
+      .prefetch(self._prefetch_buffer_size)
+      # .make_one_shot_iterator()
+      # .get_next()
+    )
+
+  

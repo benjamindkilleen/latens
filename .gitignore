@@ -1,2 +1,4 @@
+data/!mnist
 data/
+models/
 **.pyc
