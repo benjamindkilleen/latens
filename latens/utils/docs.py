@@ -7,7 +7,7 @@ description = """\
 Latens. An Unsupervised Learning approach to active learning.
 """
 
-command_choices = ['debug', 'train', 'predict', 'convert']
+command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert']
 command_help = "latens command to run."
 
 input_help = """Name or names of data files."""

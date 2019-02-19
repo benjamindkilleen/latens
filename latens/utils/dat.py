@@ -190,10 +190,10 @@ class Data(object):
     datas = []
     for i, n in enumerate(splits):
       dataset = self._dataset.skip(sum(splits[:i])).take(n)
-      if types[i] is None:
-        datas.append(None)
-      elif types is None or i <= len(types):
+      if types is None or i >= len(types):
         datas.append(type(self)(dataset, **self._kwargs))
+      elif types[i] is None:
+        datas.append(None)
       else:
         datas.append(types[i](dataset, **self._kwargs))
       
@@ -224,7 +224,7 @@ class TrainDataInput(DataInput):
   def postprocess_dataset(self, dataset):
     # TODO: allow for augmentation?
     return (dataset.shuffle(self._num_shuffle)
-            .repeat()
+            .repeat(-1)
             .batch(self._batch_size)
             .prefetch(self._prefetch_buffer_size))
 

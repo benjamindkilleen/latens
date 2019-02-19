@@ -37,13 +37,15 @@ def cmd_convert(args):
   directory as a .tfrecord file."""
   dat.convert_from_npz(args.input[0])
 
-def cmd_train(args):
-  """Run training."""
+def cmd_autoencoder(args):
+  """Run training for the autoencoder."""
   data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
                        batch_size=args.batch_size[0])
   train_set, validation_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
 
+  logger.debug(f"train_set: {type(train_set)}")
+  
   model = mod.ConvAutoEncoder(
     args.image_shape,
     args.num_components[0],
@@ -63,17 +65,16 @@ def cmd_train(args):
 
   model.fit(
     train_set.self_supervised,
-    batch_size=args.batch_size[0],
     epochs=args.epochs[0],
-    steps_per_epoch=args.splits[0],
+    steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=validation_set.self_supervised)
 
   if args.model_path[0] is not None:
     # TODO: add overwrite protection
     model.save_weights(args.model_path)
   
-def cmd_predict(args):
-  """Run prection."""
+def cmd_reconstruct(args):
+  """Run reconstruction."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
                   batch_size=args.batch_size[0])
   test_set = data.split(
@@ -89,10 +90,10 @@ def cmd_predict(args):
   assert args.model_path[0] is not None and len(glob(args.model_path[0] + "*")) > 0
   model.load_weights(args.model_path[0])
 
-  predictions = model.predict_generator(test_set.self_supervised)
-  for example, prediction in zip(predictions, test_set):
+  reconstructions = model.predict_generator(test_set.self_supervised)
+  for example, reconstruction in zip(reconstructions, test_set):
     image, label = example
-    vis.show(image, prediction)
+    vis.show(image, reconstruction)
 
   raise NotImplementedError
 
@@ -166,10 +167,10 @@ def main():
     cmd_debug(args)
   elif args.command == 'convert':
     cmd_convert(args)
-  elif args.command == 'train':
-    cmd_train(args)
-  elif args.command == 'predict':
-    cmd_predict(args)
+  elif args.command == 'autoencoder':
+    cmd_autoencoder(args)
+  elif args.command == 'reconstruct':
+    cmd_reconstruct(args)
   else:
     RuntimeError()
 
