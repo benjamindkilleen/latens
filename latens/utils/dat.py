@@ -32,10 +32,11 @@ def _mnist_proto_from_example(example):
     raise NotImplementedError
 
   image_string = image.tostring()
-  
+  image_shape = np.array(image.shape, dtype=np.int64)
+
   feature = {
     'image' : _bytes_feature(image_string),
-    'image_shape' : _int64_feature(image.shape),
+    'image_shape' : _int64_feature(image_shape),
     'label' : _int64_feature([label])}
 
   features = tf.train.Features(feature=feature)
@@ -55,10 +56,9 @@ def _mnist_example_from_proto(proto):
     })
 
   image = tf.decode_raw(features['image'], tf.float32)
-  image = tf.reshape(image, features['image_shape'], name='reshape_image_string')
+  image_shape = (28,28,1)       # TODO: fix
+  image = tf.reshape(image, image_shape, name='reshape_image_string')
   label = features['label']
-
-  logger.debug(f'label: {label}')
 
   return image, label
 

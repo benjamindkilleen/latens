@@ -14,6 +14,8 @@ logger.addHandler(handler)
 import sys
 import os
 import argparse
+from glob import glob
+import tensorflow as tf
 from latens.utils import docs, dat
 from latens import mod
 
@@ -35,25 +37,49 @@ def cmd_convert(args):
   directory as a .tfrecord file."""
   dat.convert_from_npz(args.input[0])
 
-  
 def cmd_train(args):
   """Run training."""
-  train_set = dat.TrainDataInput(args.input, num_parallel_calls=args.cores[0])
+  # train_set = dat.TrainDataInput(args.input, num_parallel_calls=args.cores[0])
   # train_set, dev_set, eval_set = data.split(
   #   *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+  dataset = dat.load_dataset(args.input, num_parallel_calls=args.cores[0])
+  logger.info(f"data shapes: {dataset.output_shapes}")
+  dataset = dataset.map(lambda x,y : (x,x), num_parallel_calls=args.cores[0])
+  train_set = dataset.take(args.splits[0])
+  validation_set = dataset.skip(args.splits[0])
+
+  # TODO: process dataset for classification or autoencoding
+  train_set = (train_set.shuffle(100000)
+               .batch(args.batch_size[0]))
+  validation_set = validation_set.batch(args.batch_size[0])
 
   model = mod.ConvAutoEncoder(
     args.image_shape,
-    num_components=args.num_components[0],
-    model_dir=args.model_dir[0],
-    l2_reg=args.l2_reg[0])
+    args.num_components[0],
+    l2_reg=args.l2_reg[0],
+    activation=args.activation[0],
+    dropout=args.dropout[0])
 
-  model.train(
-    args.input,
-    overwrite=args.overwrite,
-    num_epochs=args.epochs[0],
-    eval_secs=args.eval_secs[0])
+  if args.model_path[0] is not None and len(glob(args.model_path[0] + "*")) > 0:
+    model.load_weights(args.model_path[0])
 
+  model.compile(
+    optimizer=tf.train.MomentumOptimizer(args.learning_rate[0],
+                                         args.momentum[0]),
+    loss=tf.losses.mean_squared_error,
+    metrics=['mae'])
+
+  model.fit(
+    train_set,
+    batch_size=args.batch_size[0],
+    epochs=args.epochs[0],
+    steps_per_epoch=args.splits[0],
+    validation_data=validation_set)
+
+  if args.model_path[0] is not None:
+    # TODO: add overwrite protection
+    model.save_weights(args.model_path)
+  
 def cmd_predict(args):
   """Run prection."""
   raise NotImplementedError
@@ -68,11 +94,11 @@ def main():
   parser.add_argument('--output', '-o', nargs=1,
                       default=['show'],
                       help=docs.output_help)
-  parser.add_argument('--model-dir', '-m', nargs=1,
+  parser.add_argument('--model-path', '-m', nargs=1,
                       default=[None],
-                      help=docs.model_dir_help)
+                      help=docs.model_path_help)
   parser.add_argument('--epochs', '-e', nargs=1,
-                      default=[-1], type=int,
+                      default=[1], type=int,
                       help=docs.epochs_help)
   parser.add_argument('--overwrite', '-f', action='store_true',
                       help=docs.overwrite_help)
@@ -83,7 +109,7 @@ def main():
                       default=[None], type=float,
                       help=docs.l2_reg_help)
   parser.add_argument('--num-components', '--classes', '-c', nargs=1,
-                      default=[2], type=int,
+                      default=[10], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -93,12 +119,28 @@ def main():
                          default=[None], type=int,
                          help=docs.eval_mins_help)
   parser.add_argument('--splits', nargs='+',
-                      default=[50000,10000,10000],
+                      default=[60000,10000],
                       type=int,
                       help=docs.splits_help)
   parser.add_argument('--cores', '--num-parallel-calls', nargs=1,
                       default=[-1], type=int,
                       help=docs.cores_help)
+  parser.add_argument('--batch-size', '-b', nargs=1,
+                      default=[16], type=int,
+                      help=docs.batch_size_help)
+  parser.add_argument('--dropout', nargs=1,
+                      default=[0.1], type=float,
+                      help=docs.dropout_help)
+  parser.add_argument('--activation', nargs=1,
+                      choices=docs.activation_choices,
+                      default=['sigmoid'],
+                      help=docs.activation_help)
+  parser.add_argument('--learning-rate', nargs=1,
+                      default=[0.01],
+                      help=docs.learning_rate_help)
+  parser.add_argument('--momentum', nargs=1,
+                      default=[0.9],
+                      help=docs.learning_rate_help)
   
   args = parser.parse_args()
 
@@ -106,6 +148,7 @@ def main():
     args.cores[0] = os.cpu_count()
   if args.eval_mins[0] is not None:
       args.eval_secs[0] = args.eval_mins[0] * 60
+  args.activation[0] = docs.activation_choices[args.activation[0]]
 
   if args.command == 'debug':
     cmd_debug(args)
