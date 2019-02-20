@@ -72,8 +72,8 @@ def cmd_autoencoder(args):
     
   # TODO: allow customize
   model.compile(
-    optimizer=tf.train.AdamOptimizer(args.learning_rate[0]),
-    loss=loss,
+    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
+    loss=tf.losses.mean_squared_error,
     metrics=['mae'])
 
   model.fit(
@@ -106,7 +106,7 @@ def cmd_reconstruct(args):
   model.load_weights(os.path.join(args.model_dir[0], 'model'))
 
   model.compile(
-    optimizer=tf.train.AdamOptimizer(args.learning_rate[0]),
+    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
     loss=tf.losses.mean_squared_error,
     metrics=['mae'])
 
@@ -140,7 +140,7 @@ def main():
                       default=[None], type=float,
                       help=docs.l2_reg_help)
   parser.add_argument('--num-components', '--components', '-n', nargs=1,
-                      default=[100], type=int,
+                      default=[128], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -157,10 +157,10 @@ def main():
                       default=[-1], type=int,
                       help=docs.cores_help)
   parser.add_argument('--batch-size', '-b', nargs=1,
-                      default=[16], type=int,
+                      default=[128], type=int,
                       help=docs.batch_size_help)
   parser.add_argument('--dropout', nargs=1,
-                      default=[0.1], type=float,
+                      default=[0.01], type=float,
                       help=docs.dropout_help)
   parser.add_argument('--activation', nargs=1,
                       choices=docs.activation_choices,
@@ -171,7 +171,7 @@ def main():
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],
-                      help=docs.learning_rate_help)
+                      help=docs.momentum_help)
   parser.add_argument('--eager', action='store_true',
                       help=docs.eager_help)
   parser.add_argument('--verbose', '-v', nargs=1,
