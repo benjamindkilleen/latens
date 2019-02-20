@@ -167,7 +167,7 @@ def main():
                       default=['sigmoid'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', nargs=1,
-                      default=[0.001],
+                      default=[0.1],
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],

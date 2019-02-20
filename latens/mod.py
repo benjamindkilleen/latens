@@ -55,6 +55,9 @@ class ConvAutoEncoder(tf.keras.Model):
     self.encoding_layers = self.create_encoding_layers()
     self.decoding_layers = self.create_decoding_layers()
 
+    for layer in self.encoding_layers + self.decoding_layers:
+      setattr(self, layer.name + '_l', layer)
+
   def call(self, inputs, training=False):
     embedding = self.encode(inputs)
     reconstruction = self.decode(embedding)
@@ -113,10 +116,10 @@ class ConvAutoEncoder(tf.keras.Model):
       for _ in range(self.level_depth):
         decoding_layers += self.conv(filters)
 
-    decoding_layers += self.conv(1, activation='sigmoid')
+    decoding_layers += self.conv(1, activation=tf.nn.sigmoid)
     return decoding_layers
 
-  def conv(self, filters, input_shape=None, activation='relu'):
+  def conv(self, filters, input_shape=None, activation=tf.nn.relu):
     conv_layers = []
     if input_shape is None:
       conv_layers.append(layers.Conv2D(
