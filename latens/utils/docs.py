@@ -16,7 +16,7 @@ l2_reg_help = """L2 regularization factor. Default is None."""
 
 output_help = """Command output. Default is 'show'."""
 
-model_path_help = """Prefix for saved model path. Default (None) doesn't save
+model_dir_help = """Directory to save the model in. Default (None) doesn't save
 the model. Required for prediction."""
 
 overwrite_help = """overwrite model if it exists"""
@@ -53,3 +53,7 @@ layer. Default is sigmoid. (Other layers use relu)."""
 learning_rate_help = """Learning rate for training. Default is 0.01"""
 
 momentum_help = """Momentum for the momentum optimizer. Default is 0.9"""
+
+eager_help = """Perform eager execution. Useful for debugging."""
+
+verbose_help = """Verbosity to use for model.fit"""

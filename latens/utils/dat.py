@@ -146,6 +146,9 @@ class Data(object):
     self.num_parallel_calls = kwargs.get('num_parallel_calls')
     self._kwargs = kwargs
 
+  def __iter__(self):
+    return self._dataset.__iter__()
+    
   def postprocess_dataset(self, dataset):
     return dataset
     
@@ -160,20 +163,8 @@ class Data(object):
   @property
   def self_supervised(self):
     return self.postprocess_dataset(
-      self._dataset.map(lambda x,y : (x,x),
+      self._dataset.map(lambda x,y : (x,tf.identity(x)),
                         num_parallel_calls=self.num_parallel_calls))
-
-  def __iter__(self):
-    iterator = self._dataset.make_one_shot_iterator()
-    next_example = iterator.get_next()
-    sess = tf.Session()
-    while True:
-      try:
-        example = sess.run(next_example)
-        yield example
-      except tf.errors.OutOfRangeError:
-        break
-    
         
   def split(self, *splits, types=None):
     """Split the dataset into different sets.

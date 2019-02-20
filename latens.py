@@ -43,7 +43,7 @@ def cmd_autoencoder(args):
                        batch_size=args.batch_size[0])
   train_set, validation_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
-
+  
   logger.debug(f"train_set: {type(train_set)}")
   
   model = mod.ConvAutoEncoder(
@@ -53,25 +53,40 @@ def cmd_autoencoder(args):
     activation=args.activation[0],
     dropout=args.dropout[0])
 
-  if args.model_path[0] is not None and len(glob(args.model_path[0] + "*")) > 0:
-    model.load_weights(args.model_path[0])
-
+  if (not args.overwrite
+      and args.model_dir[0] is not None
+      and os.path.exists(args.model_dir[0])
+      and len(glob(os.path.join(args.model_dir[0], 'model*'))) > 0):
+    logger.info(f"loading weights from {args.model_dir[0]}")
+    model.load_weights(os.path.join(args.model_dir[0], 'model'))
+    
+  def loss(Y, Y_hat):
+    """For debugging."""
+    if args.eager:
+      y = Y[0]
+      y_hat = Y_hat[0]
+      logger.debug(f"y: {y.shape}")
+      logger.debug(f"y_hat: {y_hat.shape}")
+      vis.show_image(y, y_hat)
+    return tf.losses.mean_squared_error(Y, Y_hat)
+    
   # TODO: allow customize
   model.compile(
-    optimizer=tf.train.MomentumOptimizer(args.learning_rate[0],
-                                         args.momentum[0]),
-    loss=tf.losses.mean_squared_error,
+    optimizer=tf.train.AdamOptimizer(args.learning_rate[0]),
+    loss=loss,
     metrics=['mae'])
 
   model.fit(
     train_set.self_supervised,
     epochs=args.epochs[0],
     steps_per_epoch=args.splits[0] // args.batch_size[0],
-    validation_data=validation_set.self_supervised)
+    validation_data=validation_set.self_supervised,
+    verbose=args.verbose[0])
 
-  if args.model_path[0] is not None:
-    # TODO: add overwrite protection
-    model.save_weights(args.model_path)
+  if args.model_dir[0] is not None:
+    if not os.path.exists(args.model_dir[0]):
+      os.mkdir(args.model_dir[0])
+    model.save_weights(os.path.join(args.model_dir[0], 'model'))
   
 def cmd_reconstruct(args):
   """Run reconstruction."""
@@ -87,15 +102,18 @@ def cmd_reconstruct(args):
     activation=args.activation[0],
     dropout=args.dropout[0])
 
-  assert args.model_path[0] is not None and len(glob(args.model_path[0] + "*")) > 0
-  model.load_weights(args.model_path[0])
+  assert args.model_dir[0] is not None and os.path.exists(args.model_dir[0]) > 0
+  model.load_weights(os.path.join(args.model_dir[0], 'model'))
 
-  reconstructions = model.predict_generator(test_set.self_supervised)
-  for example, reconstruction in zip(reconstructions, test_set):
+  model.compile(
+    optimizer=tf.train.AdamOptimizer(args.learning_rate[0]),
+    loss=tf.losses.mean_squared_error,
+    metrics=['mae'])
+
+  reconstructions = model.predict(test_set.self_supervised, steps=1)
+  for example, reconstruction in zip(test_set, reconstructions):
     image, label = example
-    vis.show(image, reconstruction)
-
-  raise NotImplementedError
+    vis.show_image(image, reconstruction)
 
   
 def main():
@@ -107,9 +125,9 @@ def main():
   parser.add_argument('--output', '-o', nargs=1,
                       default=['show'],
                       help=docs.output_help)
-  parser.add_argument('--model-path', '-m', nargs=1,
+  parser.add_argument('--model-dir', '-m', nargs=1,
                       default=[None],
-                      help=docs.model_path_help)
+                      help=docs.model_dir_help)
   parser.add_argument('--epochs', '-e', nargs=1,
                       default=[1], type=int,
                       help=docs.epochs_help)
@@ -121,8 +139,8 @@ def main():
   parser.add_argument('--l2-reg', nargs=1,
                       default=[None], type=float,
                       help=docs.l2_reg_help)
-  parser.add_argument('--num-components', '--classes', '-c', nargs=1,
-                      default=[10], type=int,
+  parser.add_argument('--num-components', '--components', '-n', nargs=1,
+                      default=[100], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -149,13 +167,21 @@ def main():
                       default=['sigmoid'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', nargs=1,
-                      default=[0.01],
+                      default=[0.001],
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],
                       help=docs.learning_rate_help)
-  
+  parser.add_argument('--eager', action='store_true',
+                      help=docs.eager_help)
+  parser.add_argument('--verbose', '-v', nargs=1,
+                      default=[1], type=int,
+                      help=docs.verbose_help)
+
   args = parser.parse_args()
+
+  if args.eager:
+    tf.enable_eager_execution()
 
   if args.cores[0] == -1:
     args.cores[0] = os.cpu_count()
