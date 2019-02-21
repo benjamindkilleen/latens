@@ -50,28 +50,15 @@ def cmd_autoencoder(args):
   train_set, validation_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
   
-  logger.debug(f"train_set: {type(train_set)}")
-  
   model = mod.ConvAutoEncoder(
     args.image_shape,
     args.num_components[0],
     l2_reg=args.l2_reg[0],
-    activation=args.activation[0],
-    dropout=args.dropout[0])
-      
-  # TODO: allow customize
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
-
-  if (not args.overwrite
-      and args.model_dir[0] is not None
-      and os.path.exists(args.model_dir[0])):
-    latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
-    if latest_cp is not None:
-      model.load_weights(latest_cp)
-      logger.info(f"loaded weights from {latest_cp}")
+    rep_activation=args.activation[0],
+    dropout=args.dropout[0],
+    learning_rate=args.learning_rate[0],
+    overwrite=args.overwrite,
+    model_dir=args.model_dir[0])
 
   model.fit(
     train_set.self_supervised,
@@ -81,17 +68,7 @@ def cmd_autoencoder(args):
     verbose=args.keras_verbose[0],
     callbacks=misc.create_callbacks(args))
 
-  if args.model_dir[0] is not None:
-    if not os.path.exists(args.model_dir[0]):
-      os.mkdir(args.model_dir[0])
-      logger.info(f"created model dir at {args.model_dir[0]}")      
-    elif args.overwrite:
-      rmtree(args.model_dir[0])
-      logger.info(f"removed existing model at {args.model_dir[0]}")
-    model.save_weights(os.path.join(args.model_dir[0], 'model'))
-    logger.info(f"saved model to {args.model_dir[0]}")
-
-    
+  
 def cmd_reconstruct(args):
   """Run reconstruction."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
@@ -103,24 +80,11 @@ def cmd_reconstruct(args):
     args.image_shape,
     args.num_components[0],
     l2_reg=args.l2_reg[0],
-    activation=args.activation[0],
-    dropout=args.dropout[0])
-
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
-
-  assert(args.model_dir[0] is not None
-         and os.path.exists(args.model_dir[0]))
-  latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
-  if latest_cp is None:
-    logger.error(f"No model checkpoint at {args.model_dir[0]}")
-  logger.info(f"loaded weights from {latest_cp}")
-
-  # estimator = tf.keras.estimator.model_to_estimator(model)
-  # reconstructions = estimator.predict(
-  #   input_fn=lambda : test_set.self_supervised.make_one_shot_iterator().get_next())
+    rep_activation=args.activation[0],
+    dropout=args.dropout[0],
+    learning_rate=args.learning_rate[0],
+    overwrite=args.overwrite,
+    model_dir=args.model_dir[0])
   
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
   if tf.executing_eagerly():
