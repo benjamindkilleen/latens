@@ -1,38 +1,67 @@
 /home/killeen/.local/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
 DEBUG:latens:train_set: <class 'latens.utils.dat.TrainDataInput'>
-DEBUG:latens:unflat_shape: (7, 7, 16)
-INFO:latens:loading weights from models/autoencoder
-2019-02-20 13:05:07.663485: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-2019-02-20 13:05:07.890086: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1392] Found device 0 with properties: 
+2019-02-20 18:26:03.651898: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-02-20 18:26:03.882455: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1392] Found device 0 with properties: 
 name: Tesla K80 major: 3 minor: 7 memoryClockRate(GHz): 0.8235
 pciBusID: 0000:89:00.0
 totalMemory: 11.17GiB freeMemory: 11.10GiB
-2019-02-20 13:05:07.892718: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1471] Adding visible gpu devices: 0
-2019-02-20 13:05:22.493242: I tensorflow/core/common_runtime/gpu/gpu_device.cc:952] Device interconnect StreamExecutor with strength 1 edge matrix:
-2019-02-20 13:05:22.496045: I tensorflow/core/common_runtime/gpu/gpu_device.cc:958]      0 
-2019-02-20 13:05:22.496070: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] 0:   N 
-2019-02-20 13:05:22.496570: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1084] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10763 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:89:00.0, compute capability: 3.7)
-DEBUG:latens:(?, 28, 28, 1) -> (?, 28, 28, 32):conv2d
-DEBUG:latens:(?, 28, 28, 32) -> (?, 28, 28, 32):batch_normalization
-DEBUG:latens:(?, 28, 28, 32) -> (?, 14, 14, 32):max_pooling2d
-DEBUG:latens:(?, 14, 14, 32) -> (?, 14, 14, 32):conv2d_1
-DEBUG:latens:(?, 14, 14, 32) -> (?, 14, 14, 32):batch_normalization_1
-DEBUG:latens:(?, 14, 14, 32) -> (?, 7, 7, 32):max_pooling2d_1
-DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 16):conv2d_2
-DEBUG:latens:(?, 7, 7, 16) -> (?, 7, 7, 16):batch_normalization_2
-DEBUG:latens:(?, 7, 7, 16) -> (?, 784):flatten
-DEBUG:latens:(?, 784) -> (?, 1024):dense
-DEBUG:latens:(?, 1024) -> (?, 100):dense_1
-DEBUG:latens:(?, 100) -> (?, 1024):dense_2
-DEBUG:latens:(?, 1024) -> (?, 784):dense_3
-DEBUG:latens:(?, 784) -> (?, 7, 7, 16):reshape
-DEBUG:latens:(?, 7, 7, 16) -> (?, 7, 7, 16):conv2d_3
-DEBUG:latens:(?, 7, 7, 16) -> (?, 7, 7, 16):batch_normalization_3
-DEBUG:latens:(?, 7, 7, 16) -> (?, 14, 14, 32):conv2d_transpose
-DEBUG:latens:(?, 14, 14, 32) -> (?, 14, 14, 32):conv2d_4
-DEBUG:latens:(?, 14, 14, 32) -> (?, 14, 14, 32):batch_normalization_4
-DEBUG:latens:(?, 14, 14, 32) -> (?, 28, 28, 32):conv2d_transpose_1
-DEBUG:latens:(?, 28, 28, 32) -> (?, 28, 28, 32):conv2d_5
-DEBUG:latens:(?, 28, 28, 32) -> (?, 28, 28, 32):batch_normalization_5
-DEBUG:latens:(?, 28, 28, 32) -> (?, 28, 28, 1):conv2d_6
+2019-02-20 18:26:03.882538: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1471] Adding visible gpu devices: 0
+2019-02-20 18:26:15.330030: I tensorflow/core/common_runtime/gpu/gpu_device.cc:952] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-02-20 18:26:15.330093: I tensorflow/core/common_runtime/gpu/gpu_device.cc:958]      0 
+2019-02-20 18:26:15.330108: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] 0:   N 
+2019-02-20 18:26:15.330562: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1084] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10763 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:89:00.0, compute capability: 3.7)
+DEBUG:latens:(?, 28, 28, 1) -> (?, 28, 28, 64):conv2d
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):batch_normalization
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):conv2d_1
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):batch_normalization_1
+DEBUG:latens:(?, 28, 28, 64) -> (?, 14, 14, 64):max_pooling2d
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):dropout
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):conv2d_2
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):batch_normalization_2
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):conv2d_3
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):batch_normalization_3
+DEBUG:latens:(?, 14, 14, 64) -> (?, 7, 7, 64):max_pooling2d_1
+DEBUG:latens:(?, 7, 7, 64) -> (?, 7, 7, 64):dropout_1
+DEBUG:latens:(?, 7, 7, 64) -> (?, 7, 7, 32):conv2d_4
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):batch_normalization_4
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):conv2d_5
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):batch_normalization_5
+DEBUG:latens:(?, 7, 7, 32) -> (?, 1568):flatten
+DEBUG:latens:(?, 1568) -> (?, 1024):dense
+DEBUG:latens:(?, 1024) -> (?, 1024):dense_1
+DEBUG:latens:(?, 1024) -> (?, 20):dense_2
+DEBUG:latens:(?, 20) -> (?, 1024):dense_3
+DEBUG:latens:(?, 1024) -> (?, 1024):dense_4
+DEBUG:latens:(?, 1024) -> (?, 1568):dense_5
+DEBUG:latens:(?, 1568) -> (?, 7, 7, 32):reshape
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):conv2d_6
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):batch_normalization_6
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):conv2d_7
+DEBUG:latens:(?, 7, 7, 32) -> (?, 7, 7, 32):batch_normalization_7
+DEBUG:latens:(?, 7, 7, 32) -> (?, 14, 14, 64):conv2d_transpose
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):dropout_2
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):conv2d_8
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):batch_normalization_8
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):conv2d_9
+DEBUG:latens:(?, 14, 14, 64) -> (?, 14, 14, 64):batch_normalization_9
+DEBUG:latens:(?, 14, 14, 64) -> (?, 28, 28, 64):conv2d_transpose_1
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):dropout_3
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):conv2d_10
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):batch_normalization_10
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):conv2d_11
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 64):batch_normalization_11
+DEBUG:latens:(?, 28, 28, 64) -> (?, 28, 28, 1):conv2d_12
+DEBUG:latens:(?, 28, 28, 1) -> (?, 28, 28, 1):batch_normalization_12
+Traceback (most recent call last):
+  File "latens.py", line 221, in <module>
+    main()
+  File "latens.py", line 213, in main
+    cmd_autoencoder(args)
+  File "latens.py", line 89, in cmd_autoencoder
+    rmtree(args.model_dir[0])
+  File "/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/lib/python3.6/shutil.py", line 471, in rmtree
+    onerror(os.lstat, path, sys.exc_info())
+  File "/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/lib/python3.6/shutil.py", line 469, in rmtree
+    orig_st = os.lstat(path)
+FileNotFoundError: [Errno 2] No such file or directory: 'models/autoencoder_e=100'

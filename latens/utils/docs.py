@@ -61,3 +61,6 @@ for progress bar, 2 for info at each epoch. Default is 1."""
 
 verbose_help = """latens logging verbosity. 0 is for WARNING and above. 1
 (default) for INFO. 2 for DEBUG."""
+
+tensorboard_help = """Write tensorboard logs to MODEL_DIR/logs."""
+

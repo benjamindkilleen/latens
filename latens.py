@@ -19,6 +19,7 @@ import tensorflow as tf
 from latens.utils import docs, dat, vis
 from latens import mod
 from shutil import rmtree
+from time import time
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -58,8 +59,8 @@ def cmd_autoencoder(args):
       and args.model_dir[0] is not None
       and os.path.exists(args.model_dir[0])
       and len(glob(os.path.join(args.model_dir[0], 'model*'))) > 0):
-    logger.info(f"loading weights from {args.model_dir[0]}")
     model.load_weights(os.path.join(args.model_dir[0], 'model'))
+    logger.info(f"loaded weights from {args.model_dir[0]}")
 
   def loss(Y, Y_hat):
     """For debugging."""
@@ -77,20 +78,27 @@ def cmd_autoencoder(args):
     loss=tf.losses.mean_squared_error,
     metrics=['mae'])
 
+  callbacks = []
+  if args.tensorboard:
+    tensorboard = tf.keras.callbacks.TensorBoard(
+      log_dir=os.path.join(args.model_dir[0], 'logs'))
+    callbacks.append(tensorboard)
+  
   model.fit(
     train_set.self_supervised,
     epochs=args.epochs[0],
     steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=validation_set.self_supervised,
-    verbose=args.keras_verbose[0])
+    verbose=args.keras_verbose[0],
+    callbacks=callbacks)
 
   if args.model_dir[0] is not None:
-    if args.overwrite:
-      rmtree(args.model_dir[0])
-      logger.info(f"removed existing model at {args.model_dir[0]}")
     if not os.path.exists(args.model_dir[0]):
       os.mkdir(args.model_dir[0])
       logger.info(f"created model dir at {args.model_dir[0]}")      
+    elif args.overwrite:
+      rmtree(args.model_dir[0])
+      logger.info(f"removed existing model at {args.model_dir[0]}")
     model.save_weights(os.path.join(args.model_dir[0], 'model'))
     logger.info(f"saved model to {args.model_dir[0]}")
   
@@ -108,8 +116,14 @@ def cmd_reconstruct(args):
     activation=args.activation[0],
     dropout=args.dropout[0])
 
-  assert args.model_dir[0] is not None and os.path.exists(args.model_dir[0]) > 0
+  model.compile(
+    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
+    loss=tf.losses.mean_squared_error,
+    metrics=['mae'])
+
+  assert args.model_dir[0] is not None and os.path.exists(args.model_dir[0])
   model.load_weights(os.path.join(args.model_dir[0], 'model'))
+  logger.info(f"loaded weights from {args.model_dir[0]}")
 
   model.compile(
     optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
@@ -117,9 +131,11 @@ def cmd_reconstruct(args):
     metrics=['mae'])
 
   reconstructions = model.predict(test_set.self_supervised, steps=1)
-  for example, reconstruction in zip(test_set, reconstructions):
-    image, label = example
-    vis.show_image(image, reconstruction)
+  for reconstruction in reconstructions:
+    vis.show_image(reconstruction)
+  # for example, reconstruction in zip(test_set, reconstructions):
+  #   image, label = example
+  #   vis.show_image(image, reconstruction)
 
   
 def main():
@@ -173,7 +189,7 @@ def main():
                       default=['sigmoid'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', nargs=1,
-                      default=[0.001],
+                      default=[0.01],
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],
@@ -186,6 +202,8 @@ def main():
   parser.add_argument('--verbose', '-v', nargs=1,
                       default=[2], type=int,
                       help=docs.verbose_help)
+  parser.add_argument('--tensorboard', action='store_true',
+                      help=docs.tensorboard_help)
 
   args = parser.parse_args()
 
@@ -196,7 +214,7 @@ def main():
   else:
     logger.setLevel(logging.DEBUG)
 
-  if args.eager or args.command == 'reconstruct':
+  if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
   if args.cores[0] == -1:
