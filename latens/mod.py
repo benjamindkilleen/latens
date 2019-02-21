@@ -14,14 +14,14 @@ class AutoEncoder(tf.keras.Model):
     self.encoding_layers = []
     self.decoding_layers = []
 
-  def call(self, inputs, training=False):
+  def call(self, inputs, training=True):
     embedding = self.encode(inputs, training=training)
     reconstruction = self.decode(embedding, training=training)
     # if tf.executing_eagerly():
     #   vis.show_image(inputs[0,:,:,0], reconstruction[0,:,:,0])
     return reconstruction
 
-  def encode(self, inputs, training=False):
+  def encode(self, inputs, training=True):
     for i, layer in enumerate(self.encoding_layers):
       if not training and 'dropout' in layer.name:
         continue
@@ -31,7 +31,7 @@ class AutoEncoder(tf.keras.Model):
       logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
     return inputs
 
-  def decode(self, inputs, training=False):
+  def decode(self, inputs, training=True):
     for layer in self.decoding_layers:
       if not training and 'dropout' in layer.name:
         continue
@@ -138,10 +138,10 @@ class ConvAutoEncoder(AutoEncoder):
       for _ in range(self.level_depth):
         layers += self.conv(filters)
 
-    layers += self.conv(1, activation=tf.nn.sigmoid)
+    layers += self.conv(1, activation=tf.nn.sigmoid, normalize=False)
     return layers
 
-  def conv(self, filters, input_shape=None, activation=tf.nn.relu):
+  def conv(self, filters, input_shape=None, activation=tf.nn.relu, normalize=True):
     layers = []
     if input_shape is None:
       layers.append(keras.layers.Conv2D(
@@ -156,7 +156,8 @@ class ConvAutoEncoder(AutoEncoder):
         padding='same',
         kernel_initializer='glorot_normal',
         input_shape=input_shape))
-    layers.append(keras.layers.BatchNormalization())
+    if normalize:
+      layers.append(keras.layers.BatchNormalization())
     return layers
 
   def maxpool(self):
@@ -224,7 +225,7 @@ class EmbedderClassifier(Embedder):
   
 class ShallowAutoEncoder(tf.keras.Model):
   # TODO: bring into autoencoder subclass as a simple model demo
-  def __init__(self, input_shape, num_components):
+  def __init__(self, input_shape, num_components, **kwargs):
     """FIXME! briefly describe function
 
     :param input_shape: 
@@ -236,7 +237,7 @@ class ShallowAutoEncoder(tf.keras.Model):
     super().__init__(name='auto_encoder')
     
     self.flatten_l = keras.layers.Flatten(input_shape=input_shape)
-    self.hidden_l = keras.layers.Dense(32, activation=tf.nn.sigmoid)
+    self.hidden_l = keras.layers.Dense(num_components, activation=tf.nn.sigmoid)
     self.output_l = keras.layers.Dense(784, activation=tf.nn.sigmoid)
     self.reshape_l = keras.layers.Reshape((28,28,1))
 

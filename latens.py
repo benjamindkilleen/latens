@@ -118,9 +118,11 @@ def cmd_reconstruct(args):
     logger.error(f"No model checkpoint at {args.model_dir[0]}")
   logger.info(f"loaded weights from {latest_cp}")
 
+  # estimator = tf.keras.estimator.model_to_estimator(model)
+  # reconstructions = estimator.predict(
+  #   input_fn=lambda : test_set.self_supervised.make_one_shot_iterator().get_next())
+  
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
-  logger.debug(f"reconstructions: {reconstructions.shape}")
-  vis.show_image(*reconstructions[:3])
   if tf.executing_eagerly():
     for example, reconstruction in zip(test_set, reconstructions):
       image, label = example
