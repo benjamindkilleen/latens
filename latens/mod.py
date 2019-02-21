@@ -8,7 +8,54 @@ import logging
 
 logger = logging.getLogger('latens')
 
-class ConvAutoEncoder(tf.keras.Model):
+class AutoEncoder(tf.keras.Model):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.encoding_layers = []
+    self.decoding_layers = []
+
+  def call(self, inputs, training=False):
+    embedding = self.encode(inputs, training=training)
+    reconstruction = self.decode(embedding, training=training)
+    # if tf.executing_eagerly():
+    #   vis.show_image(inputs[0,:,:,0], reconstruction[0,:,:,0])
+    return reconstruction
+
+  def encode(self, inputs, training=False):
+    for i, layer in enumerate(self.encoding_layers):
+      if not training and 'dropout' in layer.name:
+        continue
+      input_shape = inputs.shape
+      inputs = layer(inputs)
+      output_shape = inputs.shape
+      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
+    return inputs
+
+  def decode(self, inputs, training=False):
+    for layer in self.decoding_layers:
+      if not training and 'dropout' in layer.name:
+        continue
+      input_shape = inputs.shape
+      inputs = layer(inputs)
+      output_shape = inputs.shape
+      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
+    return inputs
+  
+  def create_encoding_layers(self):
+    raise NotImplementedError
+
+  def create_decoding_layers(self):
+    raise NotImplementedError
+
+  def set_layers(self, layers):
+    for layer in layers:
+      setattr(self, 'layer_' + layer.name, layer)
+      
+  @property
+  def embedder(self):
+    return Embedder(self)
+
+class ConvAutoEncoder(AutoEncoder):
   def __init__(self, image_shape, num_components,
                level_filters=[64,64,32],
                level_depth=2,
@@ -54,36 +101,7 @@ class ConvAutoEncoder(tf.keras.Model):
 
     self.encoding_layers = self.create_encoding_layers()
     self.decoding_layers = self.create_decoding_layers()
-
-    for layer in self.encoding_layers + self.decoding_layers:
-      setattr(self, 'layer_' + layer.name, layer)
-
-  def call(self, inputs, training=False):
-    embedding = self.encode(inputs, training=training)
-    reconstruction = self.decode(embedding, training=training)
-    if tf.executing_eagerly():
-      vis.show_image(inputs[0,:,:,0], reconstruction[0,:,:,0])
-    return reconstruction
-
-  def encode(self, inputs, training=False):
-    for i, layer in enumerate(self.encoding_layers):
-      if not training and 'dropout' in layer.name:
-        continue
-      input_shape = inputs.shape
-      inputs = layer(inputs)
-      output_shape = inputs.shape
-      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
-    return inputs
-
-  def decode(self, inputs, training=False):
-    for layer in self.decoding_layers:
-      if not training and 'dropout' in layer.name:
-        continue
-      input_shape = inputs.shape
-      inputs = layer(inputs)
-      output_shape = inputs.shape
-      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
-    return inputs
+    self.set_layers(self.encoding_layers + self.decoding_layers)
 
   def create_encoding_layers(self):
     layers = []
@@ -167,7 +185,45 @@ class ConvAutoEncoder(tf.keras.Model):
     return layers
 
 
+class Embedder(AutoEncoder):
+  """Takes in an AutoEncoder and creates a model with the same weights that just
+  does embedding."""
+  def __init__(self, autoencoder):
+    """Copy the encoding layers and their weights from the given autoencoder.
+
+    :param autoencoder: 
+    :returns: 
+    :rtype: 
+
+    """
+    super().__init__()
+    assert issubclass(type(autoencoder), AutoEncoder)
+    self.encoding_layers = autoencoder.create_encoding_layers()
+    self.set_layers(self.encoding_layers)
+
+    for layer, other_layer in zip(self.encoding_layers, autoencoder.encoding_layers):
+      layer.set_weights(other_layer.get_weights())
+
+  def call(self, inputs, training=False):
+    embedding = self.encode(inputs, training=training)
+    return embedding
+
+class EmbedderClassifier(Embedder):
+  def __init__(self, other, num_classes,
+               hidden_layers=[1024]):
+    """
+
+    :param num_classes: 
+    :param hidden_layers: 
+    :returns: 
+    :rtype: 
+
+    """
+    pass
+
+  
 class ShallowAutoEncoder(tf.keras.Model):
+  # TODO: bring into autoencoder subclass as a simple model demo
   def __init__(self, input_shape, num_components):
     """FIXME! briefly describe function
 

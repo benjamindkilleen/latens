@@ -16,14 +16,17 @@ import os
 import argparse
 from glob import glob
 import tensorflow as tf
-from latens.utils import docs, dat, vis
+from latens.utils import docs, dat, vis, misc
 from latens import mod
 from shutil import rmtree
 from time import time
+import numpy as np
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
   exit()
+
+logger.info(f"tensorflow {tf.__version__}, keras {tf.keras.__version__}")
 
 def cmd_debug(args):
   """Run the debug command."""
@@ -33,12 +36,13 @@ def cmd_debug(args):
   logger.debug(f"Output shapes: {train_set._dataset.output_shapes}")
   logger.debug(f"Output types: {train_set._dataset.output_types}")
 
-
+  
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
   dat.convert_from_npz(args.input[0])
 
+  
 def cmd_autoencoder(args):
   """Run training for the autoencoder."""
   data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
@@ -54,43 +58,28 @@ def cmd_autoencoder(args):
     l2_reg=args.l2_reg[0],
     activation=args.activation[0],
     dropout=args.dropout[0])
-
-  if (not args.overwrite
-      and args.model_dir[0] is not None
-      and os.path.exists(args.model_dir[0])
-      and len(glob(os.path.join(args.model_dir[0], 'model*'))) > 0):
-    model.load_weights(os.path.join(args.model_dir[0], 'model'))
-    logger.info(f"loaded weights from {args.model_dir[0]}")
-
-  def loss(Y, Y_hat):
-    """For debugging."""
-    if args.eager:
-      y = Y[0]
-      y_hat = Y_hat[0]
-      logger.debug(f"y: {y.shape}")
-      logger.debug(f"y_hat: {y_hat.shape}")
-      vis.show_image(y, y_hat)
-    return tf.losses.mean_squared_error(Y, Y_hat)
-    
+      
   # TODO: allow customize
   model.compile(
     optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
     loss=tf.losses.mean_squared_error,
     metrics=['mae'])
 
-  callbacks = []
-  if args.tensorboard:
-    tensorboard = tf.keras.callbacks.TensorBoard(
-      log_dir=os.path.join(args.model_dir[0], 'logs'))
-    callbacks.append(tensorboard)
-  
+  if (not args.overwrite
+      and args.model_dir[0] is not None
+      and os.path.exists(args.model_dir[0])):
+    latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
+    if latest_cp is not None:
+      model.load_weights(latest_cp)
+      logger.info(f"loaded weights from {latest_cp}")
+
   model.fit(
     train_set.self_supervised,
     epochs=args.epochs[0],
     steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=validation_set.self_supervised,
     verbose=args.keras_verbose[0],
-    callbacks=callbacks)
+    callbacks=misc.create_callbacks(args))
 
   if args.model_dir[0] is not None:
     if not os.path.exists(args.model_dir[0]):
@@ -101,7 +90,8 @@ def cmd_autoencoder(args):
       logger.info(f"removed existing model at {args.model_dir[0]}")
     model.save_weights(os.path.join(args.model_dir[0], 'model'))
     logger.info(f"saved model to {args.model_dir[0]}")
-  
+
+    
 def cmd_reconstruct(args):
   """Run reconstruction."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
@@ -121,21 +111,23 @@ def cmd_reconstruct(args):
     loss=tf.losses.mean_squared_error,
     metrics=['mae'])
 
-  assert args.model_dir[0] is not None and os.path.exists(args.model_dir[0])
-  model.load_weights(os.path.join(args.model_dir[0], 'model'))
-  logger.info(f"loaded weights from {args.model_dir[0]}")
+  assert(args.model_dir[0] is not None
+         and os.path.exists(args.model_dir[0]))
+  latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
+  if latest_cp is None:
+    logger.error(f"No model checkpoint at {args.model_dir[0]}")
+  logger.info(f"loaded weights from {latest_cp}")
 
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
-
-  reconstructions = model.predict(test_set.self_supervised, steps=1)
-  for reconstruction in reconstructions:
-    vis.show_image(reconstruction)
-  # for example, reconstruction in zip(test_set, reconstructions):
-  #   image, label = example
-  #   vis.show_image(image, reconstruction)
+  reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
+  logger.debug(f"reconstructions: {reconstructions.shape}")
+  vis.show_image(*reconstructions[:3])
+  if tf.executing_eagerly():
+    for example, reconstruction in zip(test_set, reconstructions):
+      image, label = example
+      vis.show_image(image, reconstruction)
+  else:
+    for reconstruction in reconstructions:
+      vis.show_image(reconstruction)
 
   
 def main():
