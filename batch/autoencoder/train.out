@@ -1,0 +1,238 @@
+INFO: activate-binutils_linux-64.sh made the following environmental changes:
++ADDR2LINE=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-addr2line
++AR=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ar
++AS=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-as
++CXXFILT=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-c++filt
++ELFEDIT=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-elfedit
++GPROF=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gprof
++HOST=x86_64-conda_cos6-linux-gnu
++LD_GOLD=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ld.gold
++LD=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ld
++NM=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-nm
++OBJCOPY=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-objcopy
++OBJDUMP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-objdump
++RANLIB=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ranlib
++READELF=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-readelf
++SIZE=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-size
++STRINGS=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-strings
++STRIP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-strip
+INFO: activate-gcc_linux-64.sh made the following environmental changes:
++CC=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-cc
++CFLAGS=-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
++_CONDA_PYTHON_SYSCONFIGDATA_NAME=_sysconfigdata_x86_64_conda_cos6_linux_gnu
++CPPFLAGS=-DNDEBUG -D_FORTIFY_SOURCE=2 -O2
++CPP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-cpp
++DEBUG_CFLAGS=-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
++DEBUG_CPPFLAGS=-D_DEBUG -D_FORTIFY_SOURCE=2 -Og
++GCC_AR=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-ar
++GCC_NM=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-nm
++GCC_RANLIB=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-ranlib
++GCC=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc
++LDFLAGS=-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now
+INFO: activate-gxx_linux-64.sh made the following environmental changes:
++CXXFLAGS=-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
++CXX=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-c++
++DEBUG_CXXFLAGS=-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
++GXX=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-g++
+Starting training...
+Epoch 1/100
+ - 26s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 2/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 3/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 4/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 5/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 6/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 7/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 8/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 9/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 10/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 11/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 12/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 13/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 14/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 15/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 16/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 17/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 18/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 19/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 20/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 21/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 22/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 23/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 24/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 25/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 26/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 27/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 28/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 29/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 30/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 31/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 32/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 33/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 34/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 35/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 36/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 37/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 38/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 39/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 40/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 41/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 42/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 43/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 44/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 45/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 46/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 47/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 48/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 49/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 50/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 51/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 52/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 53/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 54/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 55/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 56/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 57/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 58/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 59/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 60/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 61/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 62/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 63/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 64/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 65/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 66/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 67/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 68/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 69/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 70/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 71/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 72/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 73/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 74/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 75/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 76/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 77/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 78/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 79/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 80/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 81/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 82/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 83/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 84/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 85/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 86/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 87/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 88/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 89/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 90/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 91/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 92/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 93/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 94/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 95/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 96/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 97/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 98/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 99/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Epoch 100/100
+ - 23s - loss: 0.2823 - mean_absolute_error: 0.4756
+Finished.

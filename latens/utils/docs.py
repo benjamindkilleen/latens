@@ -56,4 +56,8 @@ momentum_help = """Momentum for the momentum optimizer. Default is 0.9"""
 
 eager_help = """Perform eager execution. Useful for debugging."""
 
-verbose_help = """Verbosity to use for model.fit"""
+keras_verbose_help = """Verbosity to use for model.fit(). 0 for no logging, 1
+for progress bar, 2 for info at each epoch. Default is 1."""
+
+verbose_help = """latens logging verbosity. 0 is for WARNING and above. 1
+(default) for INFO. 2 for DEBUG."""

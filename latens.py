@@ -18,6 +18,7 @@ from glob import glob
 import tensorflow as tf
 from latens.utils import docs, dat, vis
 from latens import mod
+from shutil import rmtree
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -59,7 +60,7 @@ def cmd_autoencoder(args):
       and len(glob(os.path.join(args.model_dir[0], 'model*'))) > 0):
     logger.info(f"loading weights from {args.model_dir[0]}")
     model.load_weights(os.path.join(args.model_dir[0], 'model'))
-    
+
   def loss(Y, Y_hat):
     """For debugging."""
     if args.eager:
@@ -81,12 +82,17 @@ def cmd_autoencoder(args):
     epochs=args.epochs[0],
     steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=validation_set.self_supervised,
-    verbose=args.verbose[0])
+    verbose=args.keras_verbose[0])
 
   if args.model_dir[0] is not None:
+    if args.overwrite:
+      rmtree(args.model_dir[0])
+      logger.info(f"removed existing model at {args.model_dir[0]}")
     if not os.path.exists(args.model_dir[0]):
       os.mkdir(args.model_dir[0])
+      logger.info(f"created model dir at {args.model_dir[0]}")      
     model.save_weights(os.path.join(args.model_dir[0], 'model'))
+    logger.info(f"saved model to {args.model_dir[0]}")
   
 def cmd_reconstruct(args):
   """Run reconstruction."""
@@ -140,7 +146,7 @@ def main():
                       default=[None], type=float,
                       help=docs.l2_reg_help)
   parser.add_argument('--num-components', '--components', '-n', nargs=1,
-                      default=[128], type=int,
+                      default=[20], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -157,30 +163,40 @@ def main():
                       default=[-1], type=int,
                       help=docs.cores_help)
   parser.add_argument('--batch-size', '-b', nargs=1,
-                      default=[128], type=int,
+                      default=[64], type=int,
                       help=docs.batch_size_help)
   parser.add_argument('--dropout', nargs=1,
-                      default=[0.01], type=float,
+                      default=[0.2], type=float,
                       help=docs.dropout_help)
   parser.add_argument('--activation', nargs=1,
                       choices=docs.activation_choices,
                       default=['sigmoid'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', nargs=1,
-                      default=[0.1],
+                      default=[0.001],
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],
                       help=docs.momentum_help)
   parser.add_argument('--eager', action='store_true',
                       help=docs.eager_help)
-  parser.add_argument('--verbose', '-v', nargs=1,
+  parser.add_argument('--keras-verbose', nargs=1,
                       default=[1], type=int,
+                      help=docs.keras_verbose_help)
+  parser.add_argument('--verbose', '-v', nargs=1,
+                      default=[2], type=int,
                       help=docs.verbose_help)
 
   args = parser.parse_args()
 
-  if args.eager:
+  if args.verbose[0] == 0:
+    logger.setLevel(logging.WARNING)
+  elif args.verbose[0] == 1:
+    logger.setLevel(logging.INFO)
+  else:
+    logger.setLevel(logging.DEBUG)
+
+  if args.eager or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
   if args.cores[0] == -1:

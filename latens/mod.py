@@ -10,9 +10,9 @@ logger = logging.getLogger('latens')
 
 class ConvAutoEncoder(tf.keras.Model):
   def __init__(self, image_shape, num_components,
-               level_filters=[16,8,8],
-               level_depth=1,
-               dense_nodes=[],
+               level_filters=[64,64,32],
+               level_depth=2,
+               dense_nodes=[1024,1024],
                l2_reg=None,
                rep_activation=tf.nn.sigmoid,
                dropout=0.1,
@@ -56,13 +56,13 @@ class ConvAutoEncoder(tf.keras.Model):
     self.decoding_layers = self.create_decoding_layers()
 
     for layer in self.encoding_layers + self.decoding_layers:
-      setattr(self, layer.name + '_l', layer)
+      setattr(self, 'layer_' + layer.name, layer)
 
   def call(self, inputs, training=False):
     embedding = self.encode(inputs)
     reconstruction = self.decode(embedding)
     if tf.executing_eagerly():
-      vis.show_image(inputs[0,:,:,0], embedding[0,:,:,0], reconstruction[0,:,:,0])
+      vis.show_image(inputs[0,:,:,0], reconstruction[0,:,:,0])
     return reconstruction
 
   def encode(self, inputs, training=False):
@@ -91,28 +91,28 @@ class ConvAutoEncoder(tf.keras.Model):
         input_shape = None if len(encoding_layers) == 0 else self.image_shape
         encoding_layers += self.conv(filters, input_shape=input_shape)
     
-    # encoding_layers.append(layers.Flatten())
+    encoding_layers.append(layers.Flatten())
       
-    # for nodes in self.dense_nodes:
-    #   encoding_layers += self.dense(nodes)
+    for nodes in self.dense_nodes:
+      encoding_layers += self.dense(nodes)
 
-    # encoding_layers += self.dense(
-    #   self.num_components,
-    #   activation=self._rep_activation)
+    encoding_layers += self.dense(
+      self.num_components,
+      activation=self._rep_activation)
 
     return encoding_layers
 
   def create_decoding_layers(self):
     decoding_layers = []
-    # for nodes in reversed(self.dense_nodes):
-    #   decoding_layers += self.dense(nodes)
+    for nodes in reversed(self.dense_nodes):
+      decoding_layers += self.dense(nodes)
 
-    # decoding_layers += self.dense(np.product(self._unflat_shape))
-    # decoding_layers.append(layers.Reshape(self._unflat_shape))
+    decoding_layers += self.dense(np.product(self._unflat_shape))
+    decoding_layers.append(layers.Reshape(self._unflat_shape))
 
     for i, filters in enumerate(reversed(self.level_filters)):
       if i > 0:
-        decoding_layers += self.upsample()
+        decoding_layers += self.conv_transpose(filters)
       for _ in range(self.level_depth):
         decoding_layers += self.conv(filters)
 
@@ -134,13 +134,13 @@ class ConvAutoEncoder(tf.keras.Model):
         padding='same',
         kernel_initializer='glorot_normal',
         input_shape=input_shape))
-    # conv_layers.append(layers.BatchNormalization())
+    conv_layers.append(layers.BatchNormalization())
     return conv_layers
 
   def maxpool(self):
     pool_layers = []
     pool_layers.append(layers.MaxPool2D())
-    # pool_layers.append(layers.Dropout(self._dropout_rate))
+    pool_layers.append(layers.Dropout(self._dropout_rate))
     return pool_layers
 
   def upsample(self):
@@ -152,15 +152,15 @@ class ConvAutoEncoder(tf.keras.Model):
       activation=activation,
       kernel_regularizer=self.regularizer)]
 
-  def conv_transpose(self, filters, activation='relu'):
+  def conv_transpose(self, filters, activation=tf.nn.relu):
     deconv_layers = []
     deconv_layers.append(layers.Conv2DTranspose(
-      filters, [2,2],
-      strides=[2,2],
+      filters, (2,2),
+      strides=(2,2),
       padding='same',
       activation=activation,
       kernel_regularizer=self.regularizer))
-    # deconv_layers.append(layers.Dropout(self._dropout_rate))
+    deconv_layers.append(layers.Dropout(self._dropout_rate))
     return deconv_layers
 
 
