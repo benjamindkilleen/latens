@@ -1,4 +1,5 @@
 from tensorflow.keras import activations
+from latens.utils import act
 
 """Documentation strings for latens.
 """
@@ -45,10 +46,12 @@ batch_size_help = """Batch size for training. Default is 16."""
 
 dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 
-activation_choices = {'sigmoid' : activations.sigmoid}
+activation_choices = {'sigmoid' : activations.sigmoid,
+                      'relu' : activations.relu,
+                      'clipped_relu' : act.clu}
 
 activation_help = """Activation function to use at the representational
-layer. Default is sigmoid. (Other layers use relu)."""
+layer. Default is relu."""
 
 learning_rate_help = """Learning rate for training. Default is 0.01"""
 

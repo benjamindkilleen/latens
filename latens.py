@@ -34,21 +34,21 @@ def cmd_debug(args):
                   batch_size=args.batch_size[0])
   train_set, validation_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
-  
-  model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0])
 
-  # TODO: allow customize
+  model = mod.ShallowAutoEncoder(
+    args.image_shape,
+    args.num_components[0],
+    model_dir='models/debug',
+    overwrite=args.overwrite)
+  
   model.compile(
     optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
     loss=tf.losses.mean_squared_error,
     metrics=['mae'])
+    
+  model_path = 'models/debug/model.h5'
 
-  save_path = 'models/debug/model.h5'
-  load_path = save_path
-
-  if not args.eager:
+  if not args.load:
     model.fit(
       train_set.self_supervised,
       epochs=args.epochs[0],
@@ -56,17 +56,18 @@ def cmd_debug(args):
       validation_data=validation_set.self_supervised,
       verbose=args.keras_verbose[0],
       callbacks=misc.create_callbacks(args))
-    model.save_weights(save_path)
+    model.save()
+    # model.save_weights(model_path)
     logger.debug(f"weights: {len(model.get_weights())}")
   else:
-    reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
-    model.load_weights(load_path)
+    val_recons = model.predict(validation_set.self_supervised, steps=1, verbose=1)
+    model.load()
+    # model.load_weights(model_path)
     logger.debug(f"weights: {len(model.get_weights())}")
 
-    reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
-    for example, reconstruction in zip(test_set, reconstructions):
-      image, label = example
-      vis.show_image(image, reconstruction)
+    recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
+    for recon, val_recon in zip(recons, val_recons):
+      vis.show_image(val_recon, recon)
       
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
@@ -208,7 +209,7 @@ def main():
                       default=['sigmoid'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', '-l', nargs=1,
-                      default=[0.01], type=float,
+                      default=[0.1], type=float,
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
                       default=[0.9],
@@ -223,6 +224,8 @@ def main():
                       help=docs.verbose_help)
   parser.add_argument('--tensorboard', action='store_true',
                       help=docs.tensorboard_help)
+  parser.add_argument('--load', action='store_true',
+                      help='for debugging')
 
   args = parser.parse_args()
 
