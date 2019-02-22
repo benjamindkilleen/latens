@@ -35,19 +35,15 @@ def cmd_debug(args):
   train_set, validation_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
-  model = mod.ShallowAutoEncoder(
+  model = mod.ConvAutoEncoder(
     args.image_shape,
     args.num_components[0],
     model_dir='models/debug',
-    overwrite=args.overwrite)
+    overwrite=args.overwrite,
+    batch_size=args.batch_size[0])
   
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
+  model.compile(args.learning_rate[0])
     
-  model_path = 'models/debug/model.h5'
-
   if not args.load:
     model.fit(
       train_set.self_supervised,
@@ -55,19 +51,24 @@ def cmd_debug(args):
       steps_per_epoch=args.splits[0] // args.batch_size[0],
       validation_data=validation_set.self_supervised,
       verbose=args.keras_verbose[0],
-      callbacks=misc.create_callbacks(args))
+      callbacks=misc.create_callbacks(args, model))
     model.save()
-    # model.save_weights(model_path)
     logger.debug(f"weights: {len(model.get_weights())}")
   else:
-    val_recons = model.predict(validation_set.self_supervised, steps=1, verbose=1)
+    dumb_set = dat.DummyInput(args.image_shape, batch_size=args.batch_size[0])
+    dumb_recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
     model.load()
-    # model.load_weights(model_path)
     logger.debug(f"weights: {len(model.get_weights())}")
 
     recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
-    for recon, val_recon in zip(recons, val_recons):
-      vis.show_image(val_recon, recon)
+    logger.debug(f"recons: {recons.shape}")
+    if tf.executing_eagerly():
+      for (original, _), dumb_recon, recon in zip(test_set, dumb_recons, recons):
+        vis.show_image(original, dumb_recon, recon)
+    else:
+      for recon, dumb_recon in zip(recons, dumb_recons):
+        vis.show_image(dumb_recon, recon)
+    
       
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
@@ -85,23 +86,17 @@ def cmd_autoencoder(args):
   model = mod.ConvAutoEncoder(
     args.image_shape,
     args.num_components[0],
+    model_dir=args.model_dir[0],
+    batch_size=args.batch_size[0],
     l2_reg=args.l2_reg[0],
     rep_activation=args.activation[0],
-    dropout=args.dropout[0])
+    dropout=args.dropout[0],
+    overwrite=args.overwrite)
       
-  # TODO: allow customize
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
+  model.compile(learning_rate=args.learning_rate[0])
 
-  if (not args.overwrite
-      and args.model_dir[0] is not None
-      and os.path.exists(args.model_dir[0])):
-    latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
-    if latest_cp is not None:
-      model.load_weights(latest_cp)
-      logger.info(f"loaded weights from {latest_cp}")
+  if not args.overwrite:
+    model.load()
 
   model.fit(
     train_set.self_supervised,
@@ -109,18 +104,9 @@ def cmd_autoencoder(args):
     steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=validation_set.self_supervised,
     verbose=args.keras_verbose[0],
-    callbacks=misc.create_callbacks(args))
+    callbacks=misc.create_callbacks(args, model))
 
-  if args.model_dir[0] is not None:
-    if not os.path.exists(args.model_dir[0]):
-      os.mkdir(args.model_dir[0])
-      logger.info(f"created model dir at {args.model_dir[0]}")      
-    elif args.overwrite:
-      rmtree(args.model_dir[0])
-      logger.info(f"removed existing model at {args.model_dir[0]}")
-    model.save_weights(os.path.join(args.model_dir[0], 'model'))
-    logger.info(f"saved model to {args.model_dir[0]}")
-
+  model.save()
   
 def cmd_reconstruct(args):
   """Run reconstruction."""
@@ -132,27 +118,21 @@ def cmd_reconstruct(args):
   model = mod.ConvAutoEncoder(
     args.image_shape,
     args.num_components[0],
+    model_dir=args.model_dir[0],
+    batch_size=args.batch_size[0],
     l2_reg=args.l2_reg[0],
     rep_activation=args.activation[0],
-    dropout=args.dropout[0])
+    dropout=args.dropout[0],
+    overwrite=args.overwrite)
+      
+  model.compile(learning_rate=args.learning_rate[0])
 
-  model.compile(
-    optimizer=tf.train.AdadeltaOptimizer(args.learning_rate[0]),
-    loss=tf.losses.mean_squared_error,
-    metrics=['mae'])
-
-  assert(args.model_dir[0] is not None
-         and os.path.exists(args.model_dir[0]))
-  latest_cp = tf.train.latest_checkpoint(args.model_dir[0])
-  if latest_cp is None:
-    logger.error(f"No model checkpoint at {args.model_dir[0]}")
-  logger.info(f"loaded weights from {latest_cp}")
+  model.load()
   
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
   if tf.executing_eagerly():
-    for example, reconstruction in zip(test_set, reconstructions):
-      image, label = example
-      vis.show_image(image, reconstruction)
+    for (original, _), reconstruction in zip(test_set, reconstructions):
+      vis.show_image(original, reconstruction)
   else:
     for reconstruction in reconstructions:
       vis.show_image(reconstruction)
@@ -182,7 +162,7 @@ def main():
                       default=[None], type=float,
                       help=docs.l2_reg_help)
   parser.add_argument('--num-components', '--components', '-n', nargs=1,
-                      default=[20], type=int,
+                      default=[32], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -206,7 +186,7 @@ def main():
                       help=docs.dropout_help)
   parser.add_argument('--activation', nargs=1,
                       choices=docs.activation_choices,
-                      default=['sigmoid'],
+                      default=['clu'],
                       help=docs.activation_help)
   parser.add_argument('--learning-rate', '-l', nargs=1,
                       default=[0.1], type=float,

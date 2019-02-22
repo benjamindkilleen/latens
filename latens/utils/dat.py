@@ -200,10 +200,11 @@ class DataInput(Data):
     """
     super().__init__(*args, **kwargs)
     self._prefetch_buffer_size = kwargs.get('prefetch_buffer_size', 1)
-    self._batch_size = kwargs.get('batch_size', 4)
+    self._batch_size = kwargs.get('batch_size', 1)
 
   def postprocess_dataset(self, dataset):
-    return (dataset.batch(self._batch_size)
+    return (dataset.repeat(-1)
+            .batch(self._batch_size)
             .prefetch(self._prefetch_buffer_size))
 
   
@@ -219,3 +220,15 @@ class TrainDataInput(DataInput):
             .batch(self._batch_size)
             .prefetch(self._prefetch_buffer_size))
 
+class DummyInput(DataInput):
+  def __init__(self, image_shape, **kwargs):
+    """Creates a dummy set to pass through before loading a keras model.
+
+    :param image_shape: shape of the input image.
+    :param batch_size: should always be provided, if model is batched.
+
+    """
+    tensors = (tf.ones(image_shape, dtype=tf.float32),
+               tf.ones(1, dtype=tf.float32))
+    dummyset = tf.data.Dataset.from_tensors(tensors)
+    super().__init__(dummyset, **kwargs)

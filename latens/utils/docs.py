@@ -18,7 +18,8 @@ l2_reg_help = """L2 regularization factor. Default is None."""
 output_help = """Command output. Default is 'show'."""
 
 model_dir_help = """Directory to save the model in. Default (None) doesn't save
-the model. Required for prediction."""
+the model. Should be provided for prediction, otherwise initialized weights are
+used."""
 
 overwrite_help = """overwrite model if it exists"""
 
@@ -48,10 +49,10 @@ dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 
 activation_choices = {'sigmoid' : activations.sigmoid,
                       'relu' : activations.relu,
-                      'clipped_relu' : act.clu}
+                      'clu' : act.clu}
 
 activation_help = """Activation function to use at the representational
-layer. Default is relu."""
+layer. Default is clu (clipped linear unit)."""
 
 learning_rate_help = """Learning rate for training. Default is 0.01"""
 
