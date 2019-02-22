@@ -10,64 +10,47 @@ import logging
 
 logger = logging.getLogger('latens')
 
-class AutoEncoder():
-  def __init__(self, learning_rate=0.01, model_dir=None, overwrite=False):
-    """FIXME! briefly describe function
+class AutoEncoder(tf.keras.Model):
+  def __init__(self, image_shape, num_components, **kwargs):
+    """A superclass for autoencoders.
 
-    :param learning_rate: 
-    :param model_dir: 
-    :param overwrite: 
+    :param image_shape: 
+    :param num_components: 
     :returns: 
     :rtype: 
 
     """
-
-    self.encoding_layers = self.create_encoding_layers()
-    self.decoding_layers = self.create_decoding_layers()    
-    for layer in self.layers:
-      logger.debug(layer.name)
-
-    self.model_dir = model_dir
-    self.model_path = None if model_dir is None else os.path.join(model_dir, 'model')
-    self.overwrite = overwrite
-    self.model = keras.models.Sequential(self.layers)
-    self.model.compile(optimizer=tf.train.AdadeltaOptimizer(learning_rate),
-                       loss=tf.losses.mean_squared_error,
-                       metrics=['mae'])
-
-    if self.model_dir is not None:
-      if (not os.path.exists(self.model_dir)):
-        os.mkdir(self.model_dir)
-
-      latest_cp = tf.train.latest_checkpoint(self.model_dir)
-      if not self.overwrite and latest_cp is not None:
-        self.model.load_weights(latest_cp)
-        logger.info(f"loaded weights from {latest_cp}")
-        
-  @property
-  def layers(self):
-    return self.encoding_layers + self.decoding_layers
+    super().__init__(**kwargs)
+    self.image_shape = image_shape
+    self.num_components = num_components
     
-  def create_encoding_layers(self):
-    raise NotImplementedError
+  def call(self, inputs, training=False):
+    embedding = self.encode(inputs, training=training)
+    return self.decode(embedding, training=training)
 
-  def create_decoding_layers(self):
-    raise NotImplementedError
-      
-  @property
-  def embedder(self):
-    raise NotImplementedError
+  def encode(self, inputs, training=False):
+    for layer in self.encoding_layers:
+      if not training and 'dropout' in layer.name:
+        continue
+      input_shape = inputs.shape
+      inputs = layer(inputs)
+      output_shape = inputs.shape
+      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
+    return inputs
 
-  def fit(self, *args, **kwargs):    
-    self.model.fit(*args, **kwargs)
-    if self.model_path is not None:
-      self.model.save_weights(self.model_path)
-      logger.info(f"saved model to {self.model_path}")
-      
-  def predict(self, *args, **kwargs):
-    if self.model_dir is None:
-      logger.warning(f"no weights from model_dir")
-    return self.model.predict(*args, **kwargs)
+  def decode(self, inputs, training=False):
+    for layer in self.decoding_layers:
+      if not training and 'dropout' in layer.name:
+        continue
+      input_shape = inputs.shape
+      inputs = layer(inputs)
+      output_shape = inputs.shape
+      logger.debug(f"{input_shape} -> {output_shape}:{layer.name}")
+    return inputs
+
+  def add_layer(self, *layers):
+    for layer in layers:
+      setattr(self, layer.name + '_layer', layer)
 
 class ConvAutoEncoder(AutoEncoder):
   def __init__(self, image_shape, num_components,
@@ -80,7 +63,7 @@ class ConvAutoEncoder(AutoEncoder):
                **kwargs):
     """Create a convolutional autoencoder.
 
-    :param input_shape: shape of the inputs
+    :param image_shape: shape of the inputs
     :param level_filters: number of filters to use at each level. Default is
     [16, 32].
     :param level_depth: how many convolutional layers to pass the
@@ -91,9 +74,7 @@ class ConvAutoEncoder(AutoEncoder):
     :param dropout: dropout rate to use after pooling and deconv layers. Default
     is 0.1. 0 specifies no dropout.
     """
-    self.image_shape = tuple(image_shape)
-    self.num_components = num_components
-    
+    super().__init__(image_shape, num_components, **kwargs)
     self.level_filters = level_filters
     self.level_depth = level_depth
     self.dense_nodes = dense_nodes
@@ -112,17 +93,18 @@ class ConvAutoEncoder(AutoEncoder):
                           self.image_shape[1] // scale_factor,
                           level_filters[-1])
 
-    super().__init__(**kwargs)
+    self.encoding_layers = self.create_encoding_layers()
+    self.decoding_layers = self.create_decoding_layers()
 
   def create_encoding_layers(self):
     layers = []
+    layers.append(keras.layers.InputLayer(self.image_shape))
 
     for i, filters in enumerate(self.level_filters):
       if i > 0:
         layers += self.maxpool()
       for _ in range(self.level_depth):
-        input_shape = None if len(layers) == 0 else self.image_shape
-        layers += self.conv(filters, input_shape=input_shape)
+        layers += self.conv(filters)
     
     layers.append(keras.layers.Flatten())
       
@@ -133,6 +115,7 @@ class ConvAutoEncoder(AutoEncoder):
       self.num_components,
       activation=self._rep_activation)
 
+    self.add_layer(*layers)
     return layers
 
   def create_decoding_layers(self):
@@ -150,8 +133,10 @@ class ConvAutoEncoder(AutoEncoder):
         layers += self.conv(filters)
 
     layers += self.conv(1, activation=tf.nn.sigmoid, normalize=False)
-    return layers
 
+    self.add_layer(*layers)
+    return layers
+  
   def conv(self, filters, input_shape=None, activation=tf.nn.relu, normalize=True):
     layers = []
     if input_shape is None:
@@ -185,39 +170,41 @@ class ConvAutoEncoder(AutoEncoder):
       nodes, activation=activation,
       kernel_regularizer=self.regularizer)]
 
-  # def conv_transpose(self, filters, activation=tf.nn.relu):
-  #   layers = []
-  #   layers.append(keras.layers.Conv2DTranspose(
-  #     filters, (2,2),
-  #     strides=(2,2),
-  #     padding='same',
-  #     activation=activation,
-  #     kernel_regularizer=self.regularizer))
-  #   layers.append(keras.layers.Dropout(self._dropout_rate))
-  #   return layers
-
-
-class ShallowAutoEncoder(tf.keras.Model):
-  # TODO: bring into autoencoder subclass as a simple model demo
-  def __init__(self, input_shape, num_components, **kwargs):
-    """FIXME! briefly describe function
-
-    :param input_shape: 
-    :param num_components: 
-    :returns: 
-    :rtype: 
+  def conv_transpose(self, filters, activation=tf.nn.relu):
+    layers = []
+    layers.append(keras.layers.Conv2DTranspose(
+      filters, (2,2),
+      strides=(2,2),
+      padding='same',
+      activation=activation,
+      kernel_regularizer=self.regularizer))
+    layers.append(keras.layers.Dropout(self._dropout_rate))
+    return layers
+    
+class ShallowAutoEncoder(AutoEncoder):
+  def __init__(self, *args, **kwargs):
+    """A very shallow autoencoder with just one hidden layer.
 
     """
-    super().__init__(name='auto_encoder')
-    
-    self.flatten_l = keras.layers.Flatten(input_shape=input_shape)
-    self.hidden_l = keras.layers.Dense(num_components, activation=tf.nn.sigmoid)
-    self.output_l = keras.layers.Dense(784, activation=tf.nn.sigmoid)
-    self.reshape_l = keras.layers.Reshape((28,28,1))
+    super().__init__(*args, name='shallow_auto_encoder', **kwargs)
 
-  def call(self, inputs):    
-    flat = self.flatten_l(inputs)
-    hidden = self.hidden_l(flat)
-    outputs = self.output_l(hidden)
-    image = self.reshape_l(outputs)
-    return image
+    self.encoding_layers = self.create_encoding_layers()
+    self.decoding_layers = self.create_decoding_layers()
+  
+  def create_encoding_layers(self):
+    layers = []
+    layers.append(keras.layers.Flatten(input_shape=self.image_shape))
+    layers.append(keras.layers.Dense(self.num_components,
+                                     activation=tf.nn.relu))
+    self.add_layer(*layers)
+    return layers
+
+  def create_decoding_layers(self):
+    layers = []
+    layers.append(keras.layers.Dense(784, activation=tf.nn.relu))
+    layers.append(keras.layers.Reshape(self.image_shape))
+    self.add_layer(*layers)
+    return layers
+
+
+    
