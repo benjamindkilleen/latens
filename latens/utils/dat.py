@@ -26,10 +26,10 @@ def _mnist_proto_from_example(example):
   image = np.atleast_3d(image)
   if image.dtype in [np.float32, np.float64]:
     image = image.astype(np.float32)
-  if image.dtype in [np.uint8, np.int32, np.int64]:
+  elif image.dtype in [np.uint8, np.int32, np.int64]:
     image = image.astype(np.float32) / 255.
   else:
-    raise NotImplementedError
+    raise NotImplementedError(f"Image has type {image.dtype}")
 
   image_string = image.tostring()
   image_shape = np.array(image.shape, dtype=np.int64)
