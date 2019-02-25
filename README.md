@@ -18,3 +18,11 @@ where `PATH_TO_LATENS` is replaced with the path to the root directory (where
 this file is located). You can add the same line to your `~/.bash_profile` or
 equivalent config file to make the change permanent.
 
+## Usage
+
+Latens can be easily imported, once it has been added to the `PYTHONPATH`, but
+to run directly, the `latens.py` script contains the main functionality. Run
+```
+python latens.py -h
+```
+to see the available options.
