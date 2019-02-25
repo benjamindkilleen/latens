@@ -6,6 +6,7 @@ from shutil import rmtree
 from latens.utils import dat, vis, act
 import os
 import numpy as np
+from glob import glob
 import logging
 
 logger = logging.getLogger('latens')
@@ -51,14 +52,22 @@ class Model(tf.keras.Model):
     network topology (doesn't actually train, since weights are loaded after).
 
     """
-    if self.model_path is None or not os.path.exists(self.model_path):
+    if self.model_path is None:
       logger.warning(f"failed to load weights from {self.model_path}")
       return
+    if not os.path.exists(self.model_path):
+      model_paths = sorted(glob(os.path.join(self.model_dir, 'model_e=*.h5')))
+      if len(model_paths) == 0:
+        logger.warning(f"No epoch data, failed to load weights.")
+        return
+      model_path = model_paths[-1]
+    else:
+      model_path = self.model_path
     
     self.fit(self.dummy_set.self_supervised, epochs=1, steps_per_epoch=1,
              verbose=0)
-    self.load_weights(self.model_path)
-    logger.info(f"loaded weights from {self.model_path}")
+    self.load_weights(model_path)
+    logger.info(f"loaded weights from {model_path}")
 
     
 class AutoEncoder(Model):
@@ -299,6 +308,8 @@ class Embedder(ConvAutoEncoder):
 
     It shouldn't be trained, really, but borrows the weights (and parameters)
     from the autoencoder used initializes it.
+
+    TODO: currently only works in eager mode. Figure out why.
 
     """
     
