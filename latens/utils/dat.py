@@ -144,11 +144,12 @@ class Data(object):
       raise ValueError(f"unrecognized data '{data}'")
 
     self.num_parallel_calls = kwargs.get('num_parallel_calls')
+    self.num_components = kwargs.get('num_components')
     self._kwargs = kwargs
 
   def __iter__(self):
     return self._dataset.__iter__()
-    
+
   def postprocess_dataset(self, dataset):
     return dataset
     
@@ -156,6 +157,23 @@ class Data(object):
   def dataset(self):
     return self.postprocess_dataset(self._dataset)
 
+  @property
+  def embedded(self):
+    return self.postprocess_dataset(self._dataset.map(
+      lambda x,y : (x, tf.ones(self.num_components, dtype=x.dtype)),
+      num_parallel_calls=self.num_parallel_calls))
+
+  @property
+  def self_supervised_embedded(self):
+    return self.postprocess_dataset(self._dataset.map(
+      lambda x,y : (x, (x, tf.ones(self.num_components, dtype=x.dtype))),
+      num_parallel_calls=self.num_parallel_calls))
+  
+  def embed(self, n):
+    return self.postprocess_dataset(self._dataset.map(
+      lambda x,y : (x, tf.ones(n, x.dtype)),
+      num_parallel_calls=self.num_parallel_calls))
+  
   @property
   def supervised(self):
     return self.dataset

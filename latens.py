@@ -75,7 +75,7 @@ def cmd_convert(args):
   directory as a .tfrecord file."""
   dat.convert_from_npz(args.input[0])
 
-  
+
 def cmd_autoencoder(args):
   """Run training for the autoencoder."""
   data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
@@ -112,8 +112,8 @@ def cmd_reconstruct(args):
   """Run reconstruction."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
                   batch_size=args.batch_size[0])
-  test_set = data.split(
-    *args.splits, types=[None, None, dat.DataInput])[2]
+  train_set, tune_set, test_set = data.split(
+    *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
   model = mod.ConvAutoEncoder(
     args.image_shape,
@@ -129,13 +129,46 @@ def cmd_reconstruct(args):
 
   model.load()
   
-  reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
+  reconstructions = model.predict(tune_set.self_supervised, steps=1, verbose=1)
   if tf.executing_eagerly():
-    for (original, _), reconstruction in zip(test_set, reconstructions):
+    for (original, _), reconstruction in zip(tune_set, reconstructions):
       vis.show_image(original, reconstruction)
   else:
     for reconstruction in reconstructions:
       vis.show_image(reconstruction)
+
+def cmd_embed(args):
+  data = dat.Data(args.input, num_parallel_calls=args.cores[0],
+                  batch_size=args.batch_size[0])
+  train_set, tune_set, test_set = data.split(
+    *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+
+  model = mod.ConvAutoEncoder(
+    args.image_shape,
+    args.num_components[0],
+    model_dir=args.model_dir[0],
+    batch_size=args.batch_size[0],
+    l2_reg=args.l2_reg[0],
+    rep_activation=args.activation[0],
+    dropout=args.dropout[0],
+    overwrite=args.overwrite)
+      
+  model.compile(learning_rate=args.learning_rate[0])
+
+  model.load()
+
+  embedder = mod.Embedder(model)
+  
+  embeddings = embedder.predict(
+    tune_set.embed(args.num_components[0]),
+    steps=args.splits[1] // args.batch_size[0] + 1,
+    verbose=1)[:splits[1]]
+  if tf.executing_eagerly():
+    for (original, _), embedding in zip(tune_set, embedding):
+      vis.show_image(original)
+      logger.info(f"embedding: {embedding}")
+      
+  logger.info(f"embeddings:\n{embeddings}")
 
   
 def main():

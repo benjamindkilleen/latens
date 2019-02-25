@@ -63,7 +63,8 @@ class Model(tf.keras.Model):
     
 class AutoEncoder(Model):
   def __init__(self, image_shape, num_components, **kwargs):
-    """A superclass for autoencoders.
+    """A superclass for autoencoders. Subclasses must define the attributes
+    'encoding_layers' and 'decoding_layers'.
 
     :param image_shape: 
     :param num_components: 
@@ -106,6 +107,12 @@ class AutoEncoder(Model):
     for layer in layers:
       setattr(self, layer.name + '_layer', layer)
 
+  def create_encoding_layers(self):
+    raise NotImplementedError
+
+  def create_decoding_layers(self):
+    raise NotImplementedError
+  
 class ConvAutoEncoder(AutoEncoder):
   def __init__(self, image_shape, num_components,
                level_filters=[64,32,32],
@@ -152,6 +159,8 @@ class ConvAutoEncoder(AutoEncoder):
 
     self.encoding_layers = self.create_encoding_layers()
     self.decoding_layers = self.create_decoding_layers()
+    self.add_layer(*self.encoding_layers)
+    self.add_layer(*self.decoding_layers)
 
   def create_encoding_layers(self):
     layers = []
@@ -172,7 +181,6 @@ class ConvAutoEncoder(AutoEncoder):
       self.num_components,
       activation=self._rep_activation)
 
-    self.add_layer(*layers)
     return layers
 
   def create_decoding_layers(self):
@@ -191,7 +199,6 @@ class ConvAutoEncoder(AutoEncoder):
 
     layers += self.conv(1, activation=act.clu, normalize=False)
 
-    self.add_layer(*layers)
     return layers
   
   def conv(self, filters,
@@ -260,5 +267,56 @@ class ShallowAutoEncoder(AutoEncoder):
     self.add_layer(*layers)
     return layers
 
+  
+class AutoEmbedder(ConvAutoEncoder):
+  def call(self, inputs, **kwargs):
+    embedding = self.encode(inputs, **kwargs)
+    reconstruction = self.decode(embedding, **kwargs)
+    return reconstruction, embedding
+  
+  def compile(self, learning_rate=0.1, gamma=1.0, **kwargs):
+    """
 
+    :param learning_rate: 
+    :param gamma: coefficient for entropy of the embeddings
+    :returns: 
+    :rtype: 
+
+    """
+    def entropy(embedding, _):
+      normalized_embedding = tf.nn.l2_normalize(embedding)
+      return gamma * tf.reduce_sum(embedding * tf.log(embedding))
+
+    kwargs['optimizer'] = kwargs.get(
+      'optimizer', tf.train.AdadeltaOptimizer(learning_rate))
+    kwargs['loss'] = kwargs.get('loss', {'output_1' : 'mse', 'output_2' : entropy})
+    kwargs['metrics'] = kwargs.get('metrics', {'output_1' : 'mae'})
+    super().compile(**kwargs)  
+  
+class Embedder(ConvAutoEncoder):
+  def __init__(self, autoencoder, **kwargs):
+    """An embedder is created from an autoencoder. 
+
+    It shouldn't be trained, really, but borrows the weights (and parameters)
+    from the autoencoder used initializes it.
+
+    """
     
+    super().__init__(autoencoder.image_shape,
+                     autoencoder.num_components,
+                     batch_size=autoencoder.batch_size,
+                     **kwargs)
+
+    self.encoding_layers = autoencoder.create_encoding_layers()
+    self.add_layer(*self.encoding_layers)
+
+    self.compile()
+    self.fit(self.dummy_set.embed(self.num_components), epochs=1,
+             steps_per_epoch=1, verbose=0)
+    for layer, other_layer in zip(self.encoding_layers,
+                                  autoencoder.encoding_layers):
+      layer.set_weights(other_layer.get_weights())
+
+  def call(self, inputs, training=False):
+    embedding = self.encode(inputs, training=training)
+    return embedding
