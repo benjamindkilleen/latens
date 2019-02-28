@@ -313,13 +313,33 @@ class ConvEmbedder(ConvAutoEncoder):
     embedding = self.encode(inputs, training=training)
     return embedding
 
-class ConvClassifier(ConvAutoEncoder):
-  def __init__(self, *args, num_classes=None, **kwargs):
-    """Create a classifier 
+class SModel():
+  def __init__(self, input_shape):
+    self.model = keras.models.Sequential()
 
+  def create_layers(self):
+    """Implemented by subclasses
+
+    :returns: 
+    :rtype: 
+
+    """
+    raise NotImplementedError
+  
+class Classifier(SModel):
+  def __init__(self, image_shape, num_classes,
+               level_filters=[64,32,32],
+               level_depth=2,
+               dense_nodes=[1024],
+               l2_reg=None,
+               **kwargs):
+    """Create a classifier.
+
+    :param image_shape: 
     :param num_classes: 
     :returns: 
     :rtype: 
 
     """
     pass
+    super().__init__(image_shape, **kwargs)
