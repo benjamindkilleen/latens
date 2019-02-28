@@ -16,3 +16,11 @@ def plot_image(*images):
 def show_image(*images):
   plot_image(*images)
   plt.show()
+
+def plot_embeddings(embeddings, num=20):
+  im = plt.imshow(embeddings[:min(num, embeddings.shape[0])].T, cmap='magma')
+  plt.colorbar(im)
+
+def show_embeddings(embeddings, **kwargs):
+  plot_embeddings(embeddings, **kwargs)
+  plt.show()

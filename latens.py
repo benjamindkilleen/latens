@@ -39,7 +39,7 @@ def cmd_debug(args):
     args.image_shape,
     args.num_components[0],
     model_dir='models/debug',
-    overwrite=args.overwrite,
+    overwrite=True,
     batch_size=args.batch_size[0])
   
   model.compile(args.learning_rate[0])
@@ -48,10 +48,14 @@ def cmd_debug(args):
     model.fit(
       train_set.self_supervised,
       epochs=args.epochs[0],
-      steps_per_epoch=args.splits[0] // args.batch_size[0],
+      steps_per_epoch=1, # args.splits[0] // args.batch_size[0],
       validation_data=validation_set.self_supervised,
       verbose=args.keras_verbose[0],
       callbacks=misc.create_callbacks(args, model))
+    layer_names = [layer.name for layer in
+                   model.encoding_layers + model.decoding_layers]
+    for layer_name in layer_names:
+      logger.debug(f"layer: {layer_name}")
     model.save()
     logger.debug(f"weights: {len(model.get_weights())}")
   else:
@@ -68,8 +72,8 @@ def cmd_debug(args):
     else:
       for recon, dumb_recon in zip(recons, dumb_recons):
         vis.show_image(dumb_recon, recon)
-    
-      
+
+        
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
@@ -127,18 +131,22 @@ def cmd_reconstruct(args):
       
   model.compile(learning_rate=args.learning_rate[0])
 
-  model.load()
-  
-  reconstructions = model.predict(tune_set.self_supervised, steps=1, verbose=1)
+  model.load(recent=args.load)
+
+  reconstructions = model.predict(tune_set.self_supervised,
+                                  steps=args.splits[1] // args.batch_size[0] + 1,
+                                  verbose=1)
+  logger.debug(f"recons: {reconstructions[:20, 14, 14, 0]}")
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(tune_set, reconstructions):
       vis.show_image(original, reconstruction)
   else:
-    for reconstruction in reconstructions:
-      vis.show_image(reconstruction)
+    for i in range(reconstructions.shape[0]):
+      vis.show_image(reconstructions[i])
 
 def cmd_embed(args):
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
+                  num_components=args.num_components[0],
                   batch_size=args.batch_size[0])
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
@@ -157,20 +165,22 @@ def cmd_embed(args):
 
   model.load()
 
-  embedder = mod.Embedder(model)
+  embedder = mod.ConvEmbedder(model)
   
   embeddings = embedder.predict(
-    tune_set.embed(args.num_components[0]),
-    steps=args.splits[1] // args.batch_size[0] + 1,
-    verbose=1)[:splits[1]]
-  if tf.executing_eagerly():
-    for (original, _), embedding in zip(tune_set, embedding):
-      vis.show_image(original)
-      logger.info(f"embedding: {embedding}")
-      
-  logger.info(f"embeddings:\n{embeddings}")
-
+    train_set.embed(args.num_components[0]),
+    steps=args.splits[0] // args.batch_size[0] + 1,
+    verbose=1)[:args.splits[0]]
   
+  logger.info(f"embeddings:\n{embeddings}")
+  if args.output[0] is not None:
+    if args.output[0] == 'show':
+      vis.show_embeddings(embeddings)
+    filename, ext = os.path.splitext(args.output[0])
+    if ext == 'npy':
+      np.save(args.output[0], embeddings)
+
+
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
@@ -195,7 +205,7 @@ def main():
                       default=[None], type=float,
                       help=docs.l2_reg_help)
   parser.add_argument('--num-components', '--components', '-n', nargs=1,
-                      default=[32], type=int,
+                      default=[10], type=int,
                       help=docs.num_components_help)
   eval_time = parser.add_mutually_exclusive_group()
   eval_time.add_argument('--eval-secs', nargs=1,
@@ -238,7 +248,7 @@ def main():
   parser.add_argument('--tensorboard', action='store_true',
                       help=docs.tensorboard_help)
   parser.add_argument('--load', action='store_true',
-                      help='for debugging')
+                      help=docs.load_help)
 
   args = parser.parse_args()
 
@@ -266,6 +276,8 @@ def main():
     cmd_autoencoder(args)
   elif args.command == 'reconstruct':
     cmd_reconstruct(args)
+  elif args.command == 'embed':
+    cmd_embed(args)
   else:
     RuntimeError()
 

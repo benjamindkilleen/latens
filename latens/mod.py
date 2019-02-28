@@ -23,7 +23,7 @@ class Model(tf.keras.Model):
     self.overwrite = overwrite
     self.dummy_set = dat.DummyInput(image_shape, batch_size=batch_size)
     
-  def save(self, epoch=None):
+  def save(self, epoch=None, **kwargs):
     """Save the model to self.model_dir, depending on self.overwrite."""
     if self.model_dir is None:
       logger.warning(f"called 'save' with no model_dir")
@@ -43,19 +43,21 @@ class Model(tf.keras.Model):
         logger.info("skipping overwrite")
         return
     self.save_weights(model_path)
-    logger.info(f"saved model to {self.model_path}")
+    logger.info(f"saved model to {model_path}")
 
-  def load(self):
+  def load(self, recent=False):
     """Load weights for the dataset from its model dir, if possible.
     
     Because of keras weirdness, runs a single training step to determine the
     network topology (doesn't actually train, since weights are loaded after).
+    
+    :param recent: prefer the most recent epoch weights over a completed file.
 
     """
     if self.model_path is None:
       logger.warning(f"failed to load weights from {self.model_path}")
       return
-    if not os.path.exists(self.model_path):
+    if recent or not os.path.exists(self.model_path):
       model_paths = sorted(glob(os.path.join(self.model_dir, 'model_e=*.h5')))
       if len(model_paths) == 0:
         logger.warning(f"No epoch data, failed to load weights.")
@@ -129,6 +131,7 @@ class ConvAutoEncoder(AutoEncoder):
                dense_nodes=[1024],
                l2_reg=None,
                rep_activation=act.clu,
+               rep_dropout=0.1,
                dropout=0.2,
                **kwargs):
     """Create a convolutional autoencoder.
@@ -149,7 +152,8 @@ class ConvAutoEncoder(AutoEncoder):
     self.level_depth = level_depth
     self.dense_nodes = dense_nodes
     self._rep_activation = rep_activation
-    self._dropout_rate = dropout
+    self._dropout = dropout
+    self._rep_dropout = rep_dropout
 
     if l2_reg is None:
       self.regularizer = None
@@ -194,6 +198,8 @@ class ConvAutoEncoder(AutoEncoder):
 
   def create_decoding_layers(self):
     layers = []
+    # layers.append(keras.layers.Dropout(self._rep_dropout))
+    
     for nodes in reversed(self.dense_nodes):
       layers += self.dense(nodes)
 
@@ -225,7 +231,7 @@ class ConvAutoEncoder(AutoEncoder):
   def maxpool(self):
     layers = []
     layers.append(keras.layers.MaxPool2D())
-    layers.append(keras.layers.Dropout(self._dropout_rate))
+    layers.append(keras.layers.Dropout(self._dropout))
     return layers
 
   def upsample(self):
@@ -248,7 +254,7 @@ class ConvAutoEncoder(AutoEncoder):
       padding='same',
       activation=activation,
       kernel_regularizer=self.regularizer))
-    layers.append(keras.layers.Dropout(self._dropout_rate))
+    layers.append(keras.layers.Dropout(self._dropout))
     return layers
     
 class ShallowAutoEncoder(AutoEncoder):
@@ -277,32 +283,7 @@ class ShallowAutoEncoder(AutoEncoder):
     return layers
 
   
-class AutoEmbedder(ConvAutoEncoder):
-  def call(self, inputs, **kwargs):
-    embedding = self.encode(inputs, **kwargs)
-    reconstruction = self.decode(embedding, **kwargs)
-    return reconstruction, embedding
-  
-  def compile(self, learning_rate=0.1, gamma=1.0, **kwargs):
-    """
-
-    :param learning_rate: 
-    :param gamma: coefficient for entropy of the embeddings
-    :returns: 
-    :rtype: 
-
-    """
-    def entropy(embedding, _):
-      normalized_embedding = tf.nn.l2_normalize(embedding)
-      return gamma * tf.reduce_sum(embedding * tf.log(embedding))
-
-    kwargs['optimizer'] = kwargs.get(
-      'optimizer', tf.train.AdadeltaOptimizer(learning_rate))
-    kwargs['loss'] = kwargs.get('loss', {'output_1' : 'mse', 'output_2' : entropy})
-    kwargs['metrics'] = kwargs.get('metrics', {'output_1' : 'mae'})
-    super().compile(**kwargs)  
-  
-class Embedder(ConvAutoEncoder):
+class ConvEmbedder(ConvAutoEncoder):
   def __init__(self, autoencoder, **kwargs):
     """An embedder is created from an autoencoder. 
 
@@ -331,3 +312,14 @@ class Embedder(ConvAutoEncoder):
   def call(self, inputs, training=False):
     embedding = self.encode(inputs, training=training)
     return embedding
+
+class ConvClassifier(ConvAutoEncoder):
+  def __init__(self, *args, num_classes=None, **kwargs):
+    """Create a classifier 
+
+    :param num_classes: 
+    :returns: 
+    :rtype: 
+
+    """
+    pass

@@ -8,8 +8,8 @@ description = """\
 Latens. An Unsupervised Learning approach to active learning.
 """
 
-command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert']
-command_help = "latens command to run."
+command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert', 'embed']
+command_help = "latens command to run"
 
 input_help = """Name or names of data files."""
 
@@ -68,3 +68,4 @@ verbose_help = """latens logging verbosity. 0 is for WARNING and above. 1
 
 tensorboard_help = """Write tensorboard logs to MODEL_DIR/logs."""
 
+load_help = """Prefer most recent epoch file rather than finished weights."""
