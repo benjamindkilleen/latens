@@ -348,12 +348,8 @@ class SModel():
     """
     raise NotImplementedError
 
-  def compile(self, learning_rate=0.1, **kwargs):
-    kwargs['optimizer'] = kwargs.get(
-      'optimizer', tf.train.AdadeltaOptimizer(learning_rate))
-    kwargs['loss'] = kwargs.get('loss', tf.losses.mean_squared_error)
-    kwargs['metrics'] = kwargs.get('metrics', ['mae'])
-    self.model.compile(**kwargs)
+  def compile(self, *args, **kwargs):
+    self.model.compile(*args, **kwargs)
 
   @property
   def callbacks(self):
@@ -371,6 +367,9 @@ class SModel():
   def predict(self, *args, **kwargs):
     return self.model.predict(*args, **kwargs)
 
+  def evaluate(self, *args, **kwargs):
+    return self.model.evaluate(*args, **kwargs)
+
   # TODO: make a function to wrap around keras.load_model
   def save(self, *args, **kwargs):
     return self.model.save(*args, **kwargs)
@@ -386,7 +385,7 @@ class SModel():
     logger.info(f"restored model from {latest}")
   
 
-class Classifier(Smodel):
+class Classifier(SModel):
   def __init__(self, input_shape, num_classes,
                output_activation='softmax',
                **kwargs):
@@ -394,6 +393,13 @@ class Classifier(Smodel):
     self.num_classes = num_classes
     self.output_activation = output_activation
     super().__init__(**kwargs)
+
+  def compile(self, learning_rate=0.1, **kwargs):
+    kwargs['optimizer'] = kwargs.get(
+      'optimizer', tf.train.AdadeltaOptimizer(learning_rate))
+    kwargs['loss'] = kwargs.get('loss', 'categorical_crossentropy')
+    kwargs['metrics'] = kwargs.get('metrics', ['accuracy'])
+    self.model.compile(**kwargs)
 
     
 class ConvClassifier(Classifier):
@@ -417,7 +423,7 @@ class ConvClassifier(Classifier):
     """
     self.level_filters = level_filters
     self.level_depth = level_depth
-    self.dense_nodes = dense_noces
+    self.dense_nodes = dense_nodes
     self.dropout = dropout
     super().__init__(input_shape, num_classes, **kwargs)
     
@@ -425,7 +431,7 @@ class ConvClassifier(Classifier):
     layers = []
     layers.append(keras.layers.InputLayer(self.input_shape))
 
-    for i filters in enumerate(self.level_filters):
+    for i, filters in enumerate(self.level_filters):
       if i > 0:
         layers += self.create_maxpool()
       for _ in range(self.level_depth):
@@ -436,7 +442,7 @@ class ConvClassifier(Classifier):
     for nodes in self.dense_nodes:
       layers += self.create_dense(nodes)
 
-    layers += self.dense(
+    layers += self.create_dense(
       self.num_classes,
       activation = self.output_activation)
 
@@ -460,7 +466,6 @@ class ConvClassifier(Classifier):
   def create_dense(self, nodes, activation='relu', normalize=False):
     layers = []
     layers.append(keras.layers.Dense(
-      nodes, activation=activation,
-      kernel_regularizer=self.regularizer))
+      nodes, activation=activation))
     return layers
   

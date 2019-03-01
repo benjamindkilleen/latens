@@ -144,7 +144,8 @@ class Data(object):
       raise ValueError(f"unrecognized data '{data}'")
 
     self.num_parallel_calls = kwargs.get('num_parallel_calls')
-    self.num_components = kwargs.get('num_components')
+    self.num_components = kwargs.get('num_components', 10)
+    self.num_classes = kwargs.get('num_classes', 10)
     self._kwargs = kwargs
 
   def __iter__(self):
@@ -159,7 +160,9 @@ class Data(object):
 
   @property
   def labeled(self):
-    return self.postprocess(self._dataset)
+    return self.postprocess(self._dataset.map(
+      lambda x,y : (x, tf.reshape(tf.one_hot(y, self.num_classes), (-1,))),
+      num_parallel_calls=self.num_parallel_calls))
   
   @property
   def embedded(self):

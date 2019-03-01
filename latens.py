@@ -21,6 +21,7 @@ from latens import mod
 from shutil import rmtree
 from time import time
 import numpy as np
+import matplotlib.pyplot as plt
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -31,8 +32,10 @@ logger.info(f"tensorflow {tf.__version__}, keras {tf.keras.__version__}")
 def cmd_debug(args):
   """Run the debug command."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
-                  batch_size=args.batch_size[0])
-  train_set, validation_set, test_set = data.split(
+                  batch_size=args.batch_size[0],
+                  num_classes=args.num_classes[0],
+                  num_components=args.num_components[0])
+  train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
   model_dir = 'models/debug'
@@ -46,26 +49,36 @@ def cmd_debug(args):
     batch_size=args.batch_size[0])
   
   model.compile(args.learning_rate[0])
-    
+  
   if not args.load:
     model.fit(
       train_set.labeled,
       epochs=args.epochs[0],
-      steps_per_epoch=1, # args.splits[0] // args.batch_size[0],
-      validation_data=validation_set.self_supervised,
-      verbose=args.keras_verbose[0],
-      callbacks=misc.create_callbacks(args, model))
+      steps_per_epoch=args.splits[0] // args.batch_size[0],
+      validation_data=tune_set.labeled,
+      validation_steps=args.splits[1] // args.batch_size[0],
+      verbose=args.keras_verbose[0])
   else:
     model.load()
-
-    recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
-    logger.debug(f"recons: {recons.shape}")
+    
     if tf.executing_eagerly():
-      for (original, _), dumb_recon, recon in zip(test_set, dumb_recons, recons):
-        vis.show_image(original, dumb_recon, recon)
+      logits = model.predict(test_set.labeled,
+                             steps=args.splits[2] // args.batch_size[0],
+                             verbose=1)
+      
+      predictions = np.argmax(logits, axis=1)
+      for (original, label), prediction in zip(test_set, predictions):
+        vis.plot_image(original)
+        plt.title(f"Label: {label}, Prediction: {prediction}")
+        plt.show()
     else:
-      for recon, dumb_recon in zip(recons, dumb_recons):
-        vis.show_image(dumb_recon, recon)
+      loss, accuracy = model.evaluate(test_set.labeled,
+                                      steps=args.splits[2] // args.batch_size[0],
+                                      verbose=1)
+
+      logger.info(f"loss: {loss}")
+      logger.info(f"accuracy: {accuracy}")
+    
 
         
 def cmd_convert(args):
