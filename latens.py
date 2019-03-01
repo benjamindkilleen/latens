@@ -90,7 +90,8 @@ def cmd_convert(args):
 def cmd_autoencoder(args):
   """Run training for the autoencoder."""
   data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
-                       batch_size=args.batch_size[0])
+                       batch_size=args.batch_size[0],
+                       num_components=args.num_components[0])
   train_set, tune_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
   
@@ -99,8 +100,7 @@ def cmd_autoencoder(args):
     args.num_components[0],
     model_dir=args.model_dir[0],
     batch_size=args.batch_size[0],
-    l2_reg=args.l2_reg[0],
-    rep_activation=args.activation[0],
+    rep_activation=args.rep_activation[0],
     dropout=args.dropout[0],
     overwrite=args.overwrite)
       
@@ -114,19 +114,15 @@ def cmd_autoencoder(args):
     epochs=args.epochs[0],
     steps_per_epoch=args.splits[0] // args.batch_size[0],
     validation_data=tune_set.self_supervised,
-    verbose=args.keras_verbose[0],
-    callbacks=misc.create_callbacks(args, model))
+    validation_steps=args.splits[1] // args.batch_size[0],
+    verbose=args.keras_verbose[0])
 
-  model.save()
-  
 def cmd_reconstruct(args):
   """Run reconstruction."""
-  if not tf.executing_eagerly():
-    logger.warning("run 'reconstruct' with --eager mode enabled")
-    exit()
-    
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
-                  batch_size=args.batch_size[0])
+                  batch_size=args.batch_size[0],
+                  num_components=args.num_components[0],
+                  num_classes=args.num_classes[0])
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
@@ -135,19 +131,15 @@ def cmd_reconstruct(args):
     args.num_components[0],
     model_dir=args.model_dir[0],
     batch_size=args.batch_size[0],
-    l2_reg=args.l2_reg[0],
-    rep_activation=args.activation[0],
-    dropout=args.dropout[0],
-    overwrite=args.overwrite)
+    rep_activation=args.rep_activation[0],
+    dropout=args.dropout[0])
   
   model.compile(learning_rate=args.learning_rate[0])
 
-  model.load(recent=args.load)
+  model.load()
 
-  reconstructions = model.predict(test_set.self_supervised,
-                                  steps=1,
-                                  verbose=1)[:args.splits[2]]
-  logger.debug(f"recons: {reconstructions[:20, 14, 14, 0]}")
+  reconstructions = model.predict(test_set.self_supervised, steps=1,
+                                  verbose=1)
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(test_set, reconstructions):
       vis.show_image(original, reconstruction)
@@ -155,14 +147,11 @@ def cmd_reconstruct(args):
     for i in range(reconstructions.shape[0]):
       vis.show_image(reconstructions[i])
 
-def cmd_embed(args):
-  """Embeds the training set."""
-  if not tf.executing_eagerly():
-    logger.warning("run 'embed' with --eager mode enabled")
-    exit()
-  
+def cmd_encode(args):
+  """Encodes the training set."""
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
                   num_components=args.num_components[0],
+                  num_classes=args.num_classes[0],
                   batch_size=args.batch_size[0])
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
@@ -172,19 +161,15 @@ def cmd_embed(args):
     args.num_components[0],
     model_dir=args.model_dir[0],
     batch_size=args.batch_size[0],
-    l2_reg=args.l2_reg[0],
-    rep_activation=args.activation[0],
-    dropout=args.dropout[0],
-    overwrite=args.overwrite)
+    rep_activation=args.rep_activation[0],
+    dropout=args.dropout[0])
       
   model.compile(learning_rate=args.learning_rate[0])
 
   model.load()
 
-  embedder = mod.ConvEmbedder(model)
-  
-  embeddings = embedder.predict(
-    train_set.embed(args.num_components[0]),
+  embeddings = model.encode(
+    train_set.encode(args.num_components[0]),
     steps=args.splits[0] // args.batch_size[0] + 1,
     verbose=1)[:args.splits[0]]
   
@@ -248,10 +233,10 @@ def main():
   parser.add_argument('--dropout', nargs=1,
                       default=[0.2], type=float,
                       help=docs.dropout_help)
-  parser.add_argument('--activation', nargs=1,
-                      choices=docs.activation_choices,
+  parser.add_argument('--rep-activation', nargs=1,
+                      choices=docs.rep_activation_choices,
                       default=['clu'],
-                      help=docs.activation_help)
+                      help=docs.rep_activation_help)
   parser.add_argument('--learning-rate', '-l', nargs=1,
                       default=[0.1], type=float,
                       help=docs.learning_rate_help)
@@ -290,7 +275,7 @@ def main():
     args.cores[0] = os.cpu_count()
   if args.eval_mins[0] is not None:
       args.eval_secs[0] = args.eval_mins[0] * 60
-  args.activation[0] = docs.activation_choices[args.activation[0]]
+  args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
 
   if args.command == 'debug':
     cmd_debug(args)
@@ -300,8 +285,8 @@ def main():
     cmd_autoencoder(args)
   elif args.command == 'reconstruct':
     cmd_reconstruct(args)
-  elif args.command == 'embed':
-    cmd_embed(args)
+  elif args.command == 'encode':
+    cmd_encode(args)
   elif args.command == 'classifier':
     cmd_classifier(args)
   else:

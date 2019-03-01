@@ -8,7 +8,7 @@ description = """\
 Latens. An Unsupervised Learning approach to active learning.
 """
 
-command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert', 'embed']
+command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert', 'encode']
 command_help = "latens command to run"
 
 input_help = """Name or names of data files."""
@@ -47,11 +47,11 @@ batch_size_help = """Batch size for training. Default is 16."""
 
 dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 
-activation_choices = {'sigmoid' : activations.sigmoid,
-                      'relu' : activations.relu,
-                      'clu' : act.clu}
+rep_activation_choices = {'sigmoid' : activations.sigmoid,
+                          'relu' : activations.relu,
+                          'clu' : act.clu}
 
-activation_help = """Activation function to use at the representational
+rep_activation_help = """Activation function to use at the representational
 layer. Default is clu (clipped linear unit)."""
 
 learning_rate_help = """Learning rate for training. Default is 0.01"""

@@ -165,18 +165,18 @@ class Data(object):
       num_parallel_calls=self.num_parallel_calls))
   
   @property
-  def embedded(self):
+  def encoded(self):
     return self.postprocess(self._dataset.map(
       lambda x,y : (x, tf.ones(self.num_components, dtype=x.dtype)),
       num_parallel_calls=self.num_parallel_calls))
 
   @property
-  def self_supervised_embedded(self):
+  def self_supervised_encoded(self):
     return self.postprocess(self._dataset.map(
       lambda x,y : (x, (x, tf.ones(self.num_components, dtype=x.dtype))),
       num_parallel_calls=self.num_parallel_calls))
   
-  def embed(self, n):
+  def encode(self, n):
     return self.postprocess(self._dataset.map(
       lambda x,y : (x, tf.ones(n, x.dtype)),
       num_parallel_calls=self.num_parallel_calls))

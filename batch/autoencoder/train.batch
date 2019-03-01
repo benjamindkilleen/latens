@@ -15,7 +15,7 @@ source activate DL_GPU_cuda_9.0
 
 cd /project2/glk/latens
 
-epochs=100
+epochs=50
 
 echo "Starting training..."
 python latens.py autoencoder -i data/mnist/mnist.tfrecord \
