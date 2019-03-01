@@ -57,6 +57,7 @@ class Model(tf.keras.Model):
     if self.model_path is None:
       logger.warning(f"failed to load weights from {self.model_path}")
       return
+
     if recent or not os.path.exists(self.model_path):
       model_paths = sorted(glob(os.path.join(self.model_dir, 'model_e=*.h5')))
       if len(model_paths) == 0:
@@ -314,32 +315,152 @@ class ConvEmbedder(ConvAutoEncoder):
     return embedding
 
 class SModel():
-  def __init__(self, input_shape):
-    self.model = keras.models.Sequential()
+  def __init__(self, model_dir=None, overwrite=False, batch_size=1):
+    """Create a sequential model in self.model.
 
-  def create_layers(self):
-    """Implemented by subclasses
+    In general, these layers should include an input layer. Furthermore,
+    super().__init__() should usually be called at the end of the subclass's
+    __init__, after it has initialized variables necessary for
+    self.create_layers().
 
+    :param input_shape: 
     :returns: 
     :rtype: 
+
+    """
+    self.model_dir = model_dir
+    self.checkpoint_path = (None if model_dir is None else
+                            os.path.join(model_dir, "cp-{epoch:04d}.hdf5"))
+    
+    self.overwrite = overwrite
+    self.batch_size = batch_size
+
+    self.model = keras.models.Sequential()
+    self.layers = self.create_layers()
+    for layer in self.layers:
+      self.model.add(layer)
+
+  def create_layers(self):
+    """Implemented by subclasses.
+
+    Should return a list of keras layers to add to the model.
 
     """
     raise NotImplementedError
+
+  def compile(self, learning_rate=0.1, **kwargs):
+    kwargs['optimizer'] = kwargs.get(
+      'optimizer', tf.train.AdadeltaOptimizer(learning_rate))
+    kwargs['loss'] = kwargs.get('loss', tf.losses.mean_squared_error)
+    kwargs['metrics'] = kwargs.get('metrics', ['mae'])
+    self.model.compile(**kwargs)
+
+  @property
+  def callbacks(self):
+    callbacks = []
+    if self.checkpoint_path is not None:
+      callbacks.append(tf.keras.callbacks.ModelCheckpoint(
+        self.checkpoint_path, verbose=1, save_weights_only=True,
+        period=1))
+    return callbacks
+    
+  def fit(self, *args, **kwargs):
+    kwargs['callbacks'] = self.callbacks
+    return self.model.fit(*args, **kwargs)
+
+  def predict(self, *args, **kwargs):
+    return self.model.predict(*args, **kwargs)
+
+  # TODO: make a function to wrap around keras.load_model
+  def save(self, *args, **kwargs):
+    return self.model.save(*args, **kwargs)
+
+  # load the model from a most recent checkpoint
+  def load(self):
+    if self.model_dir is None:
+      logger.warning(f"failed to load weights; no `model_dir` set")
+      return
+    
+    latest = tf.train.latest_checkpoint(self.model_dir)
+    self.model.load_weights(latest)
+    logger.info(f"restored model from {latest}")
   
-class Classifier(SModel):
-  def __init__(self, image_shape, num_classes,
+
+class Classifier(Smodel):
+  def __init__(self, input_shape, num_classes,
+               output_activation='softmax',
+               **kwargs):
+    self.input_shape = input_shape
+    self.num_classes = num_classes
+    self.output_activation = output_activation
+    super().__init__(**kwargs)
+
+    
+class ConvClassifier(Classifier):
+  def __init__(self, input_shape, num_classes,
                level_filters=[64,32,32],
                level_depth=2,
                dense_nodes=[1024],
-               l2_reg=None,
+               dropout=0.2,
                **kwargs):
     """Create a classifier.
 
-    :param image_shape: 
+    :param input_shape: 
     :param num_classes: 
+    :param level_filters: 
+    :param level_depth: 
+    :param dense_nodes: 
+    :param dropout: 
     :returns: 
     :rtype: 
 
     """
-    pass
-    super().__init__(image_shape, **kwargs)
+    self.level_filters = level_filters
+    self.level_depth = level_depth
+    self.dense_nodes = dense_noces
+    self.dropout = dropout
+    super().__init__(input_shape, num_classes, **kwargs)
+    
+  def create_layers(self):
+    layers = []
+    layers.append(keras.layers.InputLayer(self.input_shape))
+
+    for i filters in enumerate(self.level_filters):
+      if i > 0:
+        layers += self.create_maxpool()
+      for _ in range(self.level_depth):
+        layers += self.create_conv(filters)
+
+    layers.append(keras.layers.Flatten())
+
+    for nodes in self.dense_nodes:
+      layers += self.create_dense(nodes)
+
+    layers += self.dense(
+      self.num_classes,
+      activation = self.output_activation)
+
+    return layers
+
+  def create_maxpool(self):
+    layers = []
+    layers.append(keras.layers.MaxPool2D())
+    layers.append(keras.layers.Dropout(self.dropout))
+    return layers
+
+  def create_conv(self, filters, activation='relu', normalize=False):
+    layers = []
+    layers.append(keras.layers.Conv2D(
+      filters, (3,3),
+      activation=activation,
+      padding='same',
+      kernel_initializer='glorot_normal'))
+    return layers
+
+  def create_dense(self, nodes, activation='relu', normalize=False):
+    layers = []
+    layers.append(keras.layers.Dense(
+      nodes, activation=activation,
+      kernel_regularizer=self.regularizer))
+    return layers
+  

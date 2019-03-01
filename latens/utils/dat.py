@@ -150,27 +150,31 @@ class Data(object):
   def __iter__(self):
     return self._dataset.__iter__()
 
-  def postprocess_dataset(self, dataset):
+  def postprocess(self, dataset):
     return dataset
     
   @property
   def dataset(self):
-    return self.postprocess_dataset(self._dataset)
+    return self.postprocess(self._dataset)
 
   @property
+  def labeled(self):
+    return self.postprocess(self._dataset)
+  
+  @property
   def embedded(self):
-    return self.postprocess_dataset(self._dataset.map(
+    return self.postprocess(self._dataset.map(
       lambda x,y : (x, tf.ones(self.num_components, dtype=x.dtype)),
       num_parallel_calls=self.num_parallel_calls))
 
   @property
   def self_supervised_embedded(self):
-    return self.postprocess_dataset(self._dataset.map(
+    return self.postprocess(self._dataset.map(
       lambda x,y : (x, (x, tf.ones(self.num_components, dtype=x.dtype))),
       num_parallel_calls=self.num_parallel_calls))
   
   def embed(self, n):
-    return self.postprocess_dataset(self._dataset.map(
+    return self.postprocess(self._dataset.map(
       lambda x,y : (x, tf.ones(n, x.dtype)),
       num_parallel_calls=self.num_parallel_calls))
   
@@ -180,7 +184,7 @@ class Data(object):
 
   @property
   def self_supervised(self):
-    return self.postprocess_dataset(
+    return self.postprocess(
       self._dataset.map(lambda x,y : (x,tf.identity(x)),
                         num_parallel_calls=self.num_parallel_calls))
         
@@ -220,7 +224,7 @@ class DataInput(Data):
     self._prefetch_buffer_size = kwargs.get('prefetch_buffer_size', 1)
     self._batch_size = kwargs.get('batch_size', 1)
 
-  def postprocess_dataset(self, dataset):
+  def postprocess(self, dataset):
     return (dataset.repeat(-1)
             .batch(self._batch_size)
             .prefetch(self._prefetch_buffer_size))
@@ -231,7 +235,7 @@ class TrainDataInput(DataInput):
     super().__init__(*args, **kwargs)
     self._num_shuffle = kwargs.get('num_shuffle', 100000)
 
-  def postprocess_dataset(self, dataset):
+  def postprocess(self, dataset):
     # TODO: allow for augmentation?
     return (dataset.shuffle(self._num_shuffle)
             .repeat(-1)

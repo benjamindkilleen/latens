@@ -35,9 +35,12 @@ def cmd_debug(args):
   train_set, validation_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
-  model = mod.ConvAutoEncoder(
+  model_dir = 'models/debug'
+  model_path = os.path.join(model_dir, 'model.hdf5')
+  
+  model = mod.ConvClassifier(
     args.image_shape,
-    args.num_components[0],
+    args.num_classes[0],
     model_dir='models/debug',
     overwrite=True,
     batch_size=args.batch_size[0])
@@ -46,23 +49,14 @@ def cmd_debug(args):
     
   if not args.load:
     model.fit(
-      train_set.self_supervised,
+      train_set.labeled,
       epochs=args.epochs[0],
       steps_per_epoch=1, # args.splits[0] // args.batch_size[0],
       validation_data=validation_set.self_supervised,
       verbose=args.keras_verbose[0],
       callbacks=misc.create_callbacks(args, model))
-    layer_names = [layer.name for layer in
-                   model.encoding_layers + model.decoding_layers]
-    for layer_name in layer_names:
-      logger.debug(f"layer: {layer_name}")
-    model.save()
-    logger.debug(f"weights: {len(model.get_weights())}")
   else:
-    dumb_set = dat.DummyInput(args.image_shape, batch_size=args.batch_size[0])
-    dumb_recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
     model.load()
-    logger.debug(f"weights: {len(model.get_weights())}")
 
     recons = model.predict(test_set.self_supervised, steps=1, verbose=1)
     logger.debug(f"recons: {recons.shape}")
@@ -193,37 +187,8 @@ def cmd_embed(args):
 
 def cmd_classifier(args):
   """Run training from scratch for a classifier."""
-  data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
-                       batch_size=args.batch_size[0])
-  train_set, tune_set = data.split(
-    *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
+  raise NotImplementedError
   
-  model = mod.ConvClassifier(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    batch_size=args.batch_size[0],
-    l2_reg=args.l2_reg[0],
-    rep_activation=args.activation[0],
-    dropout=args.dropout[0],
-    overwrite=args.overwrite)
-      
-  model.compile(learning_rate=args.learning_rate[0])
-
-  if not args.overwrite:
-    model.load()
-
-  model.fit(
-    train_set.self_supervised,
-    epochs=args.epochs[0],
-    steps_per_epoch=args.splits[0] // args.batch_size[0],
-    validation_data=tune_set.self_supervised,
-    verbose=args.keras_verbose[0],
-    callbacks=misc.create_callbacks(args, model))
-
-  model.save()
-
-
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
@@ -278,7 +243,7 @@ def main():
                       default=[0.1], type=float,
                       help=docs.learning_rate_help)
   parser.add_argument('--momentum', nargs=1,
-                      default=[0.9],
+                      default=[0.9], type=float,
                       help=docs.momentum_help)
   parser.add_argument('--eager', action='store_true',
                       help=docs.eager_help)
@@ -292,6 +257,9 @@ def main():
                       help=docs.tensorboard_help)
   parser.add_argument('--load', action='store_true',
                       help=docs.load_help)
+  parser.add_argument('--num-classes', nargs=1,
+                      default=[10], type=int,
+                      help=docs.num_classes_help)
 
   args = parser.parse_args()
 
@@ -321,6 +289,8 @@ def main():
     cmd_reconstruct(args)
   elif args.command == 'embed':
     cmd_embed(args)
+  elif args.command == 'classifier':
+    cmd_classifier(args)
   else:
     RuntimeError()
 
