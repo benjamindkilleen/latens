@@ -12,8 +12,7 @@ import logging
 logger = logging.getLogger('latens')
 
 class Model():
-  def __init__(self, model_dir=None, overwrite=False, batch_size=1,
-               dropout=0.2):
+  def __init__(self, model_dir=None, dropout=0.2):
     """Create a sequential model in self.model.
 
     In general, these layers should include an input layer. Furthermore,
@@ -30,9 +29,6 @@ class Model():
     self.checkpoint_path = (None if model_dir is None else
                             os.path.join(model_dir, "cp-{epoch:04d}.hdf5"))
     
-    self.overwrite = overwrite
-    self.batch_size = batch_size
-
     self.dropout = dropout
     self.model = keras.models.Sequential()
     self.layers = self.create_layers()
@@ -239,12 +235,13 @@ class AutoEncoder(Model):
     raise NotImplementedError("subclasses implement create_decoding_layers()")
 
   def encode(self, *args, **kwargs):
-    # TODO: grab weights from encoding layers?
     return self.encoder.predict(*args, **kwargs)
 
   def decode(self, *args, **kwargs):
-    # TODO: grab weights from decoding layers?
     return self.decoder.predict(*args, **kwargs)
+
+  def decode_generator(self, *args, **kwargs):
+    return self.decoder.predict_generator(*args, **kwargs)
 
   
 class ConvAutoEncoder(AutoEncoder):

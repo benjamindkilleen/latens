@@ -44,9 +44,7 @@ def cmd_debug(args):
   model = mod.ConvClassifier(
     args.image_shape,
     args.num_classes[0],
-    model_dir='models/debug',
-    overwrite=True,
-    batch_size=args.batch_size[0])
+    model_dir='models/debug')
   
   model.compile(args.learning_rate[0])
   
@@ -99,10 +97,8 @@ def cmd_autoencoder(args):
     args.image_shape,
     args.num_components[0],
     model_dir=args.model_dir[0],
-    batch_size=args.batch_size[0],
     rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0],
-    overwrite=args.overwrite)
+    dropout=args.dropout[0])
       
   model.compile(learning_rate=args.learning_rate[0])
 
@@ -130,7 +126,6 @@ def cmd_reconstruct(args):
     args.image_shape,
     args.num_components[0],
     model_dir=args.model_dir[0],
-    batch_size=args.batch_size[0],
     rep_activation=args.rep_activation[0],
     dropout=args.dropout[0])
   
@@ -160,7 +155,6 @@ def cmd_encode(args):
     args.image_shape,
     args.num_components[0],
     model_dir=args.model_dir[0],
-    batch_size=args.batch_size[0],
     rep_activation=args.rep_activation[0],
     dropout=args.dropout[0])
       
@@ -168,20 +162,70 @@ def cmd_encode(args):
 
   model.load()
 
-  embeddings = model.encode(
+  encodings = model.encode(
     train_set.encode(args.num_components[0]),
     steps=args.splits[0] // args.batch_size[0] + 1,
     verbose=1)[:args.splits[0]]
   
-  logger.debug(f"embeddings:\n{embeddings}")
+  logger.debug(f"encodings:\n{encodings}")
   if args.output[0] is not None:
     if args.output[0] == 'show':
-      vis.show_embeddings(embeddings)
+      vis.show_encodings(encodings)
     filename, ext = os.path.splitext(args.output[0])
     if ext == '.npy':
-      np.save(args.output[0], embeddings)
-      logger.info(f"saved embeddings to '{args.output[0]}'")
+      np.save(args.output[0], encodings)
+      logger.info(f"saved encodings to '{args.output[0]}'")
 
+def cmd_decode(args):
+  """Decode a numpy array of encodings from args.input and show."""
+  encodings = np.load(args.input[0])
+  logger.info(f"loaded encodings from '{args.input[0]}'")
+
+  model = mod.ConvAutoEncoder(
+    args.image_shape,
+    args.num_components[0],
+    model_dir=args.model_dir[0],
+    rep_activation=args.rep_activation[0],
+    dropout=args.dropout[0])
+      
+  model.compile(learning_rate=args.learning_rate[0])
+
+  model.load()
+  
+  reconstructions = model.decode(encodings[:args.batch_size[0]], verbose=1,
+                                 batch_size=args.batch_size[0])
+  if tf.executing_eagerly():
+    for (original, _), reconstruction in zip(test_set, reconstructions):
+      vis.show_image(original, reconstruction)
+  else:
+    for i in range(reconstructions.shape[0]):
+      vis.show_image(reconstructions[i])
+
+def cmd_visualize(args):
+  """Visualize the decodings that the model makes."""
+  model = mod.ConvAutoEncoder(
+    args.image_shape,
+    args.num_components[0],
+    model_dir=args.model_dir[0],
+    rep_activation=args.rep_activation[0],
+    dropout=args.dropout[0])
+  model.compile(learning_rate=args.learning_rate[0])
+  model.load()
+
+  rows = args.num_components[0]
+  cols = 20
+  points = 0.3 * np.ones((rows, cols, args.num_components[0]), dtype=np.float32)
+  for i in range(points.shape[0]):
+    points[i,:,i] = np.linspace(0, 1.0, num=cols, dtype=np.float32)
+
+  images = model.decode(points.reshape(-1, args.num_components[0]), verbose=1,
+                        batch_size=args.batch_size[0])
+
+  if args.output[0] == 'show':
+    vis.show_image(*images, columns=cols)
+  else:
+    vis.plot_image(*images, columns=cols)
+    plt.savefig(args.output[0])
 
 def cmd_classifier(args):
   """Run training from scratch for a classifier."""
@@ -191,7 +235,8 @@ def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
                       help=docs.command_help)
-  parser.add_argument('--input', '-i', nargs='+', required=True,
+  parser.add_argument('--input', '-i', nargs='+',
+                      default=[None],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
                       default=['show'],
@@ -277,6 +322,9 @@ def main():
       args.eval_secs[0] = args.eval_mins[0] * 60
   args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
 
+  if args.input[0] is None and args.command != 'visualize':
+    logger.warning("no input provided")
+
   if args.command == 'debug':
     cmd_debug(args)
   elif args.command == 'convert':
@@ -287,6 +335,10 @@ def main():
     cmd_reconstruct(args)
   elif args.command == 'encode':
     cmd_encode(args)
+  elif args.command == 'decode':
+    cmd_decode(args)
+  elif args.command == 'visualize':
+    cmd_visualize(args)
   elif args.command == 'classifier':
     cmd_classifier(args)
   else:

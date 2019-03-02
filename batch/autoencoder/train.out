@@ -1,37 +1,202 @@
-INFO: activate-binutils_linux-64.sh made the following environmental changes:
-+ADDR2LINE=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-addr2line
-+AR=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ar
-+AS=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-as
-+CXXFILT=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-c++filt
-+ELFEDIT=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-elfedit
-+GPROF=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gprof
-+HOST=x86_64-conda_cos6-linux-gnu
-+LD_GOLD=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ld.gold
-+LD=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ld
-+NM=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-nm
-+OBJCOPY=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-objcopy
-+OBJDUMP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-objdump
-+RANLIB=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-ranlib
-+READELF=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-readelf
-+SIZE=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-size
-+STRINGS=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-strings
-+STRIP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-strip
-INFO: activate-gcc_linux-64.sh made the following environmental changes:
-+CC=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-cc
-+CFLAGS=-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
-+_CONDA_PYTHON_SYSCONFIGDATA_NAME=_sysconfigdata_x86_64_conda_cos6_linux_gnu
-+CPPFLAGS=-DNDEBUG -D_FORTIFY_SOURCE=2 -O2
-+CPP=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-cpp
-+DEBUG_CFLAGS=-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
-+DEBUG_CPPFLAGS=-D_DEBUG -D_FORTIFY_SOURCE=2 -Og
-+GCC_AR=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-ar
-+GCC_NM=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-nm
-+GCC_RANLIB=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc-ranlib
-+GCC=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-gcc
-+LDFLAGS=-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now
-INFO: activate-gxx_linux-64.sh made the following environmental changes:
-+CXXFLAGS=-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe
-+CXX=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-c++
-+DEBUG_CXXFLAGS=-fvisibility-inlines-hidden -std=c++17 -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -fno-plt -Og -g -Wall -Wextra -fvar-tracking-assignments -pipe
-+GXX=/software/Anaconda3-5.0.1-el7-x86_64/envs/DL_GPU_cuda_9.0/bin/x86_64-conda_cos6-linux-gnu-g++
 Starting training...
+Epoch 1/50
+
+Epoch 00001: saving model to models/autoencoder_e=50/cp-0001.hdf5
+ - 48s - loss: 3.8008 - mean_absolute_error: 0.1294 - val_loss: 2.3460 - val_mean_absolute_error: 0.0902
+Epoch 2/50
+
+Epoch 00002: saving model to models/autoencoder_e=50/cp-0002.hdf5
+ - 34s - loss: 1.9303 - mean_absolute_error: 0.0725 - val_loss: 1.4247 - val_mean_absolute_error: 0.0592
+Epoch 3/50
+
+Epoch 00003: saving model to models/autoencoder_e=50/cp-0003.hdf5
+ - 36s - loss: 1.4754 - mean_absolute_error: 0.0588 - val_loss: 1.2089 - val_mean_absolute_error: 0.0516
+Epoch 4/50
+
+Epoch 00004: saving model to models/autoencoder_e=50/cp-0004.hdf5
+ - 36s - loss: 1.3289 - mean_absolute_error: 0.0548 - val_loss: 1.1324 - val_mean_absolute_error: 0.0494
+Epoch 5/50
+
+Epoch 00005: saving model to models/autoencoder_e=50/cp-0005.hdf5
+ - 37s - loss: 1.2491 - mean_absolute_error: 0.0525 - val_loss: 1.1073 - val_mean_absolute_error: 0.0482
+Epoch 6/50
+
+Epoch 00006: saving model to models/autoencoder_e=50/cp-0006.hdf5
+ - 37s - loss: 1.1884 - mean_absolute_error: 0.0506 - val_loss: 1.0415 - val_mean_absolute_error: 0.0460
+Epoch 7/50
+
+Epoch 00007: saving model to models/autoencoder_e=50/cp-0007.hdf5
+ - 37s - loss: 1.1441 - mean_absolute_error: 0.0492 - val_loss: 0.9862 - val_mean_absolute_error: 0.0447
+Epoch 8/50
+
+Epoch 00008: saving model to models/autoencoder_e=50/cp-0008.hdf5
+ - 37s - loss: 1.1082 - mean_absolute_error: 0.0480 - val_loss: 0.9638 - val_mean_absolute_error: 0.0442
+Epoch 9/50
+
+Epoch 00009: saving model to models/autoencoder_e=50/cp-0009.hdf5
+ - 37s - loss: 1.0764 - mean_absolute_error: 0.0469 - val_loss: 0.9931 - val_mean_absolute_error: 0.0436
+Epoch 10/50
+
+Epoch 00010: saving model to models/autoencoder_e=50/cp-0010.hdf5
+ - 37s - loss: 1.0532 - mean_absolute_error: 0.0461 - val_loss: 0.9201 - val_mean_absolute_error: 0.0427
+Epoch 11/50
+
+Epoch 00011: saving model to models/autoencoder_e=50/cp-0011.hdf5
+ - 37s - loss: 1.0239 - mean_absolute_error: 0.0451 - val_loss: 0.9008 - val_mean_absolute_error: 0.0409
+Epoch 12/50
+
+Epoch 00012: saving model to models/autoencoder_e=50/cp-0012.hdf5
+ - 37s - loss: 1.0058 - mean_absolute_error: 0.0445 - val_loss: 0.9144 - val_mean_absolute_error: 0.0409
+Epoch 13/50
+
+Epoch 00013: saving model to models/autoencoder_e=50/cp-0013.hdf5
+ - 37s - loss: 0.9880 - mean_absolute_error: 0.0439 - val_loss: 0.8586 - val_mean_absolute_error: 0.0398
+Epoch 14/50
+
+Epoch 00014: saving model to models/autoencoder_e=50/cp-0014.hdf5
+ - 37s - loss: 0.9695 - mean_absolute_error: 0.0433 - val_loss: 0.8500 - val_mean_absolute_error: 0.0395
+Epoch 15/50
+
+Epoch 00015: saving model to models/autoencoder_e=50/cp-0015.hdf5
+ - 37s - loss: 0.9563 - mean_absolute_error: 0.0428 - val_loss: 0.8339 - val_mean_absolute_error: 0.0394
+Epoch 16/50
+
+Epoch 00016: saving model to models/autoencoder_e=50/cp-0016.hdf5
+ - 37s - loss: 0.9421 - mean_absolute_error: 0.0423 - val_loss: 0.8519 - val_mean_absolute_error: 0.0390
+Epoch 17/50
+
+Epoch 00017: saving model to models/autoencoder_e=50/cp-0017.hdf5
+ - 37s - loss: 0.9269 - mean_absolute_error: 0.0418 - val_loss: 0.8117 - val_mean_absolute_error: 0.0385
+Epoch 18/50
+
+Epoch 00018: saving model to models/autoencoder_e=50/cp-0018.hdf5
+ - 37s - loss: 0.9154 - mean_absolute_error: 0.0414 - val_loss: 0.8479 - val_mean_absolute_error: 0.0401
+Epoch 19/50
+
+Epoch 00019: saving model to models/autoencoder_e=50/cp-0019.hdf5
+ - 37s - loss: 0.9037 - mean_absolute_error: 0.0411 - val_loss: 0.8106 - val_mean_absolute_error: 0.0384
+Epoch 20/50
+
+Epoch 00020: saving model to models/autoencoder_e=50/cp-0020.hdf5
+ - 37s - loss: 0.8924 - mean_absolute_error: 0.0407 - val_loss: 0.7764 - val_mean_absolute_error: 0.0371
+Epoch 21/50
+
+Epoch 00021: saving model to models/autoencoder_e=50/cp-0021.hdf5
+ - 37s - loss: 0.8825 - mean_absolute_error: 0.0404 - val_loss: 0.8006 - val_mean_absolute_error: 0.0383
+Epoch 22/50
+
+Epoch 00022: saving model to models/autoencoder_e=50/cp-0022.hdf5
+ - 37s - loss: 0.8732 - mean_absolute_error: 0.0400 - val_loss: 0.7968 - val_mean_absolute_error: 0.0378
+Epoch 23/50
+
+Epoch 00023: saving model to models/autoencoder_e=50/cp-0023.hdf5
+ - 37s - loss: 0.8641 - mean_absolute_error: 0.0398 - val_loss: 0.7614 - val_mean_absolute_error: 0.0366
+Epoch 24/50
+
+Epoch 00024: saving model to models/autoencoder_e=50/cp-0024.hdf5
+ - 37s - loss: 0.8542 - mean_absolute_error: 0.0394 - val_loss: 0.7588 - val_mean_absolute_error: 0.0366
+Epoch 25/50
+
+Epoch 00025: saving model to models/autoencoder_e=50/cp-0025.hdf5
+ - 37s - loss: 0.8496 - mean_absolute_error: 0.0393 - val_loss: 0.7924 - val_mean_absolute_error: 0.0371
+Epoch 26/50
+
+Epoch 00026: saving model to models/autoencoder_e=50/cp-0026.hdf5
+ - 37s - loss: 0.8393 - mean_absolute_error: 0.0390 - val_loss: 0.7570 - val_mean_absolute_error: 0.0360
+Epoch 27/50
+
+Epoch 00027: saving model to models/autoencoder_e=50/cp-0027.hdf5
+ - 37s - loss: 0.8331 - mean_absolute_error: 0.0388 - val_loss: 0.7781 - val_mean_absolute_error: 0.0375
+Epoch 28/50
+
+Epoch 00028: saving model to models/autoencoder_e=50/cp-0028.hdf5
+ - 37s - loss: 0.8242 - mean_absolute_error: 0.0385 - val_loss: 0.7496 - val_mean_absolute_error: 0.0361
+Epoch 29/50
+
+Epoch 00029: saving model to models/autoencoder_e=50/cp-0029.hdf5
+ - 37s - loss: 0.8162 - mean_absolute_error: 0.0382 - val_loss: 0.7324 - val_mean_absolute_error: 0.0354
+Epoch 30/50
+
+Epoch 00030: saving model to models/autoencoder_e=50/cp-0030.hdf5
+ - 37s - loss: 0.8109 - mean_absolute_error: 0.0380 - val_loss: 0.7251 - val_mean_absolute_error: 0.0355
+Epoch 31/50
+
+Epoch 00031: saving model to models/autoencoder_e=50/cp-0031.hdf5
+ - 37s - loss: 0.8047 - mean_absolute_error: 0.0379 - val_loss: 0.7244 - val_mean_absolute_error: 0.0353
+Epoch 32/50
+
+Epoch 00032: saving model to models/autoencoder_e=50/cp-0032.hdf5
+ - 37s - loss: 0.7995 - mean_absolute_error: 0.0377 - val_loss: 0.8099 - val_mean_absolute_error: 0.0368
+Epoch 33/50
+
+Epoch 00033: saving model to models/autoencoder_e=50/cp-0033.hdf5
+ - 37s - loss: 0.7946 - mean_absolute_error: 0.0375 - val_loss: 0.7146 - val_mean_absolute_error: 0.0350
+Epoch 34/50
+
+Epoch 00034: saving model to models/autoencoder_e=50/cp-0034.hdf5
+ - 37s - loss: 0.7905 - mean_absolute_error: 0.0374 - val_loss: 0.7187 - val_mean_absolute_error: 0.0349
+Epoch 35/50
+
+Epoch 00035: saving model to models/autoencoder_e=50/cp-0035.hdf5
+ - 37s - loss: 0.7829 - mean_absolute_error: 0.0371 - val_loss: 0.7258 - val_mean_absolute_error: 0.0357
+Epoch 36/50
+
+Epoch 00036: saving model to models/autoencoder_e=50/cp-0036.hdf5
+ - 37s - loss: 0.7760 - mean_absolute_error: 0.0369 - val_loss: 0.7014 - val_mean_absolute_error: 0.0343
+Epoch 37/50
+
+Epoch 00037: saving model to models/autoencoder_e=50/cp-0037.hdf5
+ - 37s - loss: 0.7723 - mean_absolute_error: 0.0368 - val_loss: 0.7551 - val_mean_absolute_error: 0.0357
+Epoch 38/50
+
+Epoch 00038: saving model to models/autoencoder_e=50/cp-0038.hdf5
+ - 37s - loss: 0.7666 - mean_absolute_error: 0.0366 - val_loss: 0.7476 - val_mean_absolute_error: 0.0353
+Epoch 39/50
+
+Epoch 00039: saving model to models/autoencoder_e=50/cp-0039.hdf5
+ - 37s - loss: 0.7624 - mean_absolute_error: 0.0365 - val_loss: 0.7078 - val_mean_absolute_error: 0.0346
+Epoch 40/50
+
+Epoch 00040: saving model to models/autoencoder_e=50/cp-0040.hdf5
+ - 37s - loss: 0.7591 - mean_absolute_error: 0.0364 - val_loss: 0.7374 - val_mean_absolute_error: 0.0350
+Epoch 41/50
+
+Epoch 00041: saving model to models/autoencoder_e=50/cp-0041.hdf5
+ - 37s - loss: 0.7539 - mean_absolute_error: 0.0362 - val_loss: 0.7016 - val_mean_absolute_error: 0.0342
+Epoch 42/50
+
+Epoch 00042: saving model to models/autoencoder_e=50/cp-0042.hdf5
+ - 37s - loss: 0.7501 - mean_absolute_error: 0.0361 - val_loss: 0.7000 - val_mean_absolute_error: 0.0348
+Epoch 43/50
+
+Epoch 00043: saving model to models/autoencoder_e=50/cp-0043.hdf5
+ - 37s - loss: 0.7437 - mean_absolute_error: 0.0359 - val_loss: 0.7156 - val_mean_absolute_error: 0.0343
+Epoch 44/50
+
+Epoch 00044: saving model to models/autoencoder_e=50/cp-0044.hdf5
+ - 37s - loss: 0.7429 - mean_absolute_error: 0.0359 - val_loss: 0.7226 - val_mean_absolute_error: 0.0345
+Epoch 45/50
+
+Epoch 00045: saving model to models/autoencoder_e=50/cp-0045.hdf5
+ - 37s - loss: 0.7378 - mean_absolute_error: 0.0357 - val_loss: 0.7140 - val_mean_absolute_error: 0.0343
+Epoch 46/50
+
+Epoch 00046: saving model to models/autoencoder_e=50/cp-0046.hdf5
+ - 37s - loss: 0.7332 - mean_absolute_error: 0.0356 - val_loss: 0.6684 - val_mean_absolute_error: 0.0328
+Epoch 47/50
+
+Epoch 00047: saving model to models/autoencoder_e=50/cp-0047.hdf5
+ - 37s - loss: 0.7289 - mean_absolute_error: 0.0354 - val_loss: 0.7151 - val_mean_absolute_error: 0.0354
+Epoch 48/50
+
+Epoch 00048: saving model to models/autoencoder_e=50/cp-0048.hdf5
+ - 37s - loss: 0.7252 - mean_absolute_error: 0.0353 - val_loss: 0.6842 - val_mean_absolute_error: 0.0340
+Epoch 49/50
+
+Epoch 00049: saving model to models/autoencoder_e=50/cp-0049.hdf5
+ - 37s - loss: 0.7201 - mean_absolute_error: 0.0352 - val_loss: 0.6780 - val_mean_absolute_error: 0.0333
+Epoch 50/50
+
+Epoch 00050: saving model to models/autoencoder_e=50/cp-0050.hdf5
+ - 37s - loss: 0.7166 - mean_absolute_error: 0.0350 - val_loss: 0.6806 - val_mean_absolute_error: 0.0340
+Finished.
