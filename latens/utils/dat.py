@@ -215,6 +215,21 @@ class Data(object):
       
     return datas
 
+  def sample(self, sampling):
+    """Draw a sampling from the dataset, returning a new dataset of the same type.
+
+    :param sampling: 1-D boolean array, same size as dataset.
+    :returns: new dataset with examples selected by sampling.
+    :rtype: a Data subclass, same as self
+
+    """
+    
+    dataset = self._dataset.apply(tf.data.experimental.enumerate_dataset())
+    def map_func(idx, example):
+      return tf.data.Dataset.from_tensors(example).repeat(int(sampling[idx]))
+    dataset = dataset.flat_map(map_func)
+    return type(self)(dataset, **self._kwargs)
+
   
 class DataInput(Data):
   def __init__(self, *args, **kwargs):
