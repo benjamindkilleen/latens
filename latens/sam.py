@@ -32,11 +32,11 @@ class Sampler:
 
     """
     if self.num_examples is None:
-      return N
+      return int(N)
     elif self.num_examples >= 1:
-      return self.num_examples
+      return int(self.num_examples)
     elif 0 <= self.num_examples < 1:
-      return np.floor(self.num_examples * N)
+      return int(np.floor(self.num_examples * N))
     else:
       raise ValueError(f'unrecognized num_examples: {self.num_examples}')
     
@@ -104,9 +104,10 @@ class UniformSampler(Sampler):
     sampling = np.zeros(N, dtype=np.int64) # starts with zero examples
     
     while n > 0:
+      logger.debug(f"sampler: drawing {n} points")
       draws = np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
       distances = scipy.spatial.distance.cdist(
-        draws, points, metric=self.metric)) # (n,N) array of distances
+        draws, points, metric=self.metric) # (n,N) array of distances
 
       # index of closest point to each new draw
       closest_indices = np.argmin(distances, axis=1) 
@@ -121,4 +122,4 @@ class UniformSampler(Sampler):
       
       n -= indices.shape[0]
       
-    return indices
+    return sampling
