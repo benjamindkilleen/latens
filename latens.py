@@ -17,7 +17,7 @@ import argparse
 from glob import glob
 import tensorflow as tf
 from latens.utils import docs, dat, vis, misc
-from latens import mod
+from latens import mod, sam
 from shutil import rmtree
 from time import time
 import numpy as np
@@ -38,46 +38,14 @@ def cmd_debug(args):
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
 
-  model_dir = 'models/debug'
-  model_path = os.path.join(model_dir, 'model.hdf5')
+  points = np.load(args.input[0])
+  sampler = args.sampler[0](num_examples=args.num_examples[0])
+  sampling = sampler(points)
+  logger.debug(f"sampling: {sampling}")
+  logger.debug(f"drew {np.sum(sampling)} new points")
+  directory = os.path.dirname(args.input[0])
+  sampling = os.path.join(directory, 'sampling.npy')
   
-  model = mod.ConvClassifier(
-    args.image_shape,
-    args.num_classes[0],
-    model_dir='models/debug')
-  
-  model.compile(args.learning_rate[0])
-  
-  if not args.load:
-    model.fit(
-      train_set.labeled,
-      epochs=args.epochs[0],
-      steps_per_epoch=args.splits[0] // args.batch_size[0],
-      validation_data=tune_set.labeled,
-      validation_steps=args.splits[1] // args.batch_size[0],
-      verbose=args.keras_verbose[0])
-  else:
-    model.load()
-    
-    if tf.executing_eagerly():
-      logits = model.predict(test_set.labeled,
-                             steps=args.splits[2] // args.batch_size[0],
-                             verbose=1)
-      
-      predictions = np.argmax(logits, axis=1)
-      for (original, label), prediction in zip(test_set, predictions):
-        vis.plot_image(original)
-        plt.title(f"Label: {label}, Prediction: {prediction}")
-        plt.show()
-    else:
-      loss, accuracy = model.evaluate(test_set.labeled,
-                                      steps=args.splits[2] // args.batch_size[0],
-                                      verbose=1)
-
-      logger.info(f"loss: {loss}")
-      logger.info(f"accuracy: {accuracy}")
-    
-
         
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
@@ -303,6 +271,13 @@ def main():
   parser.add_argument('--num-classes', nargs=1,
                       default=[10], type=int,
                       help=docs.num_classes_help)
+  parser.add_argument('--num-examples', nargs=1,
+                      default=[0.1], type=float,
+                      help=docs.num_examples_help)
+  parser.add_argument('--sampler', nargs=1,
+                      choices=docs.sampler_choices,
+                      default=['random'],
+                      help=docs.sampler_help)
 
   args = parser.parse_args()
 
@@ -319,8 +294,11 @@ def main():
   if args.cores[0] == -1:
     args.cores[0] = os.cpu_count()
   if args.eval_mins[0] is not None:
-      args.eval_secs[0] = args.eval_mins[0] * 60
+    args.eval_secs[0] = args.eval_mins[0] * 60
+
+  # Take care of mappings
   args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
+  args.sampler[0] = docs.sampler_choices[args.sampler[0]]
 
   if args.input[0] is None and args.command != 'visualize':
     logger.warning("no input provided")

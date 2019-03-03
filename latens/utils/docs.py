@@ -1,5 +1,6 @@
 from tensorflow.keras import activations
 from latens.utils import act
+from latens import sam
 
 """Documentation strings for latens.
 """
@@ -51,7 +52,6 @@ dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 rep_activation_choices = {'sigmoid' : activations.sigmoid,
                           'relu' : activations.relu,
                           'clu' : act.clu}
-
 rep_activation_help = """Activation function to use at the representational
 layer. Default is clu (clipped linear unit)."""
 
@@ -67,8 +67,16 @@ for progress bar, 2 for info at each epoch. Default is 1."""
 verbose_help = """latens logging verbosity. 0 is for WARNING and above. 1
 (default) for INFO. 2 for DEBUG."""
 
-tensorboard_help = """Write tensorboard logs to MODEL_DIR/logs."""
+tensorboard_help = """Write tensorboard logs to MODEL_DIR/logs. (NOT IMPLEMENTED)"""
 
 load_help = """Prefer most recent epoch file rather than finished weights."""
 
 num_classes_help = """Specify number of classes for classifier. Default is 10."""
+
+num_examples_help = """Number of examples for a sampler to draw. Can
+be an integer value or a float in [0,1), specifying what fraction of points to
+draw. Default is 0.1."""
+
+sampler_choices = {'random' : sam.RandomSampler,
+                   'uniform' : sam.UniformSampler}
+sampler_help = """Sampler to use when drawing dataset samples. Default is random."""
