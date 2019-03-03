@@ -31,21 +31,49 @@ logger.info(f"tensorflow {tf.__version__}, keras {tf.keras.__version__}")
 
 def cmd_debug(args):
   """Run the debug command."""
+
+  if type(args.sampling[0]) == str:
+    sampling = np.load(args.sampling[0])
+  else:
+    points = np.load(args.input[0])
+    sampler = args.sampling[0](num_examples=args.num_examples[0])
+    sampling = sampler(points)
+    logger.debug(f"sampling: {sampling}")
+    logger.debug(f"drew {np.sum(sampling)} new points")
+    if args.output[0] is not 'show':
+      np.save(args.output[0], sampling)
+    exit()
+
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
                   batch_size=args.batch_size[0],
                   num_classes=args.num_classes[0],
                   num_components=args.num_components[0])
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+  
+  sampled_train_set = train_set.sample(sampling)
+  sampled_size = np.sum(sampling)
+  
+  classifier = mod.ConvClassifier(
+    args.image_shape,
+    args.num_classes[0],
+    model_dir=args.model_dir[0],
+    dropout=args.dropout[0])
 
-  points = np.load(args.input[0])
-  sampler = args.sampler[0](num_examples=args.num_examples[0])
-  sampling = sampler(points)
-  logger.debug(f"sampling: {sampling}")
-  logger.debug(f"drew {np.sum(sampling)} new points")
-  directory = os.path.dirname(args.input[0])
-  sampling = os.path.join(directory, 'sampling.npy')
-        
+  classifier.compile(args.learning_rate[0])
+
+  if not args.overwrite:
+    model.load()
+
+  classifier.fit(
+    sampled_train_set.labeled,
+    epochs=args.epochs[0],
+    steps_per_epoch=sampled_size // args.batch_size[0],
+    validation_data=tune_set.labeled,
+    validation_steps=args.splits[1] // args.batch_size[0],
+    verbose=args.keras_verbose[0])    
+
+  
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
@@ -273,10 +301,9 @@ def main():
   parser.add_argument('--num-examples', nargs=1,
                       default=[0.1], type=float,
                       help=docs.num_examples_help)
-  parser.add_argument('--sampler', nargs=1,
-                      choices=docs.sampler_choices,
+  parser.add_argument('--sampling', nargs=1,
                       default=['random'],
-                      help=docs.sampler_help)
+                      help=docs.sampling_help)
 
   args = parser.parse_args()
 
@@ -293,15 +320,14 @@ def main():
   if args.cores[0] == -1:
     args.cores[0] = os.cpu_count()
   if args.eval_mins[0] is not None:
-<<<<<<< HEAD
     args.eval_secs[0] = args.eval_mins[0] * 60
-=======
-      args.eval_secs[0] = args.eval_mins[0] * 60
->>>>>>> 4d8aa08c4b85bab5ecb68a90d2c4994360d5c6d9
 
   # Take care of mappings
   args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
-  args.sampler[0] = docs.sampler_choices[args.sampler[0]]
+  if args.sampling[0] in docs.sampler_choices[args.sampling[0]]:
+    # otherwise, sampling is a numpy file containing the sampling
+    args.sampling[0] = docs.sampler_choices[args.sampling[0]]
+    
 
   if args.input[0] is None and args.command != 'visualize':
     logger.warning("no input provided")

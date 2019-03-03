@@ -43,6 +43,9 @@ def _mnist_proto_from_example(example):
   example = tf.train.Example(features=features)
   return example.SerializeToString()
 
+def _mnist_proto_from_tensors(image, label):
+  raise NotImplementedError("implement _mnist_proto_from_tensors")
+
 def _mnist_example_from_proto(proto):
   """Convert a serialized example to an mnist tensor example."""
 
@@ -121,6 +124,26 @@ def load_dataset(record_name,
   """Load the record_name as a tf.data.Dataset"""
   dataset = tf.data.TFRecordDataset(record_name)
   return dataset.map(parse_entry, num_parallel_calls=num_parallel_calls)
+
+def save_dataset(record_name, dataset,
+                 unparse_entry=_mnist_proto_from_tensors):
+  """Save the dataset in tfrecord format
+
+  :param record_name: filename to save to
+  :param dataset: tf.data.Dataset to save
+  :param encode_entry: func
+  :returns:
+  :rtype:
+
+  """
+  logger.info(f"Writing dataset to {record_name}")
+  encoded_dataset = dataset.map(encode_entry,
+                                num_parallel_calls=self.num_parallel_calls)
+  writer = tf.data.experimental.TFRecordWriter(record_name)
+  write_op = writer.write(encoded_dataset)
+  with tf.Session() as sess:
+    sess.run(write_op)
+
 
   
 class Data(object):
@@ -260,6 +283,7 @@ class TrainDataInput(DataInput):
             .batch(self._batch_size)
             .prefetch(self._prefetch_buffer_size))
 
+  
 class DummyInput(DataInput):
   def __init__(self, image_shape, **kwargs):
     """Creates a dummy set to pass through before loading a keras model.

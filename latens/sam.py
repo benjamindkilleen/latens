@@ -69,14 +69,14 @@ class RandomSampler(Sampler):
 
   
 class UniformSampler(Sampler):
-  def __init__(self, low=0.0, high=1.0, threshold=0.03,
-               metric='cosine', **kwargs):
+  def __init__(self, low=0.0, high=1.0, threshold=0.2,
+               metric='euclidean', **kwargs):
     """Samples uniformly over the space covered by points within [low,hi].
 
+    :param low: ignored
+    :param high: ignored
     :param threshold: distance threshold at which to resample.
     :param metric: passed to scipy.spatial.distance.cdist
-    :returns: 
-    :rtype: 
 
     """
     self.low = low
@@ -92,13 +92,22 @@ class UniformSampler(Sampler):
     according the given distance metric. For each of these steps, calculates nxN
     pairwise distances, pretty inefficiently.
     
+    Draws points in the uniform distribution in each component x from
+    `[min(x) - thresh, max(x) + thresh]`
+
     TODO: use an Approximate Nearest Neighbor algorithm instead
     
     :param points: points to sample
     :returns: integer array for indexing points, i.e. a "sampling"
     :rtype: 1-D integer array
-    
+
     """
+    # for debugging
+    # self.metric = 'euclidean'
+    # self.threshold = 0.2
+    # self.low = np.min(points, axis=0)
+    # self.high = np.max(points, axis=0)
+    
     N = points.shape[0]
     n = self.get_num_examples(N) # number of examples to add to sampling
     sampling = np.zeros(N, dtype=np.int64) # starts with zero examples
@@ -109,15 +118,12 @@ class UniformSampler(Sampler):
       distances = scipy.spatial.distance.cdist(
         draws, points, metric=self.metric) # (n,N) array of distances
 
-      # logger.debug(f"distances: {distances}")
-      # logger.debug(f"mean distance: {distances.mean()}")
-
       # index of closest point to each new draw
       closest_indices = np.argmin(distances, axis=1) 
       
       # distance to closest point for each new draw
       closest_distances = np.min(distances, axis=1) # len == n
-      logger.debug(f"closest: {closest_distances}")
+      # logger.debug(f"closest distances: {closest_distances}")
       
       # indices to include in the sampling (with possible repetitions)
       indices = closest_indices[closest_distances <= self.threshold]
