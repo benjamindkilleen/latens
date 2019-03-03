@@ -11,7 +11,7 @@ logger = logging.getLogger('latens')
 
 class Sampler:
   def __init__(self, num_examples=None):
-    """A callable that returns a boolean array indexing the points given to it.
+    """A callable that returns an integer array indexing the points given to it.
 
     :param num_examples: number of examples that this sampler takes. Not used by
     every Sampler, but included for consistency. Can be a fraction, in which
@@ -47,15 +47,15 @@ class Sampler:
   def sample(self, points):
     """Select some subset of points.
 
-    Returns an array indexing into points. If boolean, this is a normal "which"
-    array, but if integer, specifies number of times to repeat each example.
+    Returns an array indexing into points. Specifies number of times to repeat
+    each example (could be interpreted as a boolean array).
 
     :param points: points to sample
     :returns: integer or boolean array for indexing points, i.e. a "sampling"
     :rtype: 1-D array
 
     """
-    return np.ones(points.shape[0], dtype=bool)
+    return np.ones(points.shape[0], dtype=np.int64)
 
 
 class RandomSampler(Sampler):
@@ -63,8 +63,8 @@ class RandomSampler(Sampler):
     N = points.shape[0]
     n = self.get_num_examples(N)
     perm = np.random.permutation(N)
-    sampling = np.zeros(N, dtype=bool)
-    sampling[perm[:n]] = True
+    sampling = np.zeros(N, dtype=np.int64)
+    sampling[perm[:n]] = 1
     return sampling
 
   
@@ -102,11 +102,6 @@ class UniformSampler(Sampler):
     :rtype: 1-D integer array
 
     """
-    # for debugging
-    # self.metric = 'euclidean'
-    # self.threshold = 0.2
-    # self.low = np.min(points, axis=0)
-    # self.high = np.max(points, axis=0)
     
     N = points.shape[0]
     n = self.get_num_examples(N) # number of examples to add to sampling

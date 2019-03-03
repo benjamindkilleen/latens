@@ -78,8 +78,11 @@ class Model():
       return
     
     latest = tf.train.latest_checkpoint(self.model_dir)
-    self.model.load_weights(latest)
-    logger.info(f"restored model from {latest}")
+    if latest is None:
+      logger.info(f"no checkpoint found in {self.model_dir}")
+    else:
+      self.model.load_weights(latest)
+      logger.info(f"restored model from {latest}")
 
   def create_maxpool(self):
     layers = []

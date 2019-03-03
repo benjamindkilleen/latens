@@ -246,10 +246,10 @@ class Data(object):
     :rtype: a Data subclass, same as self
 
     """
-    
+    sampling = tf.constant(sampling)
     dataset = self._dataset.apply(tf.data.experimental.enumerate_dataset())
     def map_func(idx, example):
-      return tf.data.Dataset.from_tensors(example).repeat(int(sampling[idx]))
+      return tf.data.Dataset.from_tensors(example).repeat(sampling[idx])
     dataset = dataset.flat_map(map_func)
     return type(self)(dataset, **self._kwargs)
 

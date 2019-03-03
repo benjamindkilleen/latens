@@ -79,4 +79,5 @@ draw. Default is 0.1."""
 
 sampler_choices = {'random' : sam.RandomSampler,
                    'uniform' : sam.UniformSampler}
-sampler_help = """Sampler to use when drawing dataset samples. Default is random."""
+sample_help = """Can be a numpy file containing a sampling or the sampler to use
+on a set of points, when drawing dataset samples. Default is 'random'."""

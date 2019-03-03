@@ -32,11 +32,11 @@ logger.info(f"tensorflow {tf.__version__}, keras {tf.keras.__version__}")
 def cmd_debug(args):
   """Run the debug command."""
 
-  if type(args.sampling[0]) == str:
-    sampling = np.load(args.sampling[0])
+  if type(args.sample[0]) == str:
+    sampling = np.load(args.sample[0])
   else:
     points = np.load(args.input[0])
-    sampler = args.sampling[0](num_examples=args.num_examples[0])
+    sampler = args.sample[0](num_examples=args.num_examples[0])
     sampling = sampler(points)
     logger.debug(f"sampling: {sampling}")
     logger.debug(f"drew {np.sum(sampling)} new points")
@@ -63,16 +63,21 @@ def cmd_debug(args):
   classifier.compile(args.learning_rate[0])
 
   if not args.overwrite:
-    model.load()
+    classifier.load()
 
   classifier.fit(
     sampled_train_set.labeled,
     epochs=args.epochs[0],
-    steps_per_epoch=sampled_size // args.batch_size[0],
+    steps_per_epoch=sampled_size // args.batch_size[0] + 1,
     validation_data=tune_set.labeled,
     validation_steps=args.splits[1] // args.batch_size[0],
     verbose=args.keras_verbose[0])    
 
+  loss, accuracy = classifier.evaluate(
+    test_set.labeled,
+    steps = args.splits[2] // args.batch_size[0])
+  logger.info(f'test accuracy: {accuracy:.03f}')
+  
   
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
@@ -299,11 +304,11 @@ def main():
                       default=[10], type=int,
                       help=docs.num_classes_help)
   parser.add_argument('--num-examples', nargs=1,
-                      default=[0.1], type=float,
+                      default=[1000], type=float,
                       help=docs.num_examples_help)
-  parser.add_argument('--sampling', nargs=1,
+  parser.add_argument('--sample', nargs=1,
                       default=['random'],
-                      help=docs.sampling_help)
+                      help=docs.sample_help)
 
   args = parser.parse_args()
 
@@ -324,9 +329,9 @@ def main():
 
   # Take care of mappings
   args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
-  if args.sampling[0] in docs.sampler_choices[args.sampling[0]]:
+  if args.sample[0] in docs.sampler_choices:
     # otherwise, sampling is a numpy file containing the sampling
-    args.sampling[0] = docs.sampler_choices[args.sampling[0]]
+    args.sample[0] = docs.sampler_choices[args.sample[0]]
     
 
   if args.input[0] is None and args.command != 'visualize':
