@@ -108,9 +108,10 @@ class UniformSampler(Sampler):
       draws = np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
       distances = scipy.spatial.distance.cdist(
         draws, points, metric=self.metric) # (n,N) array of distances
+
       # logger.debug(f"distances: {distances}")
       # logger.debug(f"mean distance: {distances.mean()}")
-      
+
       # index of closest point to each new draw
       closest_indices = np.argmin(distances, axis=1) 
       

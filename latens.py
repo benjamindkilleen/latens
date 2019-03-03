@@ -45,7 +45,6 @@ def cmd_debug(args):
   logger.debug(f"drew {np.sum(sampling)} new points")
   directory = os.path.dirname(args.input[0])
   sampling = os.path.join(directory, 'sampling.npy')
-  
         
 def cmd_convert(args):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
@@ -294,7 +293,11 @@ def main():
   if args.cores[0] == -1:
     args.cores[0] = os.cpu_count()
   if args.eval_mins[0] is not None:
+<<<<<<< HEAD
     args.eval_secs[0] = args.eval_mins[0] * 60
+=======
+      args.eval_secs[0] = args.eval_mins[0] * 60
+>>>>>>> 4d8aa08c4b85bab5ecb68a90d2c4994360d5c6d9
 
   # Take care of mappings
   args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
