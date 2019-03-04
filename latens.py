@@ -48,7 +48,7 @@ class Latens:
 
     # sampling, etc
     self.sample_size = args.sample_size[0]
-    self.sampler = args.sample[0]
+    self.sample = args.sample[0]
     self.sampler_type = docs.sample_choices[self.sample]
 
     # dataset sizes
@@ -73,6 +73,8 @@ class Latens:
     self.single_train_steps = int(np.ceil(self.train_size / self.batch_size))
     self.tune_steps = int(np.ceil(self.tune_size / self.batch_size))
     self.test_steps = int(np.ceil(self.test_size / self.batch_size))
+    self.sample_steps = int(np.ceil(
+      self.epoch_multiplier * self.sample_size / self.batch_size))
     
     # input tfrecord prefix and its derivatices
     self.input_prefix, _ = os.path.splitext(args.input[0])
@@ -80,32 +82,32 @@ class Latens:
     self.tfrecord_path = self.input_prefix + '.tfrecord'
     self.encodings_path = (
       self.input_prefix + '_encodings.npy')
-    self.random_sampling_path = (
-      self.input_prefix + f'_random_sampling_{self.sample_size}.npy')
-    self.random_sampling_data_path = (
-      self.input_prefix + f'_random_sampling_{self.sample_size}_data.tfrecord')
-    self.uniform_sampling_path = (
-      self.input_prefix + f'_uniform_sampling_{self.sample_size}.npy')
-    self.uniform_sampling_data_path = (
+    self.random_sample_path = (
+      self.input_prefix + f'_random_sample_{self.sample_size}.npy')
+    self.random_sample_data_path = (
+      self.input_prefix + f'_random_sample_{self.sample_size}_data.tfrecord')
+    self.uniform_sample_path = (
+      self.input_prefix + f'_uniform_sample_{self.sample_size}.npy')
+    self.uniform_sample_data_path = (
       self.input_prefix +
-      f'_uniform_sampling_{self.sample_size}_data.tfrecord')
+      f'_uniform_sample_{self.sample_size}_data.tfrecord')
 
 
   @property
-  def sampling_path(self):
+  def sample_path(self):
     if self.sample == 'random':
-      return self.random_sampling_path
+      return self.random_sample_path
     elif self.sample == 'uniform':
-      return self.uniform_sampling_path
+      return self.uniform_sample_path
     else:
       raise NotImplementedError
     
   @property
-  def sampling_data_path(self):
+  def sample_data_path(self):
     if self.sample == 'random':
-      return self.random_sampling_data_path
+      return self.random_sample_data_path
     elif self.sample == 'uniform':
-      return self.uniform_sampling_data_path
+      return self.uniform_sample_data_path
     else:
       raise NotImplementedError
     
@@ -125,9 +127,9 @@ class Latens:
     return data.split(
     *self.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
   
-  def make_sampled_data(self):
+  def make_sample_data(self):
     return dat.TrainDataInput(
-      self.sampling_data_path,
+      self.sample_data_path,
       num_parallel_calls=self.cores,
       batch_size=self.batch_size,
       num_classes=self.num_classes,
@@ -160,15 +162,15 @@ class Latens:
 def cmd_debug(lat):
   """Run the debug command."""
   if type(args.sample[0]) == str:
-    sampling = np.load(args.sample[0])
+    sample = np.load(args.sample[0])
   else:
     points = np.load(args.input[0])
     sampler = args.sample[0](sample_size=args.sample_size[0])
-    sampling = sampler(points)
-    logger.debug(f"sampling: {sampling}")
-    logger.debug(f"drew {np.sum(sampling)} new points")
+    sample = sampler(points)
+    logger.debug(f"sample: {sample}")
+    logger.debug(f"drew {np.sum(sample)} new points")
     if args.output[0] is not 'show':
-      np.save(args.output[0], sampling)
+      np.save(args.output[0], sample)
     exit()
 
   data = dat.Data(args.input, num_parallel_calls=args.cores[0],
@@ -178,8 +180,8 @@ def cmd_debug(lat):
   train_set, tune_set, test_set = data.split(
     *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
   
-  sampled_train_set = train_set.sample(sampling)
-  sampled_size = np.sum(sampling)
+  sample_train_set = train_set.sample(sample)
+  sample_size = np.sum(sample)
   
   classifier = mod.ConvClassifier(
     args.image_shape,
@@ -193,9 +195,9 @@ def cmd_debug(lat):
     classifier.load()
 
   classifier.fit(
-    sampled_train_set.labeled,
+    sample_train_set.labeled,
     epochs=args.epochs[0],
-    steps_per_epoch=sampled_size // args.batch_size[0] + 1,
+    steps_per_epoch=sample_size // args.batch_size[0] + 1,
     validation_data=tune_set.labeled,
     validation_steps=args.splits[1] // args.batch_size[0],
     verbose=args.keras_verbose[0])    
@@ -308,30 +310,42 @@ def cmd_visualize(lat):
     vis.plot_image(*images, columns=cols)
     plt.savefig(args.output[0])
 
+    
 def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
   encodings = np.load(lat.encodings_path)
   sampler = lat.sampler_type(sample_size=lat.sample_size)
-  sampling = sampler(encodings)
-  np.save(lat.sampling_path, sampling)
+  sample = sampler(encodings)
+  np.save(lat.sample_path, sample)
 
   train_set, tune_set, test_set = lat.make_data()
-  sampled_train_set = train_set.sample(sampling)
-  sampled_train_set.save(lat.sampled_data_path)
-    
+  sample_train_set = train_set.sample(sample)
+  sample_train_set.save(lat.sample_data_path)
+
+  
 def cmd_classifier(lat):
   """Run training from scratch for a classifier, using ."""
   train_set, tune_set, test_set = lat.make_data()
-  sampled_set = lat.make_sampled_data()
+  sample_set = lat.make_sample_data()
   
   model = lat.make_conv_classifier()
   if not args.overwrite:
     model.load()
 
-  
-  
-  
+  model.fit(
+    sample_set.labeled,
+    epochs=lat.epochs,
+    steps_per_epoch=lat.sample_steps,
+    validation_data=tune_set.labeled,
+    validation_steps=lat.tune_steps,
+    verbose=lat.keras_verbose)
+
+  loss, accuracy = model.evaluate(
+    test_set.labeled,
+    steps=lat.test_steps)
+  logger.info(f'test accuracy: {100*accuracy:.01f}%')
+    
   
 def main():
   parser = argparse.ArgumentParser(description=docs.description)

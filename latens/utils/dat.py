@@ -44,9 +44,7 @@ def _mnist_proto_from_example(example):
   return example.SerializeToString()
 
 def _mnist_proto_from_tensors(image, label):
-  logger.debug(f"image: {image}")
-  logger.debug(f"label: {label}")
-  raise NotImplementedError("implement _mnist_proto_from_tensors")
+  raise NotImplementedError
 
 def _mnist_example_from_proto(proto):
   """Convert a serialized example to an mnist tensor example."""
@@ -128,24 +126,27 @@ def load_dataset(record_name,
   return dataset.map(parse_entry, num_parallel_calls=num_parallel_calls)
 
 def save_dataset(record_name, dataset,
-                 unparse_entry=_mnist_proto_from_tensors):
+                 proto_from_example=_mnist_proto_from_example,
+                 num_parallel_calls=None):
   """Save the dataset in tfrecord format
 
   :param record_name: filename to save to
   :param dataset: tf.data.Dataset to save
-  :param encode_entry: func
-  :returns:
-  :rtype:
+  :param proto_from_example: 
+  :param num_parallel_calls: 
+  :returns: 
+  :rtype: 
 
   """
-  logger.info(f"Writing dataset to {record_name}")
-  encoded_dataset = dataset.map(unparse_entry,
-                                num_parallel_calls=self.num_parallel_calls)
-  writer = tf.data.experimental.TFRecordWriter(record_name)
-  write_op = writer.write(encoded_dataset)
-  with tf.Session() as sess:
-    sess.run(write_op)
+  next_example = dataset.make_one_shot_iterator().get_next()
 
+  logger.info(f"writing dataset to {record_name}...")
+  writer = tf.python_io.TFRecordWriter(record_name)
+  with tf.Session() as sess:
+    example = sess.run(next_example)
+    writer.write(proto_from_example(example))
+
+  writer.close()
 
   
 class Data(object):
@@ -173,6 +174,10 @@ class Data(object):
     self.num_classes = kwargs.get('num_classes', 10)
     self._kwargs = kwargs
 
+  def save(self, record_name):
+    save_dataset(record_name, self._dataset,
+                 num_parallel_calls=self.num_parallel_calls)
+    
   def __iter__(self):
     return self._dataset.__iter__()
 
