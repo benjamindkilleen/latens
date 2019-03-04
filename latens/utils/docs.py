@@ -13,7 +13,8 @@ command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert',
                    'encode', 'decode', 'classifier', 'visualize']
 command_help = "latens command to run"
 
-input_help = """Name or names of data files."""
+input_help = """Input dataset file or prefix. Prefix is used to store other
+files."""
 
 l2_reg_help = """L2 regularization factor. Default is None."""
 
@@ -38,9 +39,8 @@ eval_secs_help = """Evaluate model every EVAL_SECS during training. Default is
 
 eval_mins_help = """See EVAL_SECS. Default is 20 minutes (1200 seconds)"""
 
-splits_help = """Number of examples to use for splits on the dataset. Must
-define three splits for training, validation, and test sets. Default is '50000
-10000 10000' for MNIST."""
+splits_help = """Number of examples to use for the train, tune, and test sets,
+respectively. Default is '50000 10000 10000' for MNIST."""
 
 cores_help = """Number of CPU cores to use when parallelizing. Default, -1,
 parallelizes across all visible processors."""
@@ -73,11 +73,11 @@ load_help = """Prefer most recent epoch file rather than finished weights."""
 
 num_classes_help = """Specify number of classes for classifier. Default is 10."""
 
-num_examples_help = """Number of examples for a sampler to draw. Can
-be an integer value or a float in [0,1), specifying what fraction of points to
-draw. Default is 0.1."""
+num_examples_help = """Number of examples for a sampler to draw. Default is 1000."""
 
-sampler_choices = {'random' : sam.RandomSampler,
+sample_choices = {'random' : sam.RandomSampler,
                    'uniform' : sam.UniformSampler}
-sample_help = """Can be a numpy file containing a sampling or the sampler to use
-on a set of points, when drawing dataset samples. Default is 'random'."""
+sample_help = """Type of sampling to use. Default is 'random'."""
+
+epoch_multiplier_help = """Runs multiple epochs as a single keras 'epoch',
+shuffling in between."""

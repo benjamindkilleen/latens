@@ -29,9 +29,122 @@ if sys.version_info < (3,6):
 
 logger.info(f"tensorflow {tf.__version__}, keras {tf.keras.__version__}")
 
+
+class Latens:
+  def __init__(self, args):
+    """Bag of state for the latens run."""
+
+    # general
+    self.cores = args.cores[0]
+    if self.cores == -1:
+      self.cores = os.cpu_count()
+    self.verbose = args.verbose[0]
+    self.keras_verbose = args.keras_verbose[0]
+
+    # num_somethings
+    self.num_examples = args.num_examples[0]
+    self.num_components = args.num_components[0]
+    self.num_classes = args.num_classes[0]
+
+    # dataset sizes
+    self.splits = args.splits
+    self.train_size = args.splits[0]
+    self.tune_size = args.splits[1]
+    self.test_size = args.splits[2]
+
+    # model arguments
+    self.learning_rate = args.learning_rate[0]
+    self.overwrite = args.overwrite
+    self.rep_activation = docs.rep_activation_choices[args.rep_activation[0]]
+    self.image_shape = args.image_shape
+    self.model_dir = args.model_dir[0]
+    self.batch_size = args.batch_size[0]
+    self.dropout = args.dropout[0]
+
+    # number of steps for different iterations
+    self.epoch_multiplier = args.epoch_multiplier[0]
+    self.train_steps = int(np.ceil(
+      self.epoch_multiplier * self.train_size / self.batch_size))
+    self.single_train_steps = int(np.ceil(self.train_size / self.batch_size))
+    self.tune_steps = int(np.ceil(self.tune_size / self.batch_size))
+    self.test_steps = int(np.ceil(self.test_size / self.batch_size))
+    
+    # input tfrecord prefix and its derivatices
+    self.input_prefix, _ = os.path.splitext(args.input[0])
+    self.npz_path = self.input_prefix + '.npz'
+    self.tfrecord_path = self.input_prefix + '.tfrecord'
+    self.encodings_path = (
+      self.input_prefix + '_encodings.npy')
+    self.random_sampling_path = (
+      self.input_prefix + f'_random_sampling_{self.num_examples}.npy')
+    self.random_sampling_data_path = (
+      self.input_prefix + f'_random_sampling_{self.num_examples}_data.tfrecord')
+    self.uniform_sampling_path = (
+      self.input_prefix + f'_uniform_sampling_{self.num_examples}.npy')
+    self.uniform_sampling_data_path = (
+      self.input_prefix +
+      f'_uniform_sampling_{self.num_examples}_data.tfrecord')
+
+    # sampling, etc
+    self.sampler = args.sample[0]
+    self.sampler_type = docs.sample_choices[self.sample]
+    
+  def make_data(self):
+    """Make the train, test, and split sets.
+
+    :returns: train, test, and split sets
+    :rtype: dat.TrainDataInput, dat.DataInput, dat.DataInput
+
+    """
+    data = dat.Data(self.tfrecord_path,
+                    num_parallel_calls=self.cores,
+                    batch_size=self.batch_size,
+                    num_classes=self.num_classes,
+                    num_components=self.num_components)
+    return data.split(
+    *self.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+
+  @property
+  def sampling_data_path(self):
+    if self.sample == 'random':
+      return self.random_sampling_data_path
+    elif self.sample == 'uniform':
+      return self.uniform_sampling_data_path
+    else:
+      raise NotImplementedError
+  
+  def make_sampled_data(self):
+    return dat.TrainDataInput(
+      self.sampling_data_path,
+      num_parallel_calls=self.cores,
+      batch_size=self.batch_size,
+      num_classes=self.num_classes,
+      num_components=self.num_components)
+  
+  def make_conv_autoencoder(self):
+    model = mod.ConvAutoEncoder(
+      self.image_shape,
+      self.num_components,
+      model_dir=self.model_dir,
+      rep_activation=self.rep_activation,
+      dropout=self.dropout)
+    
+    model.compile(learning_rate=self.learning_rate)
+    return model
+
+  def make_conv_classifier(self):
+    model = mod.ConvClassifier(
+      self.image_shape,
+      self.num_classes,
+      model_dir=self.model_dir,
+      dropout=self.dropout)
+    
+    model.compile(learning_rate=self.learning_rate)
+    return model
+    
+    
 def cmd_debug(args):
   """Run the debug command."""
-
   if type(args.sample[0]) == str:
     sampling = np.load(args.sample[0])
   else:
@@ -87,54 +200,38 @@ def cmd_convert(args):
 
 def cmd_autoencoder(args):
   """Run training for the autoencoder."""
-  data = dat.DataInput(args.input, num_parallel_calls=args.cores[0],
-                       batch_size=args.batch_size[0],
-                       num_components=args.num_components[0])
-  train_set, tune_set = data.split(
-    *args.splits, types=[dat.TrainDataInput, dat.DataInput])[:2]
-  
-  model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0])
-      
-  model.compile(learning_rate=args.learning_rate[0])
+  lat = Latens(args)
+  train_set, tune_set, test_set = lat.make_data()
 
-  if not args.overwrite:
+  model = lat.make_conv_autoencoder()
+  if not lat.overwrite:
     model.load()
 
   model.fit(
     train_set.self_supervised,
-    epochs=args.epochs[0],
-    steps_per_epoch=args.splits[0] // args.batch_size[0],
+    epochs=lat.epochs,
+    steps_per_epoch=lat.train_steps,
     validation_data=tune_set.self_supervised,
-    validation_steps=args.splits[1] // args.batch_size[0],
-    verbose=args.keras_verbose[0])
+    validation_steps=lat.tune_steps,
+    verbose=lat.keras_verbose)
 
 def cmd_reconstruct(args):
   """Run reconstruction."""
-  data = dat.Data(args.input, num_parallel_calls=args.cores[0],
-                  batch_size=args.batch_size[0],
-                  num_components=args.num_components[0],
-                  num_classes=args.num_classes[0])
-  train_set, tune_set, test_set = data.split(
-    *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+  lat = Latens(args)
+  train_set, tune_set, test_set = lat.make_data()
 
   model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0])
+    lat.image_shape,
+    lat.num_components,
+    model_dir=lat.model_dir,
+    rep_activation=lat.rep_activation,
+    dropout=lat.dropout)
   
-  model.compile(learning_rate=args.learning_rate[0])
+  model.compile(learning_rate=lat.learning_rate)
 
   model.load()
 
-  reconstructions = model.predict(test_set.self_supervised, steps=1,
-                                  verbose=1)
+  reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(test_set, reconstructions):
       vis.show_image(original, reconstruction)
@@ -144,56 +241,36 @@ def cmd_reconstruct(args):
 
 def cmd_encode(args):
   """Encodes the training set."""
-  data = dat.Data(args.input, num_parallel_calls=args.cores[0],
-                  num_components=args.num_components[0],
-                  num_classes=args.num_classes[0],
-                  batch_size=args.batch_size[0])
-  train_set, tune_set, test_set = data.split(
-    *args.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+  lat = Latens(args)
+  train_set, tune_set, test_set = lat.make_data()
 
-  model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0])
-      
-  model.compile(learning_rate=args.learning_rate[0])
-
+  model = lat.make_conv_autoencoder()
   model.load()
 
   encodings = model.encode(
-    train_set.encode(args.num_components[0]),
-    steps=args.splits[0] // args.batch_size[0] + 1,
-    verbose=1)[:args.splits[0]]
+    train_set.encoded,
+    steps=lat.single_train_steps,
+    verbose=1)[:lat.train_size]
   
   logger.debug(f"encodings:\n{encodings}")
-  if args.output[0] is not None:
-    if args.output[0] == 'show':
-      vis.show_encodings(encodings)
-    filename, ext = os.path.splitext(args.output[0])
-    if ext == '.npy':
-      np.save(args.output[0], encodings)
-      logger.info(f"saved encodings to '{args.output[0]}'")
+  
+  if args.output[0] == 'show':
+    vis.show_encodings(encodings)
+    
+  np.save(lat.encodings_path, encodings)
+  logger.info(f"saved encodings to '{lat.encodings_path}'")
 
 def cmd_decode(args):
   """Decode a numpy array of encodings from args.input and show."""
-  encodings = np.load(args.input[0])
-  logger.info(f"loaded encodings from '{args.input[0]}'")
+  lat = Latens(args)
+  encodings = np.load(lat.encodings_path)
+  logger.info(f"loaded encodings from '{lat.encodings_path}'")
 
-  model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0])
-      
-  model.compile(learning_rate=args.learning_rate[0])
-
+  model = lat.make_conv_autoencoder()
   model.load()
   
-  reconstructions = model.decode(encodings[:args.batch_size[0]], verbose=1,
-                                 batch_size=args.batch_size[0])
+  reconstructions = model.decode(encodings[:lat.batch_size], verbose=1,
+                                 batch_size=lat.batch_size)
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(test_set, reconstructions):
       vis.show_image(original, reconstruction)
@@ -203,13 +280,7 @@ def cmd_decode(args):
 
 def cmd_visualize(args):
   """Visualize the decodings that the model makes."""
-  model = mod.ConvAutoEncoder(
-    args.image_shape,
-    args.num_components[0],
-    model_dir=args.model_dir[0],
-    rep_activation=args.rep_activation[0],
-    dropout=args.dropout[0])
-  model.compile(learning_rate=args.learning_rate[0])
+  model = lat.make_conv_autoencoder()
   model.load()
 
   rows = args.num_components[0]
@@ -227,15 +298,28 @@ def cmd_visualize(args):
     vis.plot_image(*images, columns=cols)
     plt.savefig(args.output[0])
 
+def cmd_sample(args):
+  """Run sampling
+    
 def cmd_classifier(args):
-  """Run training from scratch for a classifier."""
-  raise NotImplementedError
+  """Run training from scratch for a classifier, using ."""
+  lat = Latens(args)
+  train_set, tune_set, test_set = lat.make_data()
+  sampled_set = lat.make_sampled_data()
+  
+  model = lat.make_conv_classifier()
+  if not args.overwrite:
+    model.load()
+
+  
+  
+  
   
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
                       help=docs.command_help)
-  parser.add_argument('--input', '-i', nargs='+',
+  parser.add_argument('--input', '-i', nargs=1, required=True,
                       default=[None],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
@@ -258,14 +342,7 @@ def main():
   parser.add_argument('--num-components', '--components', '-n', nargs=1,
                       default=[10], type=int,
                       help=docs.num_components_help)
-  eval_time = parser.add_mutually_exclusive_group()
-  eval_time.add_argument('--eval-secs', nargs=1,
-                         default=[1200], type=int,
-                         help=docs.eval_secs_help)
-  eval_time.add_argument('--eval-mins', nargs=1,
-                         default=[None], type=int,
-                         help=docs.eval_mins_help)
-  parser.add_argument('--splits', nargs='+',
+  parser.add_argument('--splits', nargs=3,
                       default=[50000,10000,10000],
                       type=int,
                       help=docs.splits_help)
@@ -304,14 +381,18 @@ def main():
                       default=[10], type=int,
                       help=docs.num_classes_help)
   parser.add_argument('--num-examples', nargs=1,
-                      default=[1000], type=float,
+                      default=[1000], type=int,
                       help=docs.num_examples_help)
-  parser.add_argument('--sample', nargs=1,
+  parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
                       default=['random'],
                       help=docs.sample_help)
+  parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
+                      default=[1], type=int,
+                      help=docs.epoch_multiplier_help)
 
   args = parser.parse_args()
 
+  # Must be handled on initialization
   if args.verbose[0] == 0:
     logger.setLevel(logging.WARNING)
   elif args.verbose[0] == 1:
@@ -321,21 +402,6 @@ def main():
 
   if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
-
-  if args.cores[0] == -1:
-    args.cores[0] = os.cpu_count()
-  if args.eval_mins[0] is not None:
-    args.eval_secs[0] = args.eval_mins[0] * 60
-
-  # Take care of mappings
-  args.rep_activation[0] = docs.rep_activation_choices[args.rep_activation[0]]
-  if args.sample[0] in docs.sampler_choices:
-    # otherwise, sampling is a numpy file containing the sampling
-    args.sample[0] = docs.sampler_choices[args.sample[0]]
-    
-
-  if args.input[0] is None and args.command != 'visualize':
-    logger.warning("no input provided")
 
   if args.command == 'debug':
     cmd_debug(args)
