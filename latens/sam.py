@@ -10,35 +10,35 @@ import logging
 logger = logging.getLogger('latens')
 
 class Sampler:
-  def __init__(self, num_examples=None):
+  def __init__(self, sample_size=None):
     """A callable that returns an integer array indexing the points given to it.
 
-    :param num_examples: number of examples that this sampler takes. Not used by
+    :param sample_size: number of examples that this sampler takes. Not used by
     every Sampler, but included for consistency. Can be a fraction, in which
-    case len(points) * num_examples are taken from points. Can be None, in
+    case len(points) * sample_size are taken from points. Can be None, in
     which case all points are taken.
     :returns: 
     :rtype: 
 
     """
-    self.num_examples = num_examples
+    self.sample_size = sample_size
 
-  def get_num_examples(self, N):
+  def get_sample_size(self, N):
     """Get the number of examples to take from a set of points.
 
     :param N: number of original points
-    :returns: num_examples
+    :returns: sample_size
     :rtype: 
 
     """
-    if self.num_examples is None:
+    if self.sample_size is None:
       return int(N)
-    elif self.num_examples >= 1:
-      return int(self.num_examples)
-    elif 0 <= self.num_examples < 1:
-      return int(np.floor(self.num_examples * N))
+    elif self.sample_size >= 1:
+      return int(self.sample_size)
+    elif 0 <= self.sample_size < 1:
+      return int(np.floor(self.sample_size * N))
     else:
-      raise ValueError(f'unrecognized num_examples: {self.num_examples}')
+      raise ValueError(f'unrecognized sample_size: {self.sample_size}')
     
   def __call__(self, *args, **kwargs):
     """Wrapper around self.sample()"""
@@ -61,7 +61,7 @@ class Sampler:
 class RandomSampler(Sampler):
   def sample(self, points):
     N = points.shape[0]
-    n = self.get_num_examples(N)
+    n = self.get_sample_size(N)
     perm = np.random.permutation(N)
     sampling = np.zeros(N, dtype=np.int64)
     sampling[perm[:n]] = 1
@@ -104,7 +104,7 @@ class UniformSampler(Sampler):
     """
     
     N = points.shape[0]
-    n = self.get_num_examples(N) # number of examples to add to sampling
+    n = self.get_sample_size(N) # number of examples to add to sampling
     sampling = np.zeros(N, dtype=np.int64) # starts with zero examples
     
     while n > 0:

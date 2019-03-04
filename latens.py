@@ -40,11 +40,16 @@ class Latens:
       self.cores = os.cpu_count()
     self.verbose = args.verbose[0]
     self.keras_verbose = args.keras_verbose[0]
+    self.tensorboard = args.tensorboard
 
     # num_somethings
-    self.num_examples = args.num_examples[0]
     self.num_components = args.num_components[0]
     self.num_classes = args.num_classes[0]
+
+    # sampling, etc
+    self.sample_size = args.sample_size[0]
+    self.sampler = args.sample[0]
+    self.sampler_type = docs.sample_choices[self.sample]
 
     # dataset sizes
     self.splits = args.splits
@@ -76,18 +81,34 @@ class Latens:
     self.encodings_path = (
       self.input_prefix + '_encodings.npy')
     self.random_sampling_path = (
-      self.input_prefix + f'_random_sampling_{self.num_examples}.npy')
+      self.input_prefix + f'_random_sampling_{self.sample_size}.npy')
     self.random_sampling_data_path = (
-      self.input_prefix + f'_random_sampling_{self.num_examples}_data.tfrecord')
+      self.input_prefix + f'_random_sampling_{self.sample_size}_data.tfrecord')
     self.uniform_sampling_path = (
-      self.input_prefix + f'_uniform_sampling_{self.num_examples}.npy')
+      self.input_prefix + f'_uniform_sampling_{self.sample_size}.npy')
     self.uniform_sampling_data_path = (
       self.input_prefix +
-      f'_uniform_sampling_{self.num_examples}_data.tfrecord')
+      f'_uniform_sampling_{self.sample_size}_data.tfrecord')
 
-    # sampling, etc
-    self.sampler = args.sample[0]
-    self.sampler_type = docs.sample_choices[self.sample]
+
+  @property
+  def sampling_path(self):
+    if self.sample == 'random':
+      return self.random_sampling_path
+    elif self.sample == 'uniform':
+      return self.uniform_sampling_path
+    else:
+      raise NotImplementedError
+    
+  @property
+  def sampling_data_path(self):
+    if self.sample == 'random':
+      return self.random_sampling_data_path
+    elif self.sample == 'uniform':
+      return self.uniform_sampling_data_path
+    else:
+      raise NotImplementedError
+    
     
   def make_data(self):
     """Make the train, test, and split sets.
@@ -103,15 +124,6 @@ class Latens:
                     num_components=self.num_components)
     return data.split(
     *self.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
-
-  @property
-  def sampling_data_path(self):
-    if self.sample == 'random':
-      return self.random_sampling_data_path
-    elif self.sample == 'uniform':
-      return self.uniform_sampling_data_path
-    else:
-      raise NotImplementedError
   
   def make_sampled_data(self):
     return dat.TrainDataInput(
@@ -127,7 +139,8 @@ class Latens:
       self.num_components,
       model_dir=self.model_dir,
       rep_activation=self.rep_activation,
-      dropout=self.dropout)
+      dropout=self.dropout,
+      tensorboard=self.tensorboard)
     
     model.compile(learning_rate=self.learning_rate)
     return model
@@ -137,19 +150,20 @@ class Latens:
       self.image_shape,
       self.num_classes,
       model_dir=self.model_dir,
-      dropout=self.dropout)
+      dropout=self.dropout,
+      tensorboard=self.tensorboard)
     
     model.compile(learning_rate=self.learning_rate)
     return model
     
     
-def cmd_debug(args):
+def cmd_debug(lat):
   """Run the debug command."""
   if type(args.sample[0]) == str:
     sampling = np.load(args.sample[0])
   else:
     points = np.load(args.input[0])
-    sampler = args.sample[0](num_examples=args.num_examples[0])
+    sampler = args.sample[0](sample_size=args.sample_size[0])
     sampling = sampler(points)
     logger.debug(f"sampling: {sampling}")
     logger.debug(f"drew {np.sum(sampling)} new points")
@@ -192,15 +206,14 @@ def cmd_debug(args):
   logger.info(f'test accuracy: {accuracy:.03f}')
   
   
-def cmd_convert(args):
+def cmd_convert(lat):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
-  dat.convert_from_npz(args.input[0])
+  dat.convert_from_npz(lat.npz_path)
 
-
-def cmd_autoencoder(args):
+  
+def cmd_autoencoder(lat):
   """Run training for the autoencoder."""
-  lat = Latens(args)
   train_set, tune_set, test_set = lat.make_data()
 
   model = lat.make_conv_autoencoder()
@@ -215,9 +228,8 @@ def cmd_autoencoder(args):
     validation_steps=lat.tune_steps,
     verbose=lat.keras_verbose)
 
-def cmd_reconstruct(args):
+def cmd_reconstruct(lat):
   """Run reconstruction."""
-  lat = Latens(args)
   train_set, tune_set, test_set = lat.make_data()
 
   model = mod.ConvAutoEncoder(
@@ -239,9 +251,8 @@ def cmd_reconstruct(args):
     for i in range(reconstructions.shape[0]):
       vis.show_image(reconstructions[i])
 
-def cmd_encode(args):
+def cmd_encode(lat):
   """Encodes the training set."""
-  lat = Latens(args)
   train_set, tune_set, test_set = lat.make_data()
 
   model = lat.make_conv_autoencoder()
@@ -260,9 +271,8 @@ def cmd_encode(args):
   np.save(lat.encodings_path, encodings)
   logger.info(f"saved encodings to '{lat.encodings_path}'")
 
-def cmd_decode(args):
+def cmd_decode(lat):
   """Decode a numpy array of encodings from args.input and show."""
-  lat = Latens(args)
   encodings = np.load(lat.encodings_path)
   logger.info(f"loaded encodings from '{lat.encodings_path}'")
 
@@ -278,7 +288,7 @@ def cmd_decode(args):
     for i in range(reconstructions.shape[0]):
       vis.show_image(reconstructions[i])
 
-def cmd_visualize(args):
+def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
   model = lat.make_conv_autoencoder()
   model.load()
@@ -298,12 +308,20 @@ def cmd_visualize(args):
     vis.plot_image(*images, columns=cols)
     plt.savefig(args.output[0])
 
-def cmd_sample(args):
-  """Run sampling
+def cmd_sample(lat):
+  """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
+  file."""
+  encodings = np.load(lat.encodings_path)
+  sampler = lat.sampler_type(sample_size=lat.sample_size)
+  sampling = sampler(encodings)
+  np.save(lat.sampling_path, sampling)
+
+  train_set, tune_set, test_set = lat.make_data()
+  sampled_train_set = train_set.sample(sampling)
+  sampled_train_set.save(lat.sampled_data_path)
     
-def cmd_classifier(args):
+def cmd_classifier(lat):
   """Run training from scratch for a classifier, using ."""
-  lat = Latens(args)
   train_set, tune_set, test_set = lat.make_data()
   sampled_set = lat.make_sampled_data()
   
@@ -380,9 +398,9 @@ def main():
   parser.add_argument('--num-classes', nargs=1,
                       default=[10], type=int,
                       help=docs.num_classes_help)
-  parser.add_argument('--num-examples', nargs=1,
+  parser.add_argument('--sample-size', nargs=1,
                       default=[1000], type=int,
-                      help=docs.num_examples_help)
+                      help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
                       default=['random'],
                       help=docs.sample_help)
@@ -403,22 +421,26 @@ def main():
   if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
-  if args.command == 'debug':
-    cmd_debug(args)
-  elif args.command == 'convert':
-    cmd_convert(args)
+  lat = Latens(args)
+
+  if args.command == 'convert':
+    cmd_convert(lat)
   elif args.command == 'autoencoder':
-    cmd_autoencoder(args)
-  elif args.command == 'reconstruct':
-    cmd_reconstruct(args)
+    cmd_autoencoder(lat)
   elif args.command == 'encode':
-    cmd_encode(args)
-  elif args.command == 'decode':
-    cmd_decode(args)
-  elif args.command == 'visualize':
-    cmd_visualize(args)
+    cmd_encode(lat)
+  elif args.command == 'sample':
+    cmd_sample(lat)
   elif args.command == 'classifier':
-    cmd_classifier(args)
+    cmd_classifier(lat)
+  elif args.command == 'reconstruct':
+    cmd_reconstruct(lat)
+  elif args.command == 'decode':
+    cmd_decode(lat)
+  elif args.command == 'visualize':
+    cmd_visualize(lat)
+  elif args.command == 'debug':
+    cmd_debug(lat)
   else:
     RuntimeError()
 

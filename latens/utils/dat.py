@@ -44,6 +44,8 @@ def _mnist_proto_from_example(example):
   return example.SerializeToString()
 
 def _mnist_proto_from_tensors(image, label):
+  logger.debug(f"image: {image}")
+  logger.debug(f"label: {label}")
   raise NotImplementedError("implement _mnist_proto_from_tensors")
 
 def _mnist_example_from_proto(proto):
@@ -137,7 +139,7 @@ def save_dataset(record_name, dataset,
 
   """
   logger.info(f"Writing dataset to {record_name}")
-  encoded_dataset = dataset.map(encode_entry,
+  encoded_dataset = dataset.map(unparse_entry,
                                 num_parallel_calls=self.num_parallel_calls)
   writer = tf.data.experimental.TFRecordWriter(record_name)
   write_op = writer.write(encoded_dataset)

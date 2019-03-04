@@ -9,9 +9,11 @@ description = """\
 Latens. An Unsupervised Learning approach to active learning.
 """
 
-command_choices = ['debug', 'autoencoder', 'reconstruct', 'convert',
-                   'encode', 'decode', 'classifier', 'visualize']
-command_help = "latens command to run"
+command_choices = ['convert', 'autoencoder', 'encode', 'sample', 'classifier',
+                   'reconstruct', 'decode', 'visualize', 'debug']
+command_help = """latens command to run. The core functionality depends on
+commands: 'convert', 'autoencoder', 'encode', 'sample', and 'classifier', in
+that order."""
 
 input_help = """Input dataset file or prefix. Prefix is used to store other
 files."""
@@ -51,7 +53,8 @@ dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 
 rep_activation_choices = {'sigmoid' : activations.sigmoid,
                           'relu' : activations.relu,
-                          'clu' : act.clu}
+                          'clu' : act.clu,
+                          'softmax' : activations.softmax}
 rep_activation_help = """Activation function to use at the representational
 layer. Default is clu (clipped linear unit)."""
 
@@ -73,7 +76,7 @@ load_help = """Prefer most recent epoch file rather than finished weights."""
 
 num_classes_help = """Specify number of classes for classifier. Default is 10."""
 
-num_examples_help = """Number of examples for a sampler to draw. Default is 1000."""
+sample_size_help = """Number of examples for a sampler to draw. Default is 1000."""
 
 sample_choices = {'random' : sam.RandomSampler,
                    'uniform' : sam.UniformSampler}

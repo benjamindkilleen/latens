@@ -12,7 +12,7 @@ import logging
 logger = logging.getLogger('latens')
 
 class Model():
-  def __init__(self, model_dir=None, dropout=0.2):
+  def __init__(self, model_dir=None, dropout=0.2, tensorboard=None):
     """Create a sequential model in self.model.
 
     In general, these layers should include an input layer. Furthermore,
@@ -28,6 +28,7 @@ class Model():
     self.model_dir = model_dir
     self.checkpoint_path = (None if model_dir is None else
                             os.path.join(model_dir, "cp-{epoch:04d}.hdf5"))
+    self.tensorboard = tensorboard
     
     self.dropout = dropout
     self.model = keras.models.Sequential()
@@ -56,6 +57,9 @@ class Model():
       callbacks.append(tf.keras.callbacks.ModelCheckpoint(
         self.checkpoint_path, verbose=1, save_weights_only=True,
         period=1))
+    if self.tensorboard:
+      # Need to have an actual director in which to store the logs.
+      raise NotImplementedError
     return callbacks
     
   def fit(self, *args, **kwargs):
