@@ -23,7 +23,6 @@ def plot_image(*images, columns=10, ticks=False):
       ax.set_aspect('equal')
 
   fig.subplots_adjust(wspace=0, hspace=0)  
-  # plt.colorbar(im, ax=axes.flat)
   
 def show_image(*images, **kwargs):
   plot_image(*images, **kwargs)

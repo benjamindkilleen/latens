@@ -297,7 +297,7 @@ def cmd_visualize(lat):
 
   rows = args.num_components[0]
   cols = 20
-  points = 0.3 * np.ones((rows, cols, args.num_components[0]), dtype=np.float32)
+  points = np.ones((rows, cols, args.num_components[0]), dtype=np.float32)
   for i in range(points.shape[0]):
     points[i,:,i] = np.linspace(0, 1.0, num=cols, dtype=np.float32)
 
