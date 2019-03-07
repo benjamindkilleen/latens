@@ -4,18 +4,21 @@
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
-\usepackage{amssymb,amsmath,bm}
+\usepackage{amssymb,amsmath,bm,bbm}
 \usepackage{hyperref}
 \usepackage{textcomp}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \def\vec#1{\ensuremath{\bm{{#1}}}}
 \def\mat#1{\vec{#1}}
+\DeclareMathOperator{\unif}{Unif}
 
 
 \sloppy % better line breaks
 \ninept
 
-\title{Query Selection based on Random Sampling of Latent Representations}
+\title{Progress Update: Query Selection based on Latent Space Sampling}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% If multiple authors, uncomment and edit the lines shown below.       %%
@@ -39,28 +42,151 @@
 }
 
 \begin{document}
-
 \maketitle
-% 
+
 \begin{abstract}
-  TODO: abstract
+  The advent of deep learning has facilitated remarkable success on increasingly
+  complex tasks. Large datasets are integral to this success, providing example
+  labels which guide training, but these labels are not always readily
+  available. The field of active learning addresses this issue by considering
+  ``curious'' learners which iteratively select query sets that, when annotated,
+  will most inform training. Crucially, this selection depends upon the
+  performance of a supervised learner on already-labeled examples, initially
+  selected randomly. Using techniques from unsupervised learning, our approach
+  leverages the unlabeled data to inform both query selection as well as
+  supervised training. Using an auto-encoder (AE), we consider various sampling
+  strategies in the learned latent space which will produce informative
+  examples. We further investigate the transfer of knowledge from the AE to a
+  supervised learner, in this case a classifier.
 \end{abstract}
-\noindent{\bf Index Terms}: computer vision, active learning, unsupervised
-learning
+\noindent{\bf Index Terms}: active learning, unsupervised learning, computer
+vision
 
 \section{Introduction}
 \label{sec:introduction}
+
+The collection and annotation of large datasets has been critical to the success
+of deep learning. Wherever such a dataset is available, it seems, the focus of
+the community eventually results in a supervised learner with high performance
+\emph{on that dataset}. Although that performance may extend to examples from
+similar tasks, many application domains are outside the scope of established
+datasets, and relevant annotations may not exist at all. This is the case
+especially for scientific image analysis, where the unique nature of each
+experiment sets it apart from conventional tasks and the labeling itself is the
+ultimate goal. In this context, one aims to train a supervised learner on as few
+labeled examples as possible, possibly leveraging the unlabeled data to do so.
+
+% \section{Related Work}
+% \label{sec:related-work}
+
+\section{Method}
+\label{sec:method}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=0.9\linewidth]{overview}
+  \caption{an overview of the query selection process. Given a large, unlabeled
+    dataset, we train an autoencoder to generate latent space representations of
+    each example. Next, the ``latent space sampling'' identifies examples which
+    are well-spread-out in the low-dimensional encoding. Finally, the selected
+    examples in the original dataset are labeled for training.}
+  \label{fig:overview}
+\end{figure*}
+
+Given the nature of this report, we separate the discussion of our envisioned
+method, in Section~\ref{sec:discussion}, with the description of our current
+method, given here. This method is subject to change, especially with regard to
+the auto-encoder architecture and sampling strategy.
+
+Latent space sampling uses a large unlabeled dataset to identify examples which
+should be labeled, according to one of several strategies (which we expound on
+in this report). Initially, we consider data matrix
+$X \in \mathbb{R}^{N\times D}$, where $N$ is the number of examples and $D$ is
+the dimensionality of each example. In our experiments, we use
+$28 \times 28 \times 1$ images, so $D = 784$. From this unlabeled set, we use an
+auto-encoder to learn a low-dimensional or latent space representation
+$Z \in \mathbb{R}^{N\times L}$ of $X$, where $L$ is the dimensionality of the
+latent space.
+
+Currently, we use a convolutional auto-encoder (CAE) to learn a 10-dimensional
+encoding of the dataset. The CAE consists of %TODO: CAE architecture
+The choice of activation function for the representational layer is driven by a
+combination of performance considerations---what generates good encodings---as
+well as sampling considerations. Initially, we envisioned that constraining the
+latent space to the hypercube $[0,1]^L$ would result in an easily sampled
+representation with good spread.\footnote{This vision has since changed. See
+  Section~\ref{sec:discussion} for details.} Experiments with the sigmoid
+activation function proved unsatisfying, and so following Nair and Hinton's
+Rectified Linear Unit \cite{nair_rectified_nodate}, we employ a clipped linear
+unit (CLU) given by $f(x) = \min(1, \max(0,x))$, in our initial
+experiments. This choice was made in order to guarantee a hypercube constrained
+representation $Z \in [0,1]^{N\times L}$ while still providing the performance
+advantages of the ReLU.
+
+Once we obtain $Z$, we select a sampling or index set $Q \subseteq [N]$ based on
+the distribution of $Z$. One strategy, which we employ in our preliminary
+experiments, is to sample from this space according to a random uniform
+distribution. As described in Algorithm~\ref{alg:uniform-sampling}, we draw a
+point $z \in [0,1]^L$ uniformly and, if any data-point representation $z_i$
+exists within a given distance $d(z,z_i)$, then we add $i$ to the query
+set. Figure~\ref{fig:overview} provides an overview of this representation
+learning and sampling process.
+
+\begin{algorithm}
+  \begin{algorithmic}[1]
+    \Require encoding $Z \in [0,1]^{N \times L}$, distance metric
+    $d : [0,1]^{2 \times L} \rightarrow \mathbb{R}$, distance threshold
+    $t \in \mathbb{R}$, $n \in \mathbb{N}$.
+    \State $Q \gets \{\}$
+    \While {$|Q| < n$}
+    \State Draw $z \in [0,1]^L \sim \unif^L(0,1)$
+    \For {$z_i \in Z$}
+    \Comment the $i$th row of $Z$
+    \If {$d(z, z_i) < t$}
+    \State $Q \gets Q \cup \{i\}$
+    \EndIf
+    \EndFor
+    \EndWhile
+    \State \Return $Q$
+  \end{algorithmic}
+  \caption{Approximate a uniform sampling of the latent-space hypercube
+    $[0,1]^L$ from the encoding $Z$.}
+  \label{alg:uniform-sampling}
+\end{algorithm}
+
+\section{Results}
+\label{sec:results}
+
+Although our main work until now has focused on implementation, we have some
+early results of training that are worth showing. Firstly, we visualize the
+behavior of an auto-encoder trained with $L = 10$. This auto-encoder was trained
+for 20 epochs on the 50,000 image training set. It achieved a mean average
+precision on the test set of 
+Figure~\ref{fig:autoencoder-visualization} shows decodings of points in
+latent-space, varying a different dimension in each row of the image. As can be
+seen,
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\linewidth]{visualize_decoding}
+  \caption{a visualization of the latent space $[0,1]^{10}$ learned by a simple
+    convolutional autoencoder. The $i$th row corresponds to variation of the
+    $i$th latent dimension from $0$ to $1$, fixing all other coordinates at
+    $0.3$. So the 9th image in the 3rd row represents the decoding of
+    $[0.3,0.3,0.45,0.3,0.3,0.3,0.3,0.3,0.3,0.3]$.}
+  \label{fig:autoencoder-visualization}
+\end{figure*}
 
 
 \section{Discussion}
 \label{sec:discussion}
   
 
-\section{Conclusions}
-\label{sec:conclusion}
+% \section{Conclusions}
+% \label{sec:conclusion}
 
-\section{Acknowledgements}
-\label{sec:acknowledgements}
+% \section{Acknowledgements}
+% \label{sec:acknowledgements}
 
 
 \newpage

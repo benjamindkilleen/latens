@@ -45,6 +45,7 @@ class Latens:
     # num_somethings
     self.num_components = args.num_components[0]
     self.num_classes = args.num_classes[0]
+    self.epochs = args.epochs[0]
 
     # sampling, etc
     self.sample_size = args.sample_size[0]
@@ -62,9 +63,12 @@ class Latens:
     self.overwrite = args.overwrite
     self.rep_activation = docs.rep_activation_choices[args.rep_activation[0]]
     self.image_shape = args.image_shape
-    self.model_dir = args.model_dir[0]
     self.batch_size = args.batch_size[0]
     self.dropout = args.dropout[0]
+
+    # model dirs?
+    self.model_dir = args.model_dir[0]
+    
 
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
