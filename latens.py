@@ -16,7 +16,7 @@ import os
 import argparse
 from glob import glob
 import tensorflow as tf
-from latens.utils import docs, dat, vis, misc
+from latens.utils import docs, dat, vis
 from latens import mod, sam
 from shutil import rmtree
 from time import time
