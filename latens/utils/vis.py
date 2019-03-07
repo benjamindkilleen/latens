@@ -8,7 +8,6 @@ import logging
 logger = logging.getLogger('artifice')
 
 def plot_image(*images, columns=10, ticks=False):
-  
   columns = min(columns, len(images))
   rows = max(1, len(images) // columns)
   fig, axes = plt.subplots(rows,columns, squeeze=False,
