@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  7 MAR 2019 16:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  7 MAR 2019 16:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -482,59 +482,64 @@ File: images/overview.pdf Graphic file (type pdf)
 Package pdftex.def Info: images/overview.pdf used on input line 87.
 (pdftex.def)             Requested size: 435.32419pt x 288.37146pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 153.
-
-<images/visualize_decoding.pdf, id=32, 722.7pt x 361.35pt>
-File: images/visualize_decoding.pdf Graphic file (type pdf)
-
-<use images/visualize_decoding.pdf>
-Package pdftex.def Info: images/visualize_decoding.pdf used on input line 168.
-(pdftex.def)             Requested size: 483.69684pt x 241.84961pt.
+put line 160.
  [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
-] [2pdfTeX warning (ext4): destination with the same identifier (name{figure.1}
-) has been already used, duplicate ignored
+]
+<images/visualize_decoding.pdf, id=56, 722.7pt x 361.35pt>
+File: images/visualize_decoding.pdf Graphic file (type pdf)
+
+<use images/visualize_decoding.pdf>
+Package pdftex.def Info: images/visualize_decoding.pdf used on input line 179.
+(pdftex.def)             Requested size: 227.62204pt x 113.80931pt.
+ [2pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.189 \newpage
+l.218 \newpage
               pdfTeX warning (ext4): destination with the same identifier (name
 {figure.2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.189 \newpage
+l.218 \newpage
                <./images/overview.pdf> <./images/visualize_decoding.pdf>]
 (./report.bbl
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 2.
 
+Overfull \hbox (20.04366pt too wide) in paragraph at lines 26--34
+\OT1/ptm/m/n/8 4824-[]imagenet-[]classi^^Lcation-[]with-[]deep-[]convolutional-
+[]neural-[]networks .
+ []
+
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
 ** the default language instead.
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 195.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 224.
  [3
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 195.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 224.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 195.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 195.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 224.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 224.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 8E2BAC07636ACE26B66B66139E12C9E3;225.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 195.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 224.
  ) 
 Here is how much of TeX's memory you used:
- 7327 strings out of 493089
- 105397 string characters out of 6134842
- 194431 words of memory out of 5000000
- 10666 multiletter control sequences out of 15000+600000
- 30701 words of font info for 77 fonts, out of 8000000 for 9000
+ 7333 strings out of 493089
+ 105524 string characters out of 6134842
+ 195408 words of memory out of 5000000
+ 10669 multiletter control sequences out of 15000+600000
+ 32385 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,8n,29p,483b,340s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,8n,29p,483b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/tex
 live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
@@ -547,10 +552,10 @@ xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/201
 dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on report.pdf (3 pages, 575595 bytes).
+Output written on report.pdf (3 pages, 582736 bytes).
 PDF statistics:
- 1325 PDF objects out of 1440 (max. 8388607)
- 1067 compressed objects within 11 object streams
- 14 named destinations out of 1000 (max. 500000)
+ 1335 PDF objects out of 1440 (max. 8388607)
+ 1077 compressed objects within 11 object streams
+ 16 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

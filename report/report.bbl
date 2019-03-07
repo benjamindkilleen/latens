@@ -21,6 +21,23 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{krizhevsky_imagenet_2012}
+\BIBentryALTinterwordspacing
+A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton, ``{ImageNet} {Classification}
+  with {Deep} {Convolutional} {Neural} {Networks},'' in \emph{Advances in
+  {Neural} {Information} {Processing} {Systems} 25}, F.~Pereira, C.~J.~C.
+  Burges, L.~Bottou, and K.~Q. Weinberger, Eds.\hskip 1em plus 0.5em minus
+  0.4em\relax Curran Associates, Inc., 2012, pp. 1097--1105. [Online].
+  Available:
+  \url{http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}
+\BIBentrySTDinterwordspacing
+
+\bibitem{goodfellow_deep_nodate}
+\BIBentryALTinterwordspacing
+I.~Goodfellow, Y.~Bengio, and A.~Courville, ``Deep {Learning}.'' [Online].
+  Available: \url{http://www.deeplearningbook.org/contents/autoencoders.html}
+\BIBentrySTDinterwordspacing
+
 \bibitem{nair_rectified_nodate}
 V.~Nair and G.~E. Hinton, ``\BIBforeignlanguage{en}{Rectified {Linear} {Units}
   {Improve} {Restricted} {Boltzmann} {Machines}},'' p.~8.

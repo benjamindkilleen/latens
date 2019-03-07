@@ -109,16 +109,23 @@ $Z \in \mathbb{R}^{N\times L}$ of $X$, where $L$ is the dimensionality of the
 latent space.
 
 Currently, we use a convolutional auto-encoder (CAE) to learn a 10-dimensional
-encoding of the dataset. The CAE consists of %TODO: CAE architecture
-The choice of activation function for the representational layer is driven by a
-combination of performance considerations---what generates good encodings---as
-well as sampling considerations. Initially, we envisioned that constraining the
-latent space to the hypercube $[0,1]^L$ would result in an easily sampled
-representation with good spread.\footnote{This vision has since changed. See
-  Section~\ref{sec:discussion} for details.} Experiments with the sigmoid
-activation function proved unsatisfying, and so following Nair and Hinton's
-Rectified Linear Unit \cite{nair_rectified_nodate}, we employ a clipped linear
-unit (CLU) given by $f(x) = \min(1, \max(0,x))$, in our initial
+encoding of the dataset \cite{krizhevsky_imagenet_2012,
+  goodfellow_deep_nodate}. The CAE consists of an encoder and a decoder. The
+encoder uses multiple $3\times 3$ convolutional layers broken up with two
+$2\times 2$ max-pooling to reduce the image dimensions to $7\times 7 \times 64$
+in the last convolutional layer. This is followed by two dense layers with 1024
+and $L$ nodes respectively. The decoder reverses this architecture, replacing
+max-pool layers with $2\times 2$ transpose convolutions. In each layer, we use
+the ReLU activation function, except for the encoder's final layer, the
+``representation layer.'' The choice of activation for the representation layer
+is driven by a combination of performance considerations---what generates good
+encodings---as well as sampling considerations. Initially, we envisioned that
+constraining the latent space to the hypercube $[0,1]^L$ would result in an
+easily sampled representation with good spread.\footnote{This vision has since
+  changed. See Section~\ref{sec:discussion} for details.} Experiments with the
+sigmoid activation function proved unsatisfying, and so following Nair and
+Hinton's Rectified Linear Unit \cite{nair_rectified_nodate}, we employ a clipped
+linear unit (CLU) given by $f(x) = \min(1, \max(0,x))$, in our initial
 experiments. This choice was made in order to guarantee a hypercube constrained
 representation $Z \in [0,1]^{N\times L}$ while still providing the performance
 advantages of the ReLU.
@@ -160,27 +167,46 @@ learning and sampling process.
 Although our main work until now has focused on implementation, we have some
 early results of training that are worth showing. Firstly, we visualize the
 behavior of an auto-encoder trained with $L = 10$. This auto-encoder was trained
-for 20 epochs on the 50,000 image training set. It achieved a mean average
-precision on the test set of 
-Figure~\ref{fig:autoencoder-visualization} shows decodings of points in
-latent-space, varying a different dimension in each row of the image. As can be
-seen,
-
-\begin{figure*}
+for 20 epochs on the 50,000 image training set. It achieved a mean absolute
+error on the test set of 0.0604. Figure~\ref{fig:autoencoder-visualization}
+shows decodings of points in latent-space, varying a different dimension in each
+row of the image. As can be seen, the representation produces many images that
+are meaningful, but it does not fully explore the available space as might be
+desired for our purposes.
+z
+\begin{figure}
   \centering
   \includegraphics[width=\linewidth]{visualize_decoding}
   \caption{a visualization of the latent space $[0,1]^{10}$ learned by a simple
     convolutional autoencoder. The $i$th row corresponds to variation of the
     $i$th latent dimension from $0$ to $1$, fixing all other coordinates at
-    $0.3$. So the 9th image in the 3rd row represents the decoding of
-    $[0.3,0.3,0.45,0.3,0.3,0.3,0.3,0.3,0.3,0.3]$.}
+    $0.3$.}
   \label{fig:autoencoder-visualization}
-\end{figure*}
+\end{figure}
 
+Sampling the latent representation $Z$ for 1000 examples according to our
+method, we trained a simple convolutional classifier from scratch. This achieved
+93.1\% accuracy on the 10,000 example test set. Although seemingly promising, we
+note that a random sampling of the training set produced similar
+results. Additionally, this preliminary finding trained the classifier from
+scratch, without using any transfer learning.
 
 \section{Discussion}
 \label{sec:discussion}
-  
+
+Because of the difficulties we face with a simple CAE, we plan to implement a
+variational auto-encoder (VAE) with convolution layers, restricting the
+latent-space to an even lower dimension such as $L=2$ in the hopes of producing
+a more meaningful and easily-sampled $Z$, while still using
+Algorithm~\ref{alg:uniform-sampling}. After this step, it should no longer be
+necessary to restrict the representation layer to the hypercube $[0,1]^L$.
+
+Furthermore, we have some interest in exploring latent-space points which are
+not in the original training set. If time allows, we plan to use the decodings
+of regularly sampled points in the latent space as a training set for a
+classifier, either employing an actual human annotator to provide labels for
+these novel examples or using a separate classifier trained on the full dataset
+to simulate a human labeler.
 
 % \section{Conclusions}
 % \label{sec:conclusion}

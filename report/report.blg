@@ -15,45 +15,45 @@ Warning--empty journal in nair_rectified_nodate
 Warning--empty year in nair_rectified_nodate
 
 Done.
-You've used 1 entry,
+You've used 3 entries,
             4039 wiz_defined-function locations,
-            813 strings with 7340 characters,
-and the built_in function-call counts, 509 in all, are:
-= -- 28
-> -- 9
-< -- 1
-+ -- 4
-- -- 2
-* -- 43
-:= -- 94
-add.period$ -- 2
-call.type$ -- 1
-change.case$ -- 1
-chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 38
-empty$ -- 36
-format.name$ -- 3
-if$ -- 89
+            826 strings with 7914 characters,
+and the built_in function-call counts, 2137 in all, are:
+= -- 149
+> -- 62
+< -- 12
++ -- 31
+- -- 12
+* -- 126
+:= -- 331
+add.period$ -- 7
+call.type$ -- 3
+change.case$ -- 5
+chr.to.int$ -- 30
+cite$ -- 5
+duplicate$ -- 148
+empty$ -- 170
+format.name$ -- 16
+if$ -- 459
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 7
-newline$ -- 26
-num.names$ -- 1
-pop$ -- 22
+int.to.str$ -- 3
+missing$ -- 29
+newline$ -- 36
+num.names$ -- 5
+pop$ -- 88
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 28
+skip$ -- 146
 stack$ -- 0
-substring$ -- 3
-swap$ -- 22
-text.length$ -- 1
+substring$ -- 75
+swap$ -- 110
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 1
+type$ -- 3
 warning$ -- 2
-while$ -- 2
-width$ -- 2
-write$ -- 29
+while$ -- 9
+width$ -- 4
+write$ -- 51
 (There were 2 warnings)
