@@ -2,3 +2,5 @@ data/!mnist
 data/
 models/
 **.pyc
+**.err
+**.out
