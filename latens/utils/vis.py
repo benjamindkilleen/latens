@@ -23,15 +23,17 @@ def plot_image(*images, columns=10, ticks=False):
 
   fig.subplots_adjust(wspace=0, hspace=0)  
 
-def plot_encodings(encodings, labels=None, num_classes=10):
-  xs = encodings[:,0]
-  ys = encodings[:,1]
+def plot_encodings(encodings, labels=None, num_classes=10, N=10000):
+  xs = encodings[:N,0]
+  ys = encodings[:N,1]
+  ls = labels[:N]
   plt.figure()
   if labels is None:
-    plt.plot(xs, ys, 'b.')
+    plt.plot(xs, ys, 'b,')
   else:
     for i in range(num_classes):
-      plt.plot(xs[labels == i], ys[labels == i], f'C{i}.', label=str(i))
+      plt.plot(xs[ls == i], ys[ls == i], f'C{i}.',
+               markersize=1, label=str(i))
     plt.legend()
   plt.title("Latent Space Encodings")
   

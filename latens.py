@@ -67,16 +67,21 @@ class Latens:
     self.batch_size = args.batch_size[0]
     self.dropout = args.dropout[0]
 
-    # model dirs
-    self.model_dir_root = args.model_dir_root[0]
-    if self.model_dir_root is None:
-      self.autoencoder_dir = None
-      self.classifier_dir = None
-    else:
-      if not os.path.exists(self.model_dir_root):
-        os.mkdir(self.model_dir_root)
-      self.autoencoder_dir = os.path.join(self.model_dir_root, 'autoencoder')
-      self.classifier_dir = os.path.join(self.model_dir_root, 'classifier')
+    # model dir and dependent data
+    self.model_root = args.model_root[0]
+    if not os.path.exists(self.model_root):
+      os.mkdir(self.model_root)
+    self.autoencoder_dir = os.path.join(self.model_root, 'autoencoder')
+    self.classifier_dir = os.path.join(self.model_root, 'classifier')
+    self.encodings_path = os.path.join(self.model_root, 'encodings.npy')
+    self.random_sample_path = os.path.join(
+      self.model_root, f'_random_sample_{self.sample_size}.npy')
+    self.random_sample_data_path = os.path.join(
+      self.model_root, f'_random_sample_{self.sample_size}_data.tfrecord')
+    self.uniform_sample_path = os.path.join(
+      self.model_root, f'_uniform_sample_{self.sample_size}.npy')
+    self.uniform_sample_data_path = os.path.join(
+      self.model_root, f'_uniform_sample_{self.sample_size}_data.tfrecord')
 
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
@@ -92,17 +97,6 @@ class Latens:
     self.input_prefix, _ = os.path.splitext(args.input[0])
     self.npz_path = self.input_prefix + '.npz'
     self.data_path = self.input_prefix + '.tfrecord'
-    self.encodings_path = (
-      self.input_prefix + '_encodings.npy')
-    self.random_sample_path = (
-      self.input_prefix + f'_random_sample_{self.sample_size}.npy')
-    self.random_sample_data_path = (
-      self.input_prefix + f'_random_sample_{self.sample_size}_data.tfrecord')
-    self.uniform_sample_path = (
-      self.input_prefix + f'_uniform_sample_{self.sample_size}.npy')
-    self.uniform_sample_data_path = (
-      self.input_prefix +
-      f'_uniform_sample_{self.sample_size}_data.tfrecord')
 
     # output files, mainly for visualization
     self.show = args.show
@@ -131,20 +125,24 @@ class Latens:
     data = np.load(self.npz_path)
     return data['data'][:self.train_size] / 255., data['labels'][:self.train_size]
     
-  def make_data(self):
+  def make_data(self, training=True):
     """Make the train, test, and split sets.
 
     :returns: train, test, and split sets
     :rtype: dat.TrainDataInput, dat.DataInput, dat.DataInput
 
     """
+    if training:
+      types = [dat.TrainDataInput, dat.DataInput, dat.DataInput]
+    else:
+      types = [dat.DataInput, dat.DataInput, dat.DataInput]
     data = dat.Data(self.data_path,
                     num_parallel_calls=self.cores,
                     batch_size=self.batch_size,
                     num_classes=self.num_classes,
                     num_components=self.num_components)
     return data.split(
-    *self.splits, types=[dat.TrainDataInput, dat.DataInput, dat.DataInput])
+    *self.splits, types=types)
   
   def make_sample_data(self):
     return dat.TrainDataInput(
@@ -251,7 +249,7 @@ def cmd_autoencoder(lat):
 
 def cmd_reconstruct(lat):
   """Run reconstruction."""
-  train_set, tune_set, test_set = lat.make_data()
+  train_set, tune_set, test_set = lat.make_data(training=False)
 
   model = lat.make_autoencoder()
   model.load()
@@ -265,7 +263,7 @@ def cmd_reconstruct(lat):
 
 def cmd_encode(lat):
   """Encodes the training set."""
-  train_set, tune_set, test_set = lat.make_data()
+  train_set, tune_set, test_set = lat.make_data(training=False)
 
   model = lat.make_autoencoder()
   model.load()
@@ -309,7 +307,7 @@ def cmd_visualize(lat):
   if lat.show:
     plt.show()
   elif lat.output is not None:
-    plt.savefig(lat.output)
+    plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
   else:
     plt.close()
     
@@ -356,12 +354,12 @@ def main():
                       default=[None],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
-                      default=[None],
+                      default=['docs'],
                       help=docs.output_help)
   parser.add_argument('--show', action='store_true',
                       help=docs.show_help)
-  parser.add_argument('--model-dir-root', '--model-dir', '-m', nargs=1,
-                      default=[None], help=docs.model_dir_help)
+  parser.add_argument('--model-root', '--model-dir', '-m', nargs=1,
+                      default=['models/tmp'], help=docs.model_dir_help)
   parser.add_argument('--epochs', '-e', nargs=1,
                       default=[1], type=int,
                       help=docs.epochs_help)
