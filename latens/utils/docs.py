@@ -80,7 +80,8 @@ num_classes_help = """Specify number of classes for classifier. Default is 10.""
 sample_size_help = """Number of examples for a sampler to draw. Default is 1000."""
 
 sample_choices = {'random' : sam.RandomSampler,
-                   'uniform' : sam.UniformSampler}
+                  'normal' : sam.NormalSampler,
+                  'uniform' : sam.UniformSampler}
 sample_help = """Type of sampling to use. Default is 'random'."""
 
 epoch_multiplier_help = """Runs multiple epochs as a single keras 'epoch',

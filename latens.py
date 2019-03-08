@@ -74,15 +74,7 @@ class Latens:
     self.autoencoder_dir = os.path.join(self.model_root, 'autoencoder')
     self.classifier_dir = os.path.join(self.model_root, 'classifier')
     self.encodings_path = os.path.join(self.model_root, 'encodings.npy')
-    self.random_sample_path = os.path.join(
-      self.model_root, f'_random_sample_{self.sample_size}.npy')
-    self.random_sample_data_path = os.path.join(
-      self.model_root, f'_random_sample_{self.sample_size}_data.tfrecord')
-    self.uniform_sample_path = os.path.join(
-      self.model_root, f'_uniform_sample_{self.sample_size}.npy')
-    self.uniform_sample_data_path = os.path.join(
-      self.model_root, f'_uniform_sample_{self.sample_size}_data.tfrecord')
-
+    
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
     self.train_steps = int(np.ceil(
@@ -101,25 +93,18 @@ class Latens:
     # output files, mainly for visualization
     self.show = args.show
     self.output = args.output[0]
-
     
   @property
   def sample_path(self):
-    if self.sample == 'random':
-      return self.random_sample_path
-    elif self.sample == 'uniform':
-      return self.uniform_sample_path
-    else:
-      raise NotImplementedError
+    return os.path.join(
+      self.model_root,
+      f'{self.sample}_sampling_{self.sample_size}.npy')
     
   @property
   def sample_data_path(self):
-    if self.sample == 'random':
-      return self.random_sample_data_path
-    elif self.sample == 'uniform':
-      return self.uniform_sample_data_path
-    else:
-      raise NotImplementedError
+    return os.path.join(
+      self.model_root,
+      f'{self.sample}_sampling_{self.sample_size}_data.tfrecord')
 
   def load_train(self):
     data = np.load(self.npz_path)
@@ -316,13 +301,20 @@ def cmd_sample(lat):
   file."""
   encodings = np.load(lat.encodings_path)
   sampler = lat.sampler_type(sample_size=lat.sample_size)
-  sample = sampler(encodings)
-  np.save(lat.sample_path, sample)
+  sampling = sampler(encodings)
+  np.save(lat.sample_path, sampling)
 
-  train_set, tune_set, test_set = lat.make_data()
-  sample_train_set = train_set.sample(sample)
+  train_set, tune_set, test_set = lat.make_data(training=False)
+  sample_train_set = train_set.sample(sampling)
   sample_train_set.save(lat.sample_data_path)
 
+  train_images, train_labels = lat.load_train()
+
+  vis.plot_sampled_encodings(encodings, sampling, labels=train_labels)
+  if lat.show:
+    plt.show()
+  else:
+    plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
   
 def cmd_classifier(lat):
   """Run training from scratch for a classifier, using ."""
@@ -416,7 +408,7 @@ def main():
                       default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['random'],
+                      default=['normal'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,

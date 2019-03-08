@@ -270,7 +270,6 @@ class AutoEncoder(Model):
     raise NotImplementedError("subclasses implement create_decoding_layers()")
     
   def _create_encoder(self):
-    
     return keras.models.Sequential(layers=self.encoding_layers)
 
   def _create_decoder(self):
@@ -300,7 +299,8 @@ class AutoEncoder(Model):
     self.encoder.compile(**kwargs)
 
   def encode(self, *args, **kwargs):
-    return self.encoder.predict(*args, **kwargs)
+    enc = self.encoder.predict(*args, **kwargs)
+    return enc[:,:self.latent_dim]
 
   def encode_generator(self, *args, **kwargs):
     return self.encoder.predict_generator(*args, **kwargs)

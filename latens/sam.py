@@ -67,33 +67,32 @@ class RandomSampler(Sampler):
     sampling[perm[:n]] = 1
     return sampling
 
-  
-class UniformSampler(Sampler):
-  def __init__(self, low=0.0, high=1.0, threshold=0.2,
-               metric='euclidean', **kwargs):
-    """Samples uniformly over the space covered by points within [low,hi].
 
-    :param low: ignored
-    :param high: ignored
-    :param threshold: distance threshold at which to resample.
-    :param metric: passed to scipy.spatial.distance.cdist
+class SpatialSampler(Sampler):
+  def __init__(self, threshold=0.05, metric='euclidean', **kwargs):
+    """Samples over a space according to some distribution.
+
+    Subclasses should override self.draw() using some distribution.
 
     """
-    self.low = low
-    self.high = high
     self.threshold = threshold
     self.metric = metric
     super().__init__(**kwargs)
-    
+
+  def draw(self, shape):
+    """Draw points from a given distribution.
+
+    :param shape: shape of array to draw
+    :returns: numpy array of points
+    """
+    raise NotImplementedError
+
   def sample(self, points):
-    """Sample according to uniform sampling.
+    """Sample according to the distribution.
 
     For each randomly sampled point, finds the closest point from points,
     according the given distance metric. For each of these steps, calculates nxN
     pairwise distances, pretty inefficiently.
-    
-    Draws points in the uniform distribution in each component x from
-    `[min(x) - thresh, max(x) + thresh]`
 
     TODO: use an Approximate Nearest Neighbor algorithm instead
     
@@ -109,17 +108,13 @@ class UniformSampler(Sampler):
     
     while n > 0:
       logger.debug(f"sampler: drawing {n} points")
-      draws = np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
+      draws = self.draw((n, points.shape[1]))
       distances = scipy.spatial.distance.cdist(
         draws, points, metric=self.metric) # (n,N) array of distances
 
-      # index of closest point to each new draw
-      closest_indices = np.argmin(distances, axis=1) 
-      
-      # distance to closest point for each new draw
+      closest_indices = np.argmin(distances, axis=1)
       closest_distances = np.min(distances, axis=1) # len == n
-      # logger.debug(f"closest distances: {closest_distances}")
-      
+
       # indices to include in the sampling (with possible repetitions)
       indices = closest_indices[closest_distances <= self.threshold]
       for idx in indices:
@@ -128,3 +123,40 @@ class UniformSampler(Sampler):
       n -= indices.shape[0]
       
     return sampling
+
+               
+class NormalSampler(SpatialSampler):
+  def __init__(self, mean=0.0, std=1.0,
+               **kwargs):
+    """Sample according to a normal distribution, identical in each dimension.
+
+    :param mean: 
+    :param std: 
+    :returns: 
+    :rtype:
+
+    """
+    self.mean = mean
+    self.std = std
+    super().__init__(**kwargs)
+
+  def draw(self, shape):
+    return np.random.normal(loc=self.mean, scale=self.std, size=shape)
+  
+class UniformSampler(SpatialSampler):
+  def __init__(self, low=0.0, high=1.0, 
+               **kwargs):
+    """Samples uniformly over the space covered by points within [low,hi].
+
+    :param low: ignored
+    :param high: ignored
+    :param threshold: distance threshold at which to resample.
+    :param metric: passed to scipy.spatial.distance.cdist
+
+    """
+    self.low = low
+    self.high = high
+    super().__init__(**kwargs)
+
+  def draw(self, shape):
+    return np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
