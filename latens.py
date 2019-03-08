@@ -43,7 +43,8 @@ class Latens:
     self.tensorboard = args.tensorboard
 
     # num_somethings
-    self.num_components = args.num_components[0]
+    self.latent_dim = args.latent_dim[0]
+    self.num_components = 2*self.latent_dim # TODO: automate
     self.num_classes = args.num_classes[0]
     self.epochs = args.epochs[0]
 
@@ -125,7 +126,10 @@ class Latens:
       return self.uniform_sample_data_path
     else:
       raise NotImplementedError
-    
+
+  def load_train(self):
+    data = np.load(self.npz_path)
+    return data['data'][:self.train_size] / 255., data['labels'][:self.train_size]
     
   def make_data(self):
     """Make the train, test, and split sets.
@@ -151,10 +155,10 @@ class Latens:
       num_components=self.num_components)
   
   def make_autoencoder(self):
-    model = mod.ConvAutoEncoder(
+    model = mod.ConvVariationalAutoEncoder(
       self.image_shape,
-      self.num_components,
-      model_dir=self.model_dir,
+      self.latent_dim,
+      model_dir=self.autoencoder_dir,
       rep_activation=self.rep_activation,
       dropout=self.dropout,
       tensorboard=self.tensorboard)
@@ -162,11 +166,11 @@ class Latens:
     model.compile(learning_rate=self.learning_rate)
     return model
 
-  def make_conv_classifier(self):
+  def make_classifier(self):
     model = mod.ConvClassifier(
       self.image_shape,
       self.num_classes,
-      model_dir=self.model_dir,
+      model_dir=self.classifier_dir,
       dropout=self.dropout,
       tensorboard=self.tensorboard)
     
@@ -249,24 +253,15 @@ def cmd_reconstruct(lat):
   """Run reconstruction."""
   train_set, tune_set, test_set = lat.make_data()
 
-  model = mod.ConvAutoEncoder(
-    lat.image_shape,
-    lat.num_components,
-    model_dir=lat.model_dir,
-    rep_activation=lat.rep_activation,
-    dropout=lat.dropout)
-  
-  model.compile(learning_rate=lat.learning_rate)
-
+  model = lat.make_autoencoder()
   model.load()
 
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
-  if tf.executing_eagerly():
-    for (original, _), reconstruction in zip(test_set, reconstructions):
-      vis.show_image(original, reconstruction)
-  else:
-    for i in range(reconstructions.shape[0]):
-      vis.show_image(reconstructions[i])
+  get_next = train_set.get_next
+  with tf.Session() as sess:
+    for reconstruction in reconstructions:
+      image, label = sess.run(get_next)
+      vis.show_image(image, reconstruction)
 
 def cmd_encode(lat):
   """Encodes the training set."""
@@ -282,7 +277,7 @@ def cmd_encode(lat):
   
   logger.debug(f"encodings:\n{encodings}")
   
-  if args.output[0] == 'show':
+  if lat.show:
     vis.show_encodings(encodings)
     
   np.save(lat.encodings_path, encodings)
@@ -307,24 +302,16 @@ def cmd_decode(lat):
 
 def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
-  model = lat.make_autoencoder()
-  model.load()
-
-  rows = lat.num_components
-  cols = 20
-  points = np.ones((rows, cols, lat.num_components), dtype=np.float32)
-  for i in range(points.shape[0]):
-    points[i,:,i] = np.linspace(0, 1.0, num=cols, dtype=np.float32)
-
-  images = model.decode(points.reshape(-1, lat.num_components), verbose=1,
-                        batch_size=lat.batch_size)
-
-  vis.plot_image(*images, columns=cols)
+  images, labels = lat.load_train()
+  encodings = np.load(lat.encodings_path)
+  
+  vis.plot_encodings(encodings, labels=labels)
   if lat.show:
     plt.show()
-  else:
+  elif lat.output is not None:
     plt.savefig(lat.output)
-
+  else:
+    plt.close()
     
 def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
@@ -344,7 +331,7 @@ def cmd_classifier(lat):
   train_set, tune_set, test_set = lat.make_data()
   sample_set = lat.make_sample_data()
   
-  model = lat.make_conv_classifier()
+  model = lat.make_classifier()
   if not args.overwrite:
     model.load()
 
@@ -386,9 +373,9 @@ def main():
   parser.add_argument('--l2-reg', nargs=1,
                       default=[None], type=float,
                       help=docs.l2_reg_help)
-  parser.add_argument('--num-components', '--components', '-n', nargs=1,
-                      default=[10], type=int,
-                      help=docs.num_components_help)
+  parser.add_argument('--latent-dim', '-L', nargs=1,
+                      default=[2], type=int,
+                      help=docs.latent_dim_help)
   parser.add_argument('--splits', nargs=3,
                       default=[50000,10000,10000],
                       type=int,
@@ -404,7 +391,7 @@ def main():
                       help=docs.dropout_help)
   parser.add_argument('--rep-activation', nargs=1,
                       choices=docs.rep_activation_choices,
-                      default=[None],
+                      default=['None'],
                       help=docs.rep_activation_help)
   parser.add_argument('--learning-rate', '-l', nargs=1,
                       default=[0.1], type=float,

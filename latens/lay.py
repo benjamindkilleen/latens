@@ -14,16 +14,22 @@ class Sampling(keras.layers.Layer):
   Considers the first half of an input tensor to be the mean, second half to be
   the log variance
 
-  """    
+  """
+  def __init__(self, *args,
+               epsilon_std=1.0,
+               **kwargs):
+    self.epsilon_std = epsilon_std
+    super().__init__(*args, **kwargs)
+  
   def call(self, inputs):
     latent_dim = tf.shape(inputs)[1] // 2
-    z_mean = self.representation[:,:latent_dim]
-    z_log_std = self.representation[:,latent_dim:]
-    epsilon = tf.random_normal(
-      shape=(self.batch_size, self.num_components),
-      mean=0.0, std=self.epsilon_std,
+    z_mean = inputs[:,:latent_dim]
+    z_log_std = inputs[:,latent_dim:]
+    epsilon = tf.random.normal(
+      shape=tf.shape(z_log_std),
+      mean=0.0, stddev=self.epsilon_std,
       dtype=z_mean.dtype)
-    return z_mean + epsilon * tf.exp(z_log_sigma)
+    return z_mean + epsilon * tf.exp(z_log_std)
   
   def compute_output_shape(self, input_shape):
     return (input_shape[0], input_shape[1] // 2)

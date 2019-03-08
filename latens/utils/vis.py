@@ -22,14 +22,22 @@ def plot_image(*images, columns=10, ticks=False):
       ax.set_aspect('equal')
 
   fig.subplots_adjust(wspace=0, hspace=0)  
+
+def plot_encodings(encodings, labels=None, num_classes=10):
+  xs = encodings[:,0]
+  ys = encodings[:,1]
+  plt.figure()
+  if labels is None:
+    plt.plot(xs, ys, 'b.')
+  else:
+    for i in range(num_classes):
+      plt.plot(xs[labels == i], ys[labels == i], f'C{i}.', label=str(i))
+    plt.legend()
+  plt.title("Latent Space Encodings")
   
 def show_image(*images, **kwargs):
   plot_image(*images, **kwargs)
   plt.show()
-
-def plot_encodings(encodings, num=20):
-  im = plt.imshow(encodings[:min(num, encodings.shape[0])].T, cmap='magma')
-  plt.colorbar(im)
 
 def show_encodings(encodings, **kwargs):
   plot_encodings(encodings, **kwargs)

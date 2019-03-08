@@ -170,7 +170,7 @@ class Data(object):
       raise ValueError(f"unrecognized data '{data}'")
 
     self.num_parallel_calls = kwargs.get('num_parallel_calls')
-    self.num_components = kwargs.get('num_components', 10)
+    self.num_components = kwargs.get('num_components', 2)
     self.num_classes = kwargs.get('num_classes', 10)
     self._kwargs = kwargs
 
@@ -220,6 +220,10 @@ class Data(object):
     return self.postprocess(
       self._dataset.map(lambda x,y : (x,tf.identity(x)),
                         num_parallel_calls=self.num_parallel_calls))
+
+  @property
+  def get_next(self):
+    return self._dataset.make_one_shot_iterator().get_next()
         
   def split(self, *splits, types=None):
     """Split the dataset into different sets.

@@ -3,7 +3,8 @@
 import tensorflow as tf
 from tensorflow import keras
 from shutil import rmtree
-from latens.utils import dat, vis, act, lay
+from latens import lay
+from latens.utils import dat, vis, act
 import os
 import numpy as np
 from glob import glob
@@ -11,6 +12,15 @@ import logging
 
 logger = logging.getLogger('latens')
 
+def log_model(model):
+  logger.info(f'model: {model.name}')
+  log_layers(model.layers)
+
+def log_layers(layers):
+  for layer in layers:
+    logger.info(
+      f"layer:{layer.input_shape} -> {layer.output_shape}:{layer.name}")
+      
 class Model():
   def __init__(self, model, model_dir=None, tensorboard=None):
     """Wrapper around a keras.Model for saving, loading, and running.
@@ -32,9 +42,8 @@ class Model():
                             os.path.join(model_dir, "cp-{epoch:04d}.hdf5"))
     self.tensorboard = tensorboard
     
-    self.model = model    
-    for layer in self.model.layers:
-      logger.debug(f"layer:{layer.input_shape} -> {layer.output_shape}:{layer.name}")
+    self.model = model
+    log_model(self.model)
 
   def compile(self, *args, **kwargs):
     raise NotImplementedError
@@ -193,7 +202,8 @@ class ConvClassifier(Classifier):
   
 
 class AutoEncoder(Model):
-  def __init__(self, input_shape, num_components,
+  def __init__(self, input_shape, latent_dim,
+               num_components=None,
                rep_activation=None,
                dropout=0.2, 
                **kwargs):
@@ -207,11 +217,11 @@ class AutoEncoder(Model):
 
     To create a custom loss, subclasses can overwrite the 'self.loss()' method,
     as in superclasses.
-    
+
     Optionally, subclasses can override self.create_encoder and
     self.create_decoder, which currently just use the sequential models
     above. This may be desired, for instance, with variational autoencoders,
-    where self.representation really has 2*num_components components, half of
+    where self.representation really has 2*latent_dim components, half of
     which should be discarded for a strict encoding.
 
     Subclasses should implement create_encoding_layers() and
@@ -221,15 +231,18 @@ class AutoEncoder(Model):
     architecture.
 
     :param input_shape: shape of the input
-    :param num_components: 
+    :param latent_dim: dimension of the latent space
+    :param num_components: number of components in representation, default uses
+    latent_dim
     :param rep_activation: activation at the representation_layer
+    :param dropout: 
     :returns: 
-    :rtype:
+    :rtype: 
 
     """
-
     self.input_shape = input_shape
-    self.num_components = num_components
+    self.latent_dim = latent_dim
+    self.num_components = latent_dim if num_components is None else num_components
     self.rep_activation = rep_activation
     self.dropout = dropout
 
@@ -238,8 +251,8 @@ class AutoEncoder(Model):
     self.decoding_layers = self.create_decoding_layers()
     encoder = self._create_encoder()
     decoder = self._create_decoder()
-    
-    inputs = keras.layers.InputLayer(input_shape)
+
+    inputs = keras.layers.Input(input_shape)
     self.representation = encoder(inputs)
     outputs = decoder(self.representation)
     model = keras.Model(inputs=inputs, outputs=outputs)
@@ -249,7 +262,7 @@ class AutoEncoder(Model):
     # for encoding/decoding after the fact
     self.encoder = self.create_encoder()
     self.decoder = self.create_decoder()
-
+    
   def create_encoding_layers(self):
     raise NotImplementedError("subclasses implement create_encoding_layers()")
 
@@ -257,6 +270,7 @@ class AutoEncoder(Model):
     raise NotImplementedError("subclasses implement create_decoding_layers()")
     
   def _create_encoder(self):
+    
     return keras.models.Sequential(layers=self.encoding_layers)
 
   def _create_decoder(self):
@@ -299,7 +313,7 @@ class AutoEncoder(Model):
 
   
 class ConvAutoEncoder(AutoEncoder):
-  def __init__(self, input_shape, num_components,
+  def __init__(self, input_shape, latent_dim,
                level_filters=[64,32,32],
                level_depth=2,
                dense_nodes=[1024],
@@ -308,7 +322,7 @@ class ConvAutoEncoder(AutoEncoder):
     """Create a convolutional autoencoder.
 
     :param input_shape: shape of the inputs
-    :param num_components: number of components in the representation
+    :param latent_dim: dimension of the representation
     :param level_filters: number of filters to use at each level. Default is
     [64,32,32].
     :param level_depth: how many convolutional layers to pass the
@@ -332,11 +346,11 @@ class ConvAutoEncoder(AutoEncoder):
                           input_shape[1] // scale_factor,
                           1 if len(level_filters) == 0 else level_filters[-1])
     
-    super().__init__(input_shape, num_components, **kwargs)
+    super().__init__(input_shape, latent_dim, **kwargs)
 
   def create_encoding_layers(self):
     layers = []
-    layers.append(keras.layers.InputLayer(self.input_shape)) # necessary
+    layers.append(keras.layers.InputLayer(self.input_shape))
 
     for i, filters in enumerate(self.level_filters):
       if i > 0:
@@ -384,13 +398,12 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
                epsilon_std=1.0,
                **kwargs):
     self.epsilon_std = epsilon_std
-    super().__init__(input_shape, 2*latent_dim, **kwargs)
-    self.latent_dim = latent_dim # TODO: clarify between num_components and
-    # latent_dim.
-
+    super().__init__(input_shape, latent_dim, num_components=2*latent_dim,
+                     **kwargs)
+    
   def create_decoding_layers(self):
     layers = []
-    layers.append(lay.Sampling(self.latent_dim))
+    layers.append(lay.Sampling(epsilon_std=self.epsilon_std))
     layers += super().create_decoding_layers()
     return layers
 
@@ -400,13 +413,15 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
-      mse = tf.losses.mean_squared_error(inputs, outputs)
+      cross_entropy = tf.reduce_sum(
+        tf.keras.backend.binary_crossentropy(inputs, outputs))
       kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
                                       - tf.square(z_mean)
                                       - tf.exp(z_log_std), axis=-1)
       kl_div = tf.reduce_mean(kl_batch)
-      return mse + kl_div
+      return cross_entropy + kl_div
+    return loss_function
 
-  def create_encoder(self):
-    layers = self.encoding_layers + lay.TakeMean()
-    return keras.models.Sequential(layers=xlayers)
+  # def create_encoder(self):
+  #   layers = self.encoding_layers + [lay.TakeMean()]
+  #   return keras.models.Sequential(layers=layers)

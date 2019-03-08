@@ -33,8 +33,7 @@ dimension. Default is '28 28 1' for mnist."""
 
 epochs_help = """Number of training epochs. Default is 1."""
 
-num_components_help = """Number of components in the low-dimensional
-representation. Default is 10."""
+latent_dim_help = """Number of latent dimensions. Default is 2."""
 
 eval_secs_help = """Evaluate model every EVAL_SECS during training. Default is
 1200."""
@@ -51,7 +50,9 @@ batch_size_help = """Batch size for training. Default is 16."""
 
 dropout_help = """Dropout rate for the representational layer. Default is 0.1"""
 
-rep_activation_choices = {'sigmoid' : activations.sigmoid,
+rep_activation_choices = {'none' : None,
+                          'None' : None,
+                          'sigmoid' : activations.sigmoid,
                           'relu' : activations.relu,
                           'clu' : act.clu,
                           'softmax' : activations.softmax}
@@ -84,3 +85,5 @@ sample_help = """Type of sampling to use. Default is 'random'."""
 
 epoch_multiplier_help = """Runs multiple epochs as a single keras 'epoch',
 shuffling in between."""
+
+show_help = """Show outputs to screen. Used mainly for visualizations."""
