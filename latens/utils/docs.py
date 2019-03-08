@@ -20,9 +20,9 @@ files."""
 
 l2_reg_help = """L2 regularization factor. Default is None."""
 
-output_help = """Command output. Default is 'show'."""
+output_help = """Command output. Usually a directory to store plots and logs in."""
 
-model_dir_help = """Directory to save the model in. Default (None) doesn't save
+model_dir_help = """Directory to save other model dirs in. Default (None) doesn't save
 the model. Should be provided for prediction, otherwise initialized weights are
 used."""
 
@@ -56,7 +56,7 @@ rep_activation_choices = {'sigmoid' : activations.sigmoid,
                           'clu' : act.clu,
                           'softmax' : activations.softmax}
 rep_activation_help = """Activation function to use at the representational
-layer. Default is clu (clipped linear unit)."""
+layer. Default is 'relu'."""
 
 learning_rate_help = """Learning rate for training. Default is 0.01"""
 

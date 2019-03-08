@@ -66,9 +66,16 @@ class Latens:
     self.batch_size = args.batch_size[0]
     self.dropout = args.dropout[0]
 
-    # model dirs?
-    self.model_dir = args.model_dir[0]
-    
+    # model dirs
+    self.model_dir_root = args.model_dir_root[0]
+    if self.model_dir_root is None:
+      self.autoencoder_dir = None
+      self.classifier_dir = None
+    else:
+      if not os.path.exists(self.model_dir_root):
+        os.mkdir(self.model_dir_root)
+      self.autoencoder_dir = os.path.join(self.model_dir_root, 'autoencoder')
+      self.classifier_dir = os.path.join(self.model_dir_root, 'classifier')
 
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
@@ -83,7 +90,7 @@ class Latens:
     # input tfrecord prefix and its derivatices
     self.input_prefix, _ = os.path.splitext(args.input[0])
     self.npz_path = self.input_prefix + '.npz'
-    self.tfrecord_path = self.input_prefix + '.tfrecord'
+    self.data_path = self.input_prefix + '.tfrecord'
     self.encodings_path = (
       self.input_prefix + '_encodings.npy')
     self.random_sample_path = (
@@ -96,7 +103,11 @@ class Latens:
       self.input_prefix +
       f'_uniform_sample_{self.sample_size}_data.tfrecord')
 
+    # output files, mainly for visualization
+    self.show = args.show
+    self.output = args.output[0]
 
+    
   @property
   def sample_path(self):
     if self.sample == 'random':
@@ -123,7 +134,7 @@ class Latens:
     :rtype: dat.TrainDataInput, dat.DataInput, dat.DataInput
 
     """
-    data = dat.Data(self.tfrecord_path,
+    data = dat.Data(self.data_path,
                     num_parallel_calls=self.cores,
                     batch_size=self.batch_size,
                     num_classes=self.num_classes,
@@ -139,7 +150,7 @@ class Latens:
       num_classes=self.num_classes,
       num_components=self.num_components)
   
-  def make_conv_autoencoder(self):
+  def make_autoencoder(self):
     model = mod.ConvAutoEncoder(
       self.image_shape,
       self.num_components,
@@ -222,7 +233,7 @@ def cmd_autoencoder(lat):
   """Run training for the autoencoder."""
   train_set, tune_set, test_set = lat.make_data()
 
-  model = lat.make_conv_autoencoder()
+  model = lat.make_autoencoder()
   if not lat.overwrite:
     model.load()
 
@@ -261,7 +272,7 @@ def cmd_encode(lat):
   """Encodes the training set."""
   train_set, tune_set, test_set = lat.make_data()
 
-  model = lat.make_conv_autoencoder()
+  model = lat.make_autoencoder()
   model.load()
 
   encodings = model.encode(
@@ -282,7 +293,7 @@ def cmd_decode(lat):
   encodings = np.load(lat.encodings_path)
   logger.info(f"loaded encodings from '{lat.encodings_path}'")
 
-  model = lat.make_conv_autoencoder()
+  model = lat.make_autoencoder()
   model.load()
   
   reconstructions = model.decode(encodings[:lat.batch_size], verbose=1,
@@ -296,23 +307,23 @@ def cmd_decode(lat):
 
 def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
-  model = lat.make_conv_autoencoder()
+  model = lat.make_autoencoder()
   model.load()
 
-  rows = args.num_components[0]
+  rows = lat.num_components
   cols = 20
-  points = np.ones((rows, cols, args.num_components[0]), dtype=np.float32)
+  points = np.ones((rows, cols, lat.num_components), dtype=np.float32)
   for i in range(points.shape[0]):
     points[i,:,i] = np.linspace(0, 1.0, num=cols, dtype=np.float32)
 
-  images = model.decode(points.reshape(-1, args.num_components[0]), verbose=1,
-                        batch_size=args.batch_size[0])
+  images = model.decode(points.reshape(-1, lat.num_components), verbose=1,
+                        batch_size=lat.batch_size)
 
-  if args.output[0] == 'show':
-    vis.show_image(*images, columns=cols)
+  vis.plot_image(*images, columns=cols)
+  if lat.show:
+    plt.show()
   else:
-    vis.plot_image(*images, columns=cols)
-    plt.savefig(args.output[0])
+    plt.savefig(lat.output)
 
     
 def cmd_sample(lat):
@@ -349,21 +360,21 @@ def cmd_classifier(lat):
     test_set.labeled,
     steps=lat.test_steps)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
-    
-  
+
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
                       help=docs.command_help)
-  parser.add_argument('--input', '-i', nargs=1, required=True,
+  parser.add_argument('--input', '-i', nargs=1, required=True, # TODO: necessary?
                       default=[None],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
-                      default=['show'],
-                      help=docs.output_help)
-  parser.add_argument('--model-dir', '-m', nargs=1,
                       default=[None],
-                      help=docs.model_dir_help)
+                      help=docs.output_help)
+  parser.add_argument('--show', action='store_true',
+                      help=docs.show_help)
+  parser.add_argument('--model-dir-root', '--model-dir', '-m', nargs=1,
+                      default=[None], help=docs.model_dir_help)
   parser.add_argument('--epochs', '-e', nargs=1,
                       default=[1], type=int,
                       help=docs.epochs_help)
@@ -393,7 +404,7 @@ def main():
                       help=docs.dropout_help)
   parser.add_argument('--rep-activation', nargs=1,
                       choices=docs.rep_activation_choices,
-                      default=['clu'],
+                      default=[None],
                       help=docs.rep_activation_help)
   parser.add_argument('--learning-rate', '-l', nargs=1,
                       default=[0.1], type=float,
