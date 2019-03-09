@@ -205,7 +205,7 @@ class AutoEncoder(Model):
   def __init__(self, input_shape, latent_dim,
                num_components=None,
                rep_activation=None,
-               dropout=0.2, 
+               dropout=0.2,
                **kwargs):
     """Create an autoencoder using two Sequential models.
 
@@ -422,6 +422,4 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
       return cross_entropy + kl_div
     return loss_function
 
-  # def create_encoder(self):
-  #   layers = self.encoding_layers + [lay.TakeMean()]
-  #   return keras.models.Sequential(layers=layers)
+

@@ -6,7 +6,11 @@ distribution. Points must fit in memory.
 import numpy as np
 import scipy
 import logging
-from sklearn.cluster import SpectralClustering, KMeans, AgglomerativeClustering
+from sklearn.cluster import (SpectralClustering,
+                             KMeans,
+                             AgglomerativeClustering,
+                             DBSCAN)
+from sklearn.mixture import GaussianMixture
 
 logger = logging.getLogger('latens')
 
@@ -139,7 +143,9 @@ class NormalSampler(SpatialSampler):
     super().__init__(**kwargs)
 
   def draw(self, points, n):
-    return np.random.normal(loc=self.mean, scale=self.std, size=(n, points.shape[1]))
+    mean = np.mean(points)
+    std = np.std(points)
+    return np.random.normal(loc=mean, scale=std, size=(n, points.shape[1]))
 
   
 class MultivariateNormalSampler(SpatialSampler):
@@ -147,14 +153,12 @@ class MultivariateNormalSampler(SpatialSampler):
     """Sample according to a multivariate normal distribution.
 
     """
-    self.mean = mean
-    self.std = std
     super().__init__(**kwargs)
 
   def draw(self, points, n):
     mean = np.mean(points, axis=0)
     cov = np.cov(points, rowvar=False)
-    return np.random.multivariate_normal(mean, cov, size=shape[0])
+    return np.random.multivariate_normal(mean, cov, size=n)
 
   
 class UniformSampler(SpatialSampler):
@@ -174,7 +178,7 @@ class UniformSampler(SpatialSampler):
 
 
 class ClusterSampler(SpatialSampler):
-  def __init__(self, clustering=AgglomerativeClustering, n_clusters=10, **kwargs):
+  def __init__(self, clustering=AgglomerativeClustering, n_clusters=5, **kwargs):
     """Draw the same number of points from each cluster.
 
     Default behavior is to sample uniformly across a cluster, but subclasses can
@@ -191,9 +195,8 @@ class ClusterSampler(SpatialSampler):
   def cluster(self, points):
     """Return cluster labels for each point in points."""
     logger.info(f"clustering...")
-    logger.info(f"should take about 5 minutes")
-    self._cluster_labels = self.clustering(
-      self.n_clusters).fit_predict(points)
+    clustering = self.clustering(self.n_clusters)
+    self._cluster_labels = clustering.fit_predict(points)
     return self._cluster_labels
 
   @property

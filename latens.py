@@ -144,6 +144,7 @@ class Latens:
     return model
 
   def make_classifier(self):
+    
     model = mod.ConvClassifier(
       self.image_shape,
       self.num_classes,
@@ -234,7 +235,7 @@ def cmd_reconstruct(lat):
   model.load()
 
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
-  get_next = train_set.get_next
+  get_next = test_set.get_next
   with tf.Session() as sess:
     for reconstruction in reconstructions:
       image, label = sess.run(get_next)
@@ -324,7 +325,10 @@ def cmd_visualize(lat):
   if os.path.exists(lat.encodings_path):
     logger.info("Plotting encoding...")
     encodings = np.load(lat.encodings_path)
-    vis.plot_encodings(encodings, labels=labels)
+    if False and lat.latent_dim == 3:
+      vis.plot_encodings_3d(encodings, labels=labels)
+    else:
+      vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
       plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
 
@@ -333,7 +337,10 @@ def cmd_visualize(lat):
     logger.info("Plotting clusters...")
     encodings = np.load(lat.encodings_path)
     cluster_labels = np.load(lat.cluster_labels_path)
-    vis.plot_encodings(encodings, labels=cluster_labels)
+    if False and lat.latent_dim == 3:
+      vis.plot_encodings_3d(encodings, labels=cluster_labels)
+    else:
+      vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
       plt.savefig(os.path.join(lat.output, 'clustered_encodings.pdf'))
@@ -343,7 +350,10 @@ def cmd_visualize(lat):
     logger.info("Plotting sampling...")
     encodings = np.load(lat.encodings_path)
     sampling = np.load(lat.sampling_path)
-    vis.plot_sampled_encodings(encodings, sampling, labels=labels)
+    if False and latent_dim == 3:
+      vis.plot_sampled_encodings_3d(encodings, sampling, labels=labels)
+    else:
+      vis.plot_sampled_encodings(encodings, sampling, labels=labels)
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
       plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
@@ -419,7 +429,7 @@ def main():
                       default=[10], type=int,
                       help=docs.num_classes_help)
   parser.add_argument('--sample-size', nargs=1,
-                      default=[1000], type=int,
+                      default=[100], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
                       default=['cluster'],

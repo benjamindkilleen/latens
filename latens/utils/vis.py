@@ -64,14 +64,13 @@ def plot_sampling_distribution(sampling, labels, num_classes=10):
   ticks = [i for i in range(num_classes)]
   tick_labels = [str(i) for i in range(num_classes)]
   plt.bar(ticks, counts, color='gray')
-  plt.xlabel("Digit")
+  plt.xlabel("Class Label")
   plt.ylabel("Count")
   plt.xticks(ticks, tick_labels)
-  plt.title("Class Counts")
+  plt.title("Class Sampling")
   
 def plot_encodings_3d(encodings, labels=None, num_classes=10):
   encodings = encodings[:max_plot]
-  sampling = sampling[:max_plot]
   xs = encodings[:,0]
   ys = encodings[:,1]
   zs = encodings[:,2]
@@ -82,7 +81,7 @@ def plot_encodings_3d(encodings, labels=None, num_classes=10):
   else:
     ls = labels[:max_plot]
     for i in range(num_classes):
-      ax.scatter3D(xs[ls == i], ys[ls == i], zs[ls==i], c='C{i}',
+      ax.scatter3D(xs[ls == i], ys[ls == i], zs[ls==i], c=f'C{i}',
                    marker='.')
   plt.title("Latent Space Encodings")
 
@@ -96,15 +95,16 @@ def plot_sampled_encodings_3d(encodings, sampling, labels=None, num_classes=10):
   sampled = sampling > 0
   plt.figure()
   ax = plt.axes(projection='3d')
-  plt.plot(xs[unsampled], ys[unsampled], zs[unsampled],
-           c='gray', marker=',')
+  ax.plot3D(xs[unsampled], ys[unsampled], zs[unsampled],
+               'gray')
   if labels is None:
-    plt.plot(xs[sampled], ys[sampled], zs[sampled], c='b', marker='o')
+    ax.scatter3D(xs[sampled], ys[sampled], zs[sampled], c='b', marker='o')
   else:
+    labels = labels[:max_plot]
     for i in range(num_classes):
       which = np.logical_and(sampled, labels == i)
-      plt.plot(xs[which], ys[which], zs[which], c=f'C{i}',
-               marker='o')
+      ax.scatter3D(xs[which], ys[which], zs[which], c=f'C{i}',
+                   marker='o')
   plt.title("Latent Space Sampling")
   
 def show_image(*images, **kwargs):
