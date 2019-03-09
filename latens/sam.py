@@ -6,6 +6,7 @@ distribution. Points must fit in memory.
 import numpy as np
 import scipy
 import logging
+from sklearn.cluster import SpectralClustering, KMeans
 
 logger = logging.getLogger('latens')
 
@@ -67,9 +68,9 @@ class RandomSampler(Sampler):
     sampling[perm[:n]] = 1
     return sampling
 
-
+  
 class SpatialSampler(Sampler):
-  def __init__(self, threshold=0.05, metric='euclidean', **kwargs):
+  def __init__(self, threshold=0.25, metric='euclidean', **kwargs):
     """Samples over a space according to some distribution.
 
     Subclasses should override self.draw() using some distribution.
@@ -160,3 +161,37 @@ class UniformSampler(SpatialSampler):
 
   def draw(self, shape):
     return np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
+
+
+class ClusterSampler(SpatialSampler):
+  def __init__(self, n_clusters=10, **kwargs):
+    """Draw the same number of points from each cluster.
+
+    Default behavior is to sample uniformly across a cluster, but subclasses can
+    modify the draw method to change this.
+
+    :param n_clusters: number of clusters, default is 10
+    """
+    self.n_clusters = n_clusters
+    super().__init__(**kwargs)
+  
+  def cluster(self, points):
+    """Return cluster labels for each point in points."""
+    raise NotImplementedError
+  
+  def sample(self, points):
+    N = points.shape[0]
+    n = self.get_sample_size(N)
+    sampling = np.zeros(N, dtype=np.int64)
+    for i in range(self.n_clusters):
+      pass
+    return sampling
+
+    
+class KMeansSampler(ClusterSampler):
+  def cluster(self, points):
+    return KMeans(self.n_clusters, n_jobs=-1).fit_predict(points)
+
+class SpectralSampler(ClusterSampler):
+  def cluster(self, points):
+    return SpectralClustering(self.n_clusters, n_jobs=-1).fit_predict(points)

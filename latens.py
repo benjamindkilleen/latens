@@ -74,7 +74,13 @@ class Latens:
     self.autoencoder_dir = os.path.join(self.model_root, 'autoencoder')
     self.classifier_dir = os.path.join(self.model_root, 'classifier')
     self.encodings_path = os.path.join(self.model_root, 'encodings.npy')
-    
+    self.sampling_path = os.path.join(
+      self.model_root, f'{self.sample}_sampling_{self.sample_size}.npy')
+    self.sample_path os.path.join(
+      self.model_root, f'{self.sample}_sample_{self.sample_size}.tfrecord')
+    self.clustering_path = os.path.join(
+      self.model_root, f'{self.sample}_clustering_{self.sample_size}.npy')
+
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
     self.train_steps = int(np.ceil(
@@ -93,18 +99,6 @@ class Latens:
     # output files, mainly for visualization
     self.show = args.show
     self.output = args.output[0]
-    
-  @property
-  def sample_path(self):
-    return os.path.join(
-      self.model_root,
-      f'{self.sample}_sampling_{self.sample_size}.npy')
-    
-  @property
-  def sample_data_path(self):
-    return os.path.join(
-      self.model_root,
-      f'{self.sample}_sampling_{self.sample_size}_data.tfrecord')
 
   def load_train(self):
     data = np.load(self.npz_path)
@@ -283,38 +277,20 @@ def cmd_decode(lat):
     for i in range(reconstructions.shape[0]):
       vis.show_image(reconstructions[i])
 
-def cmd_visualize(lat):
-  """Visualize the decodings that the model makes."""
-  images, labels = lat.load_train()
-  encodings = np.load(lat.encodings_path)
-  
-  vis.plot_encodings(encodings, labels=labels)
-  if lat.show:
-    plt.show()
-  elif lat.output is not None:
-    plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
-  else:
-    plt.close()
-    
 def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
   encodings = np.load(lat.encodings_path)
   sampler = lat.sampler_type(sample_size=lat.sample_size)
+  if issubclass(lat.sampler_type, sam.ClusterSampler):
+    sampler.n_clusters = lat.num_classes
   sampling = sampler(encodings)
-  np.save(lat.sample_path, sampling)
+  np.save(lat.sampling_path, sampling)
 
   train_set, tune_set, test_set = lat.make_data(training=False)
   sample_train_set = train_set.sample(sampling)
   sample_train_set.save(lat.sample_data_path)
 
-  train_images, train_labels = lat.load_train()
-
-  vis.plot_sampled_encodings(encodings, sampling, labels=train_labels)
-  if lat.show:
-    plt.show()
-  else:
-    plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
   
 def cmd_classifier(lat):
   """Run training from scratch for a classifier, using ."""
@@ -338,6 +314,31 @@ def cmd_classifier(lat):
     steps=lat.test_steps)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
 
+
+def cmd_visualize(lat):
+  """Visualize the decodings that the model makes."""
+  images, labels = lat.load_train()
+
+  if os.path.exists(lat.encodings_path):
+    logger.info("Plotting encoding...")
+    encodings = np.load(lat.encodings_path)
+    vis.plot_encodings(encodings, labels=labels)
+    if not lat.show:
+      plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
+
+  if (os.path.exists(lat.encodings_path) and
+      os.path.exists(lat.sampling_path)):
+    logger.info("Plotting sampling...")
+    encodings = np.load(lat.encodings_path)
+    sampling = np.load(lat.sampling_path)
+    vis.plot_sampled_encodings(encodings, sampling, labels=labels)
+    vis.plot_sampling_distribution(sampling, labels)
+    if not lat.show:
+      plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
+
+  if lat.show:
+    plt.show()
+  
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
