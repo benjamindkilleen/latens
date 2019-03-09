@@ -76,10 +76,10 @@ class Latens:
     self.encodings_path = os.path.join(self.model_root, 'encodings.npy')
     self.sampling_path = os.path.join(
       self.model_root, f'{self.sample}_sampling_{self.sample_size}.npy')
-    self.sample_path os.path.join(
+    self.sample_path = os.path.join(
       self.model_root, f'{self.sample}_sample_{self.sample_size}.tfrecord')
-    self.clustering_path = os.path.join(
-      self.model_root, f'{self.sample}_clustering_{self.sample_size}.npy')
+    self.cluster_labels_path = os.path.join(
+      self.model_root, f'{self.sample}_cluster_labels_{self.sample_size}.npy')
 
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
@@ -125,7 +125,7 @@ class Latens:
   
   def make_sample_data(self):
     return dat.TrainDataInput(
-      self.sample_data_path,
+      self.sample_path,
       num_parallel_calls=self.cores,
       batch_size=self.batch_size,
       num_classes=self.num_classes,
@@ -286,10 +286,12 @@ def cmd_sample(lat):
     sampler.n_clusters = lat.num_classes
   sampling = sampler(encodings)
   np.save(lat.sampling_path, sampling)
+  if issubclass(lat.sampler_type, sam.ClusterSampler):
+    np.save(lat.cluster_labels_path, sampler.cluster_labels)
 
   train_set, tune_set, test_set = lat.make_data(training=False)
   sample_train_set = train_set.sample(sampling)
-  sample_train_set.save(lat.sample_data_path)
+  sample_train_set.save(lat.sample_path)
 
   
 def cmd_classifier(lat):
@@ -327,6 +329,16 @@ def cmd_visualize(lat):
       plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
 
   if (os.path.exists(lat.encodings_path) and
+      os.path.exists(lat.cluster_labels_path)):
+    logger.info("Plotting clusters...")
+    encodings = np.load(lat.encodings_path)
+    cluster_labels = np.load(lat.cluster_labels_path)
+    vis.plot_encodings(encodings, labels=cluster_labels)
+    plt.title("Clustered Encodings")
+    if not lat.show:
+      plt.savefig(os.path.join(lat.output, 'clustered_encodings.pdf'))
+      
+  if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.sampling_path)):
     logger.info("Plotting sampling...")
     encodings = np.load(lat.encodings_path)
@@ -338,13 +350,14 @@ def cmd_visualize(lat):
 
   if lat.show:
     plt.show()
-  
+
+    
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
                       help=docs.command_help)
   parser.add_argument('--input', '-i', nargs=1, required=True, # TODO: necessary?
-                      default=[None],
+                      default=['data/mnist/mnist'],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
                       default=['docs'],
@@ -409,7 +422,7 @@ def main():
                       default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['normal'],
+                      default=['cluster'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,

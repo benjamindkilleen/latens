@@ -81,8 +81,13 @@ sample_size_help = """Number of examples for a sampler to draw. Default is 1000.
 
 sample_choices = {'random' : sam.RandomSampler,
                   'normal' : sam.NormalSampler,
-                  'uniform' : sam.UniformSampler}
-sample_help = """Type of sampling to use. Default is 'random'."""
+                  'multi-normal' : sam.MultivariateNormalSampler,
+                  'uniform' : sam.UniformSampler,
+                  'cluster' : sam.UniformClusterSampler,
+                  'uniform-cluster' : sam.UniformClusterSampler,
+                  'normal-cluster' : sam.NormalClusterSampler,
+                  'multi-normal-cluster' : sam.MultivariateNormalClusterSampler}
+sample_help = """Type of sampling to use. Default is 'cluster'."""
 
 epoch_multiplier_help = """Runs multiple epochs as a single keras 'epoch',
 shuffling in between."""

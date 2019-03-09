@@ -6,7 +6,7 @@ distribution. Points must fit in memory.
 import numpy as np
 import scipy
 import logging
-from sklearn.cluster import SpectralClustering, KMeans
+from sklearn.cluster import SpectralClustering, KMeans, AgglomerativeClustering
 
 logger = logging.getLogger('latens')
 
@@ -80,15 +80,17 @@ class SpatialSampler(Sampler):
     self.metric = metric
     super().__init__(**kwargs)
 
-  def draw(self, shape):
+  def draw(self, points, n):
     """Draw points from a given distribution.
 
-    :param shape: shape of array to draw
+    :param points: all the source points to be considered drawing from
+    :param n: number of new points to draw
     :returns: numpy array of points
+
     """
     raise NotImplementedError
 
-  def sample(self, points):
+  def sample(self, points, n=None):
     """Sample according to the distribution.
 
     For each randomly sampled point, finds the closest point from points,
@@ -96,20 +98,22 @@ class SpatialSampler(Sampler):
     pairwise distances, pretty inefficiently.
 
     TODO: use an Approximate Nearest Neighbor algorithm instead
-    
+
     :param points: points to sample
+    :param n: number of points to take in sampling, overriding sample_size
     :returns: integer array for indexing points, i.e. a "sampling"
     :rtype: 1-D integer array
 
     """
     
     N = points.shape[0]
-    n = self.get_sample_size(N) # number of examples to add to sampling
+    if n is None:
+      n = self.get_sample_size(N) # number of examples to add to sampling
     sampling = np.zeros(N, dtype=np.int64) # starts with zero examples
     
     while n > 0:
       logger.debug(f"sampler: drawing {n} points")
-      draws = self.draw((n, points.shape[1]))
+      draws = self.draw(points, n)
       distances = scipy.spatial.distance.cdist(
         draws, points, metric=self.metric) # (n,N) array of distances
 
@@ -129,69 +133,99 @@ class SpatialSampler(Sampler):
 class NormalSampler(SpatialSampler):
   def __init__(self, mean=0.0, std=1.0,
                **kwargs):
-    """Sample according to a normal distribution, identical in each dimension.
+    """Sample according to a normal distribution, identical in each dimension."""
+    self.mean = mean
+    self.std = std
+    super().__init__(**kwargs)
 
-    :param mean: 
-    :param std: 
-    :returns: 
-    :rtype:
+  def draw(self, points, n):
+    return np.random.normal(loc=self.mean, scale=self.std, size=(n, points.shape[1]))
+
+  
+class MultivariateNormalSampler(SpatialSampler):
+  def __init__(self, **kwargs):
+    """Sample according to a multivariate normal distribution.
 
     """
     self.mean = mean
     self.std = std
     super().__init__(**kwargs)
 
-  def draw(self, shape):
-    return np.random.normal(loc=self.mean, scale=self.std, size=shape)
+  def draw(self, points, n):
+    mean = np.mean(points, axis=0)
+    cov = np.cov(points, rowvar=False)
+    return np.random.multivariate_normal(mean, cov, size=shape[0])
+
   
 class UniformSampler(SpatialSampler):
-  def __init__(self, low=0.0, high=1.0, 
-               **kwargs):
+  def __init__(self, **kwargs):
     """Samples uniformly over the space covered by points within [low,hi].
 
-    :param low: ignored
-    :param high: ignored
     :param threshold: distance threshold at which to resample.
     :param metric: passed to scipy.spatial.distance.cdist
 
     """
-    self.low = low
-    self.high = high
     super().__init__(**kwargs)
 
-  def draw(self, shape):
-    return np.random.uniform(self.low, self.high, size=(n, points.shape[1]))
+  def draw(self, points, n):
+    low = np.min(points, axis=0)
+    high = np.max(points, axis=0)
+    return np.random.uniform(low, high, size=(n, points.shape[1]))
 
 
 class ClusterSampler(SpatialSampler):
-  def __init__(self, n_clusters=10, **kwargs):
+  def __init__(self, clustering=AgglomerativeClustering, n_clusters=10, **kwargs):
     """Draw the same number of points from each cluster.
 
     Default behavior is to sample uniformly across a cluster, but subclasses can
     modify the draw method to change this.
 
+    :param clustering: clustering class to use
     :param n_clusters: number of clusters, default is 10
+
     """
     self.n_clusters = n_clusters
+    self.clustering = clustering
     super().__init__(**kwargs)
   
   def cluster(self, points):
     """Return cluster labels for each point in points."""
-    raise NotImplementedError
-  
+    logger.info(f"clustering...")
+    logger.info(f"should take about 5 minutes")
+    self._cluster_labels = self.clustering(
+      self.n_clusters).fit_predict(points)
+    return self._cluster_labels
+
+  @property
+  def cluster_labels(self):
+    return self._cluster_labels
+    
   def sample(self, points):
+    """Sample uniformly from clusters in points.
+
+    :param points: 
+    :returns: 
+    :rtype: 
+
+    """
     N = points.shape[0]
     n = self.get_sample_size(N)
     sampling = np.zeros(N, dtype=np.int64)
+    cluster_labels = self.cluster(points)
     for i in range(self.n_clusters):
-      pass
+      cluster_which = cluster_labels == i
+      cluster_n = int(n * np.sum(cluster_which) / N)
+      cluster_points = points[cluster_which]
+      cluster_sampling = super().sample(cluster_points, n=cluster_n)
+      sampling[cluster_which] += cluster_sampling
     return sampling
 
-    
-class KMeansSampler(ClusterSampler):
-  def cluster(self, points):
-    return KMeans(self.n_clusters, n_jobs=-1).fit_predict(points)
+  
+class UniformClusterSampler(ClusterSampler, UniformSampler):
+  pass
 
-class SpectralSampler(ClusterSampler):
-  def cluster(self, points):
-    return SpectralClustering(self.n_clusters, n_jobs=-1).fit_predict(points)
+class NormalClusterSampler(ClusterSampler, NormalSampler):
+  pass
+
+class MultivariateNormalClusterSampler(ClusterSampler, MultivariateNormalSampler):
+  pass
