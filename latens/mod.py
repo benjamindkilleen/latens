@@ -455,3 +455,32 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
       return recon_loss + kl_div
     return loss_function
 
+
+class StudentAutoEncoder(ConvAutoEncoder):
+  """Create a convolutional variational autoencoder. 
+
+  Uses the same layer setup as a ConvAutoEncoder, with a different sampling
+  strategy and loss. 
+  """
+  def __init__(self, input_shape, latent_dim,
+               std=1.0,
+               **kwargs):
+    self.std = std
+    super().__init__(input_shape, latent_dim, **kwargs)
+
+  def similarity(self, xi, xj):
+    pass
+    
+  @property
+  def loss(self):
+    z = self.representation
+    def loss_function(inputs, outputs):
+      recon_loss = tf.reduce_sum(
+        tf.keras.backend.binary_crossentropy(inputs, outputs))
+      
+      # get the ps from inputs
+      # TODO: compute the p_ij's and q_ij's and get the KL div between them.
+      
+      return recon_loss + kl_div
+    return loss_function
+
