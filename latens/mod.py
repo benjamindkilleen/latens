@@ -118,14 +118,17 @@ class Model():
     return layers
   
 class SequentialModel(Model):
-  def __init__(self, **kwargs):
-    """FIXME! briefly describe function
+  def __init__(self, layers=None, **kwargs):
+    """Create a Sequential model.
 
+    :param layers: if not provided, uses self.create_layers()
     :returns: 
     :rtype: 
 
     """
-    model = keras.models.Sequential(layers=self.create_layers())
+    if layers is None:
+      layers = self.create_layers()
+    model = keras.models.Sequential(layers=layers)
     super().__init__(model, **kwargs)
 
   def create_layers(self):
@@ -143,6 +146,16 @@ class Classifier(SequentialModel):
                output_activation='softmax',
                dropout=0.2,
                **kwargs):
+    """Create a classifier using a sequential model.
+
+    :param input_shape: 
+    :param num_classes: 
+    :param output_activation: 
+    :param dropout: 
+    :returns: 
+    :rtype: 
+
+    """
     self.input_shape = input_shape
     self.num_classes = num_classes
     self.output_activation = output_activation
@@ -155,6 +168,26 @@ class Classifier(SequentialModel):
     kwargs['loss'] = kwargs.get('loss', 'categorical_crossentropy')
     kwargs['metrics'] = kwargs.get('metrics', ['accuracy'])
     self.model.compile(**kwargs)
+
+  @staticmethod
+  def from_autoencoder(autoencoder, num_classes, **kwargs):
+    """Create a classifier from the encoding layers of an AE.
+
+    classifier needs to be compiled after initialization
+
+    :param autoencoder: 
+    :param num_classes: 
+    :returns: 
+    :rtype: 
+
+    """
+    layers = autoencoder.encoding_layers
+    for layer in layers:
+      layer.trainable = False
+    layers[-1] = keras.layers.Dense(num_classes, activation='softmax')
+    classifier = Classifier(autoencoder.input_shape, num_classes,
+                            layers=layers, **kwargs)
+    return classifier
 
 class ConvClassifier(Classifier):
   def __init__(self, input_shape, num_classes,
@@ -237,7 +270,7 @@ class AutoEncoder(Model):
     :param rep_activation: activation at the representation_layer
     :param dropout: 
     :returns: 
-    :rtype: 
+    :rtype:
 
     """
     self.input_shape = input_shape
@@ -315,8 +348,8 @@ class AutoEncoder(Model):
 class ConvAutoEncoder(AutoEncoder):
   def __init__(self, input_shape, latent_dim,
                level_filters=[64,32,32],
-               level_depth=2,
-               dense_nodes=[1024],
+               level_depth=3,
+               dense_nodes=[1024, 1024],
                rep_reg=None,
                **kwargs):
     """Create a convolutional autoencoder.
@@ -413,13 +446,12 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
-      cross_entropy = tf.reduce_sum(
+      recon_loss = tf.reduce_sum(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
       kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
                                       - tf.square(z_mean)
                                       - tf.exp(z_log_std), axis=-1)
       kl_div = tf.reduce_mean(kl_batch)
-      return cross_entropy + kl_div
+      return recon_loss + kl_div
     return loss_function
-
 

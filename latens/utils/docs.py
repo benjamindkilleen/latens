@@ -87,9 +87,9 @@ sample_choices = {'random' : sam.RandomSampler,
                   'uniform-cluster' : sam.UniformClusterSampler,
                   'normal-cluster' : sam.NormalClusterSampler,
                   'multi-normal-cluster' : sam.MultivariateNormalClusterSampler}
-sample_help = """Type of sampling to use. Default is 'cluster'."""
+sample_help = """Type of sampling to use. Default is 'multi-normal'."""
 
-epoch_multiplier_help = """Runs multiple epochs as a single keras 'epoch',
-shuffling in between."""
+epoch_multiplier_help = """Runs the dataset 'mult' times per epoch. Total of
+EPOCHS * MULT epochs will be run."""
 
 show_help = """Show outputs to screen. Used mainly for visualizations."""

@@ -47,7 +47,8 @@ class Latens:
     self.num_components = 2*self.latent_dim # TODO: automate
     self.num_classes = args.num_classes[0]
     self.epochs = args.epochs[0]
-
+    self.batch_size = args.batch_size[0]
+    
     # sampling, etc
     self.sample_size = args.sample_size[0]
     self.sample = args.sample[0]
@@ -59,12 +60,21 @@ class Latens:
     self.tune_size = args.splits[1]
     self.test_size = args.splits[2]
 
+    # number of steps for different iterations
+    self.epoch_multiplier = args.epoch_multiplier[0]
+    self.train_steps = int(np.ceil(
+      self.epoch_multiplier * self.train_size / self.batch_size))
+    self.single_train_steps = int(np.ceil(self.train_size / self.batch_size))
+    self.tune_steps = int(np.ceil(self.tune_size / self.batch_size))
+    self.test_steps = int(np.ceil(self.test_size / self.batch_size))
+    self.sample_steps = int(np.ceil(
+      self.epoch_multiplier * self.sample_size / self.batch_size))
+
     # model arguments
     self.learning_rate = args.learning_rate[0]
     self.overwrite = args.overwrite
     self.rep_activation = docs.rep_activation_choices[args.rep_activation[0]]
     self.image_shape = args.image_shape
-    self.batch_size = args.batch_size[0]
     self.dropout = args.dropout[0]
 
     # model dir and dependent data
@@ -80,16 +90,6 @@ class Latens:
       self.model_root, f'{self.sample}_sample_{self.sample_size}.tfrecord')
     self.cluster_labels_path = os.path.join(
       self.model_root, f'{self.sample}_cluster_labels_{self.sample_size}.npy')
-
-    # number of steps for different iterations
-    self.epoch_multiplier = args.epoch_multiplier[0]
-    self.train_steps = int(np.ceil(
-      self.epoch_multiplier * self.train_size / self.batch_size))
-    self.single_train_steps = int(np.ceil(self.train_size / self.batch_size))
-    self.tune_steps = int(np.ceil(self.tune_size / self.batch_size))
-    self.test_steps = int(np.ceil(self.test_size / self.batch_size))
-    self.sample_steps = int(np.ceil(
-      self.epoch_multiplier * self.sample_size / self.batch_size))
     
     # input tfrecord prefix and its derivatices
     self.input_prefix, _ = os.path.splitext(args.input[0])
@@ -143,13 +143,10 @@ class Latens:
     model.compile(learning_rate=self.learning_rate)
     return model
 
-  def make_classifier(self):
-    
-    model = mod.ConvClassifier(
-      self.image_shape,
-      self.num_classes,
+  def make_classifier(self, autoencoder):
+    model = mod.Classifier.from_autoencoder(
+      autoencoder, self.num_classes,
       model_dir=self.classifier_dir,
-      dropout=self.dropout,
       tensorboard=self.tensorboard)
     
     model.compile(learning_rate=self.learning_rate)
@@ -299,12 +296,14 @@ def cmd_classifier(lat):
   """Run training from scratch for a classifier, using ."""
   train_set, tune_set, test_set = lat.make_data()
   sample_set = lat.make_sample_data()
-  
-  model = lat.make_classifier()
-  if not args.overwrite:
-    model.load()
 
-  model.fit(
+  autoencoder = lat.make_autoencoder()
+  
+  classifier = lat.make_classifier(autoencoder)
+  if not lat.overwrite:
+    classifier.load()
+
+  classifier.fit(
     sample_set.labeled,
     epochs=lat.epochs,
     steps_per_epoch=lat.sample_steps,
@@ -312,7 +311,7 @@ def cmd_classifier(lat):
     validation_steps=lat.tune_steps,
     verbose=lat.keras_verbose)
 
-  loss, accuracy = model.evaluate(
+  loss, accuracy = classifier.evaluate(
     test_set.labeled,
     steps=lat.test_steps)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
@@ -366,7 +365,7 @@ def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
                       help=docs.command_help)
-  parser.add_argument('--input', '-i', nargs=1, required=True, # TODO: necessary?
+  parser.add_argument('--input', '-i', nargs=1, 
                       default=['data/mnist/mnist'],
                       help=docs.input_help)
   parser.add_argument('--output', '-o', nargs=1,
@@ -429,10 +428,10 @@ def main():
                       default=[10], type=int,
                       help=docs.num_classes_help)
   parser.add_argument('--sample-size', nargs=1,
-                      default=[100], type=int,
+                      default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['cluster'],
+                      default=['multi-normal'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,
