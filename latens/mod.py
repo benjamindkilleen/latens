@@ -455,32 +455,61 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
       return recon_loss + kl_div
     return loss_function
 
-
+  
 class StudentAutoEncoder(ConvAutoEncoder):
   """Create a convolutional variational autoencoder. 
 
   Uses the same layer setup as a ConvAutoEncoder, with a different sampling
-  strategy and loss. 
+  strategy and loss.
+
+  For now, calculate P and Q on the fly for each batch. For this, feed in a
+  "self_supervised" style dataset.
+
+  TODO:
+  Use the self_supervised_distributed attribute of a dat.Data to calculate each
+  batch's P distribution in a prefetched way. In principle, much larger batch
+  sizes should work better for this process. examples must therefore take the
+  shape: (x, (x,p))
+
   """
   def __init__(self, input_shape, latent_dim,
-               std=1.0,
+               tolerance=1e-5, perplexity=30.0, max_steps=50,
                **kwargs):
-    self.std = std
+    """
+
+    :param input_shape: 
+    :param latent_dim: 
+    :param tolerance: 
+    :param perplexity: 
+    :param max_steps: 
+    :returns: 
+    :rtype: 
+
+    """
+    self.tolerance = tolerance
+    self.perplexity = perplexity
+    self.max_steps = max_stpes
     super().__init__(input_shape, latent_dim, **kwargs)
 
-  def similarity(self, xi, xj):
-    pass
-    
   @property
   def loss(self):
-    z = self.representation
+    representation = self.representation
     def loss_function(inputs, outputs):
       recon_loss = tf.reduce_sum(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
+
+      P = self.calculate_P(inputs)
+      Q = self.calculate_Q(representation)
       
       # get the ps from inputs
       # TODO: compute the p_ij's and q_ij's and get the KL div between them.
+      kl_div = tf.reduce_sum(P * tf.log(P / Q))
       
       return recon_loss + kl_div
     return loss_function
 
+  def calculate_P(self, X):
+    
+
+  def calculate_Q(self, Z):
+    pass

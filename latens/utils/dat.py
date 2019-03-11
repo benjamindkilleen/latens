@@ -186,7 +186,11 @@ class Data(object):
     
   @property
   def dataset(self):
-    return self.postprocess(self._dataset)
+    return self._dataset
+
+  @property
+  def processed(self):
+    self.postprocess(self._dataset)
 
   @property
   def labeled(self):
