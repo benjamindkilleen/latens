@@ -471,9 +471,13 @@ class StudentAutoEncoder(ConvAutoEncoder):
   sizes should work better for this process. examples must therefore take the
   shape: (x, (x,p))
 
+  t-SNE implementation borrows details from a variety of sources, including
+  https://nlml.github.io/in-raw-numpy/in-raw-numpy-t-sne/
+
   """
   def __init__(self, input_shape, latent_dim,
                tolerance=1e-5, perplexity=30.0, max_steps=50,
+               lower=1e-20, upper=1000.,
                **kwargs):
     """
 
@@ -488,6 +492,9 @@ class StudentAutoEncoder(ConvAutoEncoder):
     """
     self.tolerance = tolerance
     self.perplexity = perplexity
+    self.desired_entropy = np.log(perplexity)
+    self.lower = lower
+    self.upper = upper
     self.max_steps = max_stpes
     super().__init__(input_shape, latent_dim, **kwargs)
 
@@ -508,8 +515,68 @@ class StudentAutoEncoder(ConvAutoEncoder):
       return recon_loss + kl_div
     return loss_function
 
-  def calculate_P(self, X):
-    
+  @staticmethod
+  def squared_distances(self, X):
+    """Compute pairwise euclidean distances"""
+    sum_X_sqr = tf.reduce_sum(tf.square(X), axis=1)
+    return (sum_X_sqr - 2*tf.matmul(X, X, transpose_b=True) +
+            tf.transpose(sum_X_sqr))
+  
+  @staticmethod
+  def softmax(X, diag_zero=True):
+    """Take softmax of each row of 2D tensor X."""
+    exp_x = tf.exp(X - tf.reduce_max(X, axis=1, keepdims=True))
+    if diag_zero:
+      mask = tf.constant(1 - np.eye(X.shape[0]), dtype=exp_x.dtype)
+      exp_x = exp_x * mask
+    exp_x = exp_x + tf.constant(1e-8, exp_x.dtype)
+    return exp_x / tf.reduce_sum(exp_x, axis=1, keepdims=True)
 
+  @staticmethod
+  def probability_matrix(distances, sigmas=None):
+    """Compute the probability matrix over distances."""
+    if sigmas is None:
+      return StudentAutoEncoder.softmax(distances)
+    else:
+      den = 2*tf.reshape(tf.square(sigmas), (-1,1))
+      return StudentAutoEncoder.softmax(distances / den)
+
+  @staticmethod
+  def binary_search(func, target, tolerance=1e-5, max_iter=50, 
+                    lower=1e-20, upper=1000.):
+    """Perform a binary search over input values to `func` in tf
+
+    :param func: tf function to evaluate
+    :param target: target value we want the function to output
+    :param tolerance: "close enough" threshold
+    :param max_iter: number of iterations over
+    :param lower: 
+    :param upper: 
+
+    """
+    target = tf.constant(target, dtype=tf.float32)
+    tolerance = tf.constant(tolerance, dtype=tf.float32)
+    lower = tf.constant(lower, dtype=tf.float32)
+    upper = tf.constant(upper, dtype=tf.float32)
+    val = tf.placeholder(1, dtype=tf.float32)
+
+    def cond(val):
+      return val - target <= tolerance
+    
+    def body(val):
+      """single iteration of the search"""
+      pass
+    
+    return tf.while_loop(
+      cond, body, (val),
+      maximum_iterations=max_iter,
+      back_prop=False) # change?
+
+  
+  def calculate_P(self, X):
+    n = self.batch_size
+    X = tf.reshape(X, (n, -1))
+    pass
+  
   def calculate_Q(self, Z):
     pass
