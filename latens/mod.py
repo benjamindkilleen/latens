@@ -475,41 +475,25 @@ class StudentAutoEncoder(ConvAutoEncoder):
   https://nlml.github.io/in-raw-numpy/in-raw-numpy-t-sne/
 
   """
-  def __init__(self, input_shape, latent_dim,
+  def __init__(self, input_shape, latent_dim, batch_size,
                perplexity=30.0,
                **kwargs):
     """
 
-    :param input_shape: 
-    :param latent_dim: 
-    :param perplexity: 
+    :param input_shape: shape of input images
+    :param latent_dim: number of latent dimensions
+    :param batch_size: size of each batch, needed for loss function
+    :param perplexity: desired perplexity of distribution
     :returns: 
     :rtype: 
 
     """
-    self.tolerance = tolerance
+    self.batch_size = batch_size
     self.perplexity = perplexity
-    self.desired_entropy = np.log(perplexity)
-    self.lower = lower
-    self.upper = upper
-    self.max_iter = max_iter
     super().__init__(input_shape, latent_dim, **kwargs)
 
-  @property
-  def loss(self):
-    representation = self.representation
-    def loss_function(inputs, outputs):
-      recon_loss = tf.reduce_sum(
-        tf.keras.backend.binary_crossentropy(inputs, outputs))
-
-      P = self.calculate_P(inputs)
-      Q = self.calculate_Q(representation)
-      kl_div = tf.reduce_sum(P * tf.log(P / Q))
-      return recon_loss + kl_div
-    return loss_function
-
   @staticmethod
-  def squared_distances(self, X):
+  def squared_distances(X):
     """Compute pairwise euclidean distances"""
     sum_X_sqr = tf.reduce_sum(tf.square(X), axis=1)
     return (sum_X_sqr - 2*tf.matmul(X, X, transpose_b=True) +
@@ -535,7 +519,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
       return StudentAutoEncoder.softmax(distances / den)
 
   @staticmethod
-  def binary_search(func, target, tolerance=1e-5, max_iter=50, 
+  def binary_search(func, target, n=1, tolerance=1e-5, max_iter=50, 
                     lower=1e-10, upper=1000.):
     """Perform a binary search over input values to `func` in tf.
 
@@ -544,6 +528,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
     :param func: tf function to evaluate
     :param target: target value we want the function to output
+    :param n: dimensionality of search, default is 1
     :param tolerance: "close enough" threshold
     :param max_iter: number of iterations over
     :param lower: lower bound to search
@@ -551,15 +536,15 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
     """
     target = tf.constant(target, dtype=tf.float32)
-    tolerance = tf.constant(tolerance, tf.float32, target.shape[0])
-    lower = tf.constant(lower, tf.float32, target.shape[0])
-    upper = tf.constant(upper, tf.float32, target.shape[0])
+    tolerance = tf.constant(tolerance, tf.float32)
+    lower = tf.constant(lower, tf.float32, (n,))
+    upper = tf.constant(upper, tf.float32, (n,))
     two = tf.constant(2, dtype=tf.float32)
     guess = (lower + upper) / two
-    close_guess = tf.constant(False, tf.bool, targe.shape[0])
+    close_guess = tf.constant(False, tf.bool, (n,))
 
     def cond(x, close, low, up):
-      return tf.all(close)
+      return tf.reduce_all(close)
     
     def body(x, close, low, up):
       """single iteration of the search"""
@@ -575,7 +560,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
     out = tf.while_loop(
       cond, body, (guess, close_guess, lower, upper),
       maximum_iterations=max_iter,
-      back_prop=False) # change?
+      back_prop=True) # change?
     return out[0]
 
   @staticmethod
@@ -598,10 +583,10 @@ class StudentAutoEncoder(ConvAutoEncoder):
       StudentAutoEncoder.probability_matrix(distances, sigmas=sigmas))
 
   @staticmethod
-  def calculate_sigmas(self, distances, desired_perplexity):
+  def calculate_sigmas(distances, desired_perplexity):
     """Calculate the sigmas for each row of `distances`"""
     func = lambda sigmas : StudentAutoEncoder.perplexity(distances, sigmas)
-    return StudentAutoEncoder.binary_search(func, desired_perplexity)
+    return StudentAutoEncoder.binary_search(func, desired_perplexity, n=distances.shape[0])
 
   @staticmethod
   def joint_probability_matrix(prob_matrix):
@@ -619,10 +604,33 @@ class StudentAutoEncoder(ConvAutoEncoder):
   
   def calculate_Q(self, Z):
     distances = StudentAutoEncoder.squared_distances(Z)
-    inv_distances = tf.reciprocal(tf.ones_likes(distances) + distances)
-    mask = tf.constant(1 - np.eye(self.batch_size), dtype=inv_distances.dtype)
+    inv_distances = tf.reciprocal(tf.ones_like(distances) + distances)
+    mask = (tf.constant(1, inv_distances.dtype) -
+            tf.eye(tf.shape(inv_distances)[0], dtype=inv_distances.dtype))
     inv_distances = mask * inv_distances
     return inv_distances / tf.reduce_sum(inv_distances)
 
-  
-  
+  @property
+  def loss(self):
+    representation = self.representation
+    eps = tf.constant(1e-12, tf.float32, (self.batch_size, self.batch_size))
+    def loss_function(inputs, outputs):
+      self.ops = []
+      
+      recon_loss = tf.reduce_mean(
+        tf.keras.backend.binary_crossentropy(inputs, outputs))
+      self.ops.append(tf.print("recon_loss:", recon_loss))
+
+      P = self.calculate_P(inputs)
+      P = tf.where(P < eps, eps, P)
+      # self.ops.append(tf.print("P:", P))
+      Q = self.calculate_Q(representation)
+      Q = tf.where(Q < eps, eps, Q)
+      # self.ops.append(tf.print("Q:", Q))
+      kl_div = tf.reduce_sum(P * tf.log(P / Q))
+      self.ops.append(tf.print("kl_div:", kl_div))
+      
+      # with tf.control_dependencies(self.ops):
+      out = recon_loss + kl_div
+      return out
+    return loss_function

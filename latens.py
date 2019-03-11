@@ -132,9 +132,10 @@ class Latens:
       num_components=self.num_components)
   
   def make_autoencoder(self):
-    model = mod.ConvVariationalAutoEncoder(
+    model = mod.StudentAutoEncoder(
       self.image_shape,
       self.latent_dim,
+      self.batch_size,
       model_dir=self.autoencoder_dir,
       rep_activation=self.rep_activation,
       dropout=self.dropout,
