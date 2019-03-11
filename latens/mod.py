@@ -440,18 +440,21 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     layers += super().create_decoding_layers()
     return layers
 
+  def compute_vae_kl(self, z_mean, z_log_std):
+    kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
+                                      - tf.square(z_mean)
+                                      - tf.exp(z_log_std), axis=-1)
+    return tf.reduce_mean(kl_batch)
+  
   @property
   def loss(self):
-    # assumes representation is batched
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
       recon_loss = tf.reduce_sum(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
-                                      - tf.square(z_mean)
-                                      - tf.exp(z_log_std), axis=-1)
-      kl_div = tf.reduce_mean(kl_batch)
+
+      kl_div = self.compute_vae_kl(z_mean, z_log_std)
       return recon_loss + kl_div
     return loss_function
 
@@ -586,7 +589,8 @@ class StudentAutoEncoder(ConvAutoEncoder):
   def calculate_sigmas(distances, desired_perplexity):
     """Calculate the sigmas for each row of `distances`"""
     func = lambda sigmas : StudentAutoEncoder.perplexity(distances, sigmas)
-    return StudentAutoEncoder.binary_search(func, desired_perplexity, n=distances.shape[0])
+    return StudentAutoEncoder.binary_search(func, desired_perplexity,
+                                            n=distances.shape[0])
 
   @staticmethod
   def joint_probability_matrix(prob_matrix):
@@ -610,27 +614,51 @@ class StudentAutoEncoder(ConvAutoEncoder):
     inv_distances = mask * inv_distances
     return inv_distances / tf.reduce_sum(inv_distances)
 
+  def compute_student_kl(self, X, Z):
+    eps = tf.constant(1e-15, tf.float32, (self.batch_size, self.batch_size))
+    P = self.calculate_P(X)
+    P = tf.where(P < eps, eps, P)
+    
+    Q = self.calculate_Q(Z)
+    Q = tf.where(Q < eps, eps, Q)
+    
+    kl_div = tf.reduce_sum(P * tf.log(P / Q))
+    return kl_div
+  
   @property
   def loss(self):
-    representation = self.representation
-    eps = tf.constant(1e-12, tf.float32, (self.batch_size, self.batch_size))
+    representation = self.representation    
     def loss_function(inputs, outputs):
-      self.ops = []
       
       recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      self.ops.append(tf.print("recon_loss:", recon_loss))
+      kl_div = self.compute_student_kl(inputs, representation)
+      return recon_loss + kl_div
+    return loss_function
 
-      P = self.calculate_P(inputs)
-      P = tf.where(P < eps, eps, P)
-      # self.ops.append(tf.print("P:", P))
-      Q = self.calculate_Q(representation)
-      Q = tf.where(Q < eps, eps, Q)
-      # self.ops.append(tf.print("Q:", Q))
-      kl_div = tf.reduce_sum(P * tf.log(P / Q))
-      self.ops.append(tf.print("kl_div:", kl_div))
-      
-      # with tf.control_dependencies(self.ops):
-      out = recon_loss + kl_div
-      return out
+
+class VariationalStudentAutoEncoder(
+    ConvVariationalAutoEncoder,
+    StudentAutoEncoder):
+  
+  def __init__(self, input_shape, latent_dim, batch_size,
+               perplexity=30.0, epsilon_std=1.0,
+               **kwargs):
+    """Instantiated same way StudentAutoEncoder is."""
+    self.batch_size = batch_size
+    self.perplexity = perplexity
+    self.epsilon_std = epsilon_std
+    ConvAutoEncoder.__init__(self, input_shape, latent_dim,
+                             num_components=2*latent_dim, **kwargs)
+    
+  @property
+  def loss(self):
+    z_mean = self.representation[:,:self.latent_dim]
+    z_log_std = self.representation[:,self.latent_dim:]
+    def loss_function(inputs, outputs):
+      recon_loss = tf.reduce_mean(
+        tf.keras.backend.binary_crossentropy(inputs, outputs))
+      vae_kl_div = self.compute_vae_kl(z_mean, z_log_std)
+      student_kl_div = self.compute_student_kl(inputs, z_mean)
+      return recon_loss + vae_kl_div + student_kl_div
     return loss_function

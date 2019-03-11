@@ -16,13 +16,15 @@ source activate tf-gpu-1.12.0
 
 cd /project2/glk/latens
 
-epochs=50
+epochs=100
 latent_dim=2
 batch_size=128
+ae=student
 
 echo "Starting training..."
 python latens.py autoencoder -i data/mnist/mnist.tfrecord \
-       -m models/mnist_tsne_e${epochs}_L${latent_dim}_b${batch_size} \
+       --ae $ae \
+       -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
        -e $epochs -L $latent_dim -b $batch_size \
        --overwrite --keras-verbose 2
 echo "Finished."

@@ -35,6 +35,7 @@ class Latens:
     """Bag of state for the latens run."""
 
     # general
+    self.autoencoder_type = args.autoencoder_type[0]
     self.cores = args.cores[0]
     if self.cores == -1:
       self.cores = os.cpu_count()
@@ -44,7 +45,10 @@ class Latens:
 
     # num_somethings
     self.latent_dim = args.latent_dim[0]
-    self.num_components = 2*self.latent_dim # TODO: automate
+    if self.autoencoder_type == 'vae':
+      self.num_components = 2*self.latent_dim
+    else:
+      self.num_components = self.latent_dim
     self.num_classes = args.num_classes[0]
     self.epochs = args.epochs[0]
     self.batch_size = args.batch_size[0]
@@ -132,15 +136,43 @@ class Latens:
       num_components=self.num_components)
   
   def make_autoencoder(self):
-    model = mod.StudentAutoEncoder(
-      self.image_shape,
-      self.latent_dim,
-      self.batch_size,
-      model_dir=self.autoencoder_dir,
-      rep_activation=self.rep_activation,
-      dropout=self.dropout,
-      tensorboard=self.tensorboard)
-    
+    if self.autoencoder_type == 'student':
+      model = mod.StudentAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        self.batch_size,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'vaestudent':
+      model = mod.VariationalStudentAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        self.batch_size,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'vae':
+      model = mod.ConvVariationalAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'conv':      
+      model = mod.ConvAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    else:
+      raise RuntimeError
+
     model.compile(learning_rate=self.learning_rate)
     return model
 
@@ -224,6 +256,7 @@ def cmd_autoencoder(lat):
     validation_data=tune_set.self_supervised,
     validation_steps=lat.tune_steps,
     verbose=lat.keras_verbose)
+
 
 def cmd_reconstruct(lat):
   """Run reconstruction."""
@@ -437,6 +470,10 @@ def main():
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,
                       help=docs.epoch_multiplier_help)
+  parser.add_argument('--autoencoder-type', '--ae', nargs=1,
+                      default=['conv'],
+                      choices=docs.autoencoder_type_choices,
+                      help=docs.autoencoder_type_help)
 
   args = parser.parse_args()
 

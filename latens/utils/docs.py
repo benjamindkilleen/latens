@@ -93,3 +93,6 @@ epoch_multiplier_help = """Runs the dataset 'mult' times per epoch. Total of
 EPOCHS * MULT epochs will be run."""
 
 show_help = """Show outputs to screen. Used mainly for visualizations."""
+
+autoencoder_type_choices = ['conv', 'vae', 'student', 'vaestudent']
+autoencoder_type_help = "Type of autoencoder to use. Default is 'conv'"
