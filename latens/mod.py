@@ -476,16 +476,13 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
   """
   def __init__(self, input_shape, latent_dim,
-               tolerance=1e-5, perplexity=30.0, max_steps=50,
-               lower=1e-20, upper=1000.,
+               perplexity=30.0,
                **kwargs):
     """
 
     :param input_shape: 
     :param latent_dim: 
-    :param tolerance: 
     :param perplexity: 
-    :param max_steps: 
     :returns: 
     :rtype: 
 
@@ -495,7 +492,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
     self.desired_entropy = np.log(perplexity)
     self.lower = lower
     self.upper = upper
-    self.max_steps = max_stpes
+    self.max_iter = max_iter
     super().__init__(input_shape, latent_dim, **kwargs)
 
   @property
@@ -507,11 +504,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
       P = self.calculate_P(inputs)
       Q = self.calculate_Q(representation)
-      
-      # get the ps from inputs
-      # TODO: compute the p_ij's and q_ij's and get the KL div between them.
       kl_div = tf.reduce_sum(P * tf.log(P / Q))
-      
       return recon_loss + kl_div
     return loss_function
 
@@ -527,14 +520,14 @@ class StudentAutoEncoder(ConvAutoEncoder):
     """Take softmax of each row of 2D tensor X."""
     exp_x = tf.exp(X - tf.reduce_max(X, axis=1, keepdims=True))
     if diag_zero:
-      mask = tf.constant(1 - np.eye(X.shape[0]), dtype=exp_x.dtype)
+      mask = tf.constant(1, exp_x.dtype) - tf.eye(tf.shape(exp_x)[0], dtype=exp_x.dtype)
       exp_x = exp_x * mask
     exp_x = exp_x + tf.constant(1e-8, exp_x.dtype)
     return exp_x / tf.reduce_sum(exp_x, axis=1, keepdims=True)
 
   @staticmethod
   def probability_matrix(distances, sigmas=None):
-    """Compute the probability matrix over distances."""
+    """Compute the (row-based) probability matrix over distances."""
     if sigmas is None:
       return StudentAutoEncoder.softmax(distances)
     else:
@@ -543,40 +536,93 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
   @staticmethod
   def binary_search(func, target, tolerance=1e-5, max_iter=50, 
-                    lower=1e-20, upper=1000.):
-    """Perform a binary search over input values to `func` in tf
+                    lower=1e-10, upper=1000.):
+    """Perform a binary search over input values to `func` in tf.
+
+    Can perform this search over a vector of targets, as long as func is a
+    vector function.
 
     :param func: tf function to evaluate
     :param target: target value we want the function to output
     :param tolerance: "close enough" threshold
     :param max_iter: number of iterations over
-    :param lower: 
-    :param upper: 
+    :param lower: lower bound to search
+    :param upper: upper bound to search
 
     """
     target = tf.constant(target, dtype=tf.float32)
-    tolerance = tf.constant(tolerance, dtype=tf.float32)
-    lower = tf.constant(lower, dtype=tf.float32)
-    upper = tf.constant(upper, dtype=tf.float32)
-    val = tf.placeholder(1, dtype=tf.float32)
+    tolerance = tf.constant(tolerance, tf.float32, target.shape[0])
+    lower = tf.constant(lower, tf.float32, target.shape[0])
+    upper = tf.constant(upper, tf.float32, target.shape[0])
+    two = tf.constant(2, dtype=tf.float32)
+    guess = (lower + upper) / two
+    close_guess = tf.constant(False, tf.bool, targe.shape[0])
 
-    def cond(val):
-      return val - target <= tolerance
+    def cond(x, close, low, up):
+      return tf.all(close)
     
-    def body(val):
+    def body(x, close, low, up):
       """single iteration of the search"""
-      pass
+      val = func(x)
+      close = tf.abs(val - target) <= tolerance
+      which = val > target
+      low = tf.where(close, low, tf.where(which, low, x))
+      up = tf.where(close, up, tf.where(which, x, up))
+      new_x = (low + up) / two
+      x = tf.where(close, x, new_x)
+      return x, close, low, up
     
-    return tf.while_loop(
-      cond, body, (val),
+    out = tf.while_loop(
+      cond, body, (guess, close_guess, lower, upper),
       maximum_iterations=max_iter,
       back_prop=False) # change?
+    return out[0]
 
+  @staticmethod
+  def log_2(x):
+    two = tf.constant(2, x.dtype)
+    return tf.log(x) / tf.log(two)
+  
+  @staticmethod
+  def calculate_perplexity(prob_matrix):
+    """Calculate perplexity for each row in P"""
+    entropy = -tf.reduce_sum(
+      prob_matrix * StudentAutoEncoder.log_2(prob_matrix), axis=1)
+    two = tf.constant(2, prob_matrix.dtype)
+    return tf.pow(two, entropy)
+
+  @staticmethod
+  def perplexity(distances, sigmas):
+    """Wrapper function computing perplexity of each row in distances."""
+    return StudentAutoEncoder.calculate_perplexity(
+      StudentAutoEncoder.probability_matrix(distances, sigmas=sigmas))
+
+  @staticmethod
+  def calculate_sigmas(self, distances, desired_perplexity):
+    """Calculate the sigmas for each row of `distances`"""
+    func = lambda sigmas : StudentAutoEncoder.perplexity(distances, sigmas)
+    return StudentAutoEncoder.binary_search(func, desired_perplexity)
+
+  @staticmethod
+  def joint_probability_matrix(prob_matrix):
+    """Calculater the joint probability matrix form `prob_matrix`"""
+    den = tf.constant(2, tf.float32) * tf.cast(tf.shape(prob_matrix)[0], tf.float32)
+    return (prob_matrix + tf.transpose(prob_matrix)) / den
   
   def calculate_P(self, X):
     n = self.batch_size
     X = tf.reshape(X, (n, -1))
-    pass
+    distances = - StudentAutoEncoder.squared_distances(X) # negative distances
+    sigmas = StudentAutoEncoder.calculate_sigmas(distances, self.perplexity)
+    prob_matrix = StudentAutoEncoder.probability_matrix(distances, sigmas=sigmas)
+    return StudentAutoEncoder.joint_probability_matrix(prob_matrix)
   
   def calculate_Q(self, Z):
-    pass
+    distances = StudentAutoEncoder.squared_distances(Z)
+    inv_distances = tf.reciprocal(tf.ones_likes(distances) + distances)
+    mask = tf.constant(1 - np.eye(self.batch_size), dtype=inv_distances.dtype)
+    inv_distances = mask * inv_distances
+    return inv_distances / tf.reduce_sum(inv_distances)
+
+  
+  
