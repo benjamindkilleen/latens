@@ -14,5 +14,5 @@ def clu(x):
 
   """
   
-  return tf.clip_by_value(x, tf.constant(0, dtype=x.dtype),
-                          tf.constant(1, dtype=x.dtype), name='clu')
+  return tf.clip_by_value(x, tf.constant(-2, dtype=x.dtype),
+                          tf.constant(2, dtype=x.dtype), name='clu')
