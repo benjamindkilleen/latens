@@ -16,7 +16,7 @@ source activate tf-gpu-1.12.0
 
 cd /project2/glk/latens
 
-epochs=100
+epochs=300
 latent_dim=2
 batch_size=64
 ae=student

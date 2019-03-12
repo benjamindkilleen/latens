@@ -18,12 +18,13 @@ cd /project2/glk/latens
 
 epochs=300
 latent_dim=2
+batch_size=64
 ae=conv
 
 echo "Starting training..."
 python latens.py autoencoder -i data/mnist/mnist.tfrecord \
        --ae $ae \
-       -m models/mnist_e${epochs}_L${latent_dim} \
-       -e $epochs -L $latent_dim \
+       -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+       -e $epochs -L $latent_dim -b $batch_size \
        --overwrite --keras-verbose 2
 echo "Finished."
