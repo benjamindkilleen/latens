@@ -536,7 +536,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
   """
   def __init__(self, input_shape, latent_dim, batch_size,
-               perplexity=30.0, kl_multiplier=10e4,
+               perplexity=30.0, kl_multiplier=1e4,
                **kwargs):
     """
 
@@ -691,13 +691,14 @@ class StudentAutoEncoder(ConvAutoEncoder):
       recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
       kl_div = kl_multiplier * self.compute_student_kl(inputs, representation)
+      loss = recon_loss + kl_div
       ops = []
       ops.append(tf.print('recon_loss:', recon_loss))
       ops.append(tf.print('kl_div:', kl_div))
       ops.append(tf.print('loss:', recon_loss + kl_div))
       # with tf.control_dependencies(ops):
-      out = recon_loss + kl_div
-      return out
+      #   loss = tf.identity(loss)
+      return loss
     return loss_function
 
 
@@ -707,11 +708,15 @@ class VariationalStudentAutoEncoder(
   
   def __init__(self, input_shape, latent_dim, batch_size,
                perplexity=30.0, epsilon_std=1.0,
+               student_kl_multiplier=1e4,
+               vae_kl_multiplier=1,
                **kwargs):
     """Instantiated same way StudentAutoEncoder is."""
     self.batch_size = batch_size
     self.perplexity = perplexity
     self.epsilon_std = epsilon_std
+    self.student_kl_multiplier = student_kl_multiplier
+    self.vae_kl_multiplier = vae_kl_multiplier
     ConvAutoEncoder.__init__(self, input_shape, latent_dim,
                              num_components=2*latent_dim, **kwargs)
     
@@ -719,10 +724,20 @@ class VariationalStudentAutoEncoder(
   def loss(self):
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
+    student_kl_multiplier = tf.constant(self.student_kl_multiplier, tf.float32)
+    vae_kl_multiplier = tf.constant(self.vae_kl_multiplier, tf.float32)
     def loss_function(inputs, outputs):
       recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      vae_kl_div = self.compute_vae_kl(z_mean, z_log_std)
+      vae_kl_div = vae_kl_multiplier * self.compute_vae_kl(z_mean, z_log_std)
       student_kl_div = self.compute_student_kl(inputs, z_mean)
-      return recon_loss + vae_kl_div + student_kl_div
+      loss = recon_loss + student_kl_div + vae_kl_div
+      ops = []
+      ops.append(tf.print('recon_loss:', recon_loss))
+      ops.append(tf.print('student_kl_div:', student_kl_div))
+      ops.append(tf.print('vae_kl_div:', vae_kl_div))
+      ops.append(tf.print('loss:', loss))
+      # with tf.control_dependencies(ops):
+      #   loss = tf.identity(loss)
+      return loss
     return loss_function
