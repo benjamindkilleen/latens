@@ -10,7 +10,7 @@ Latens. An Unsupervised Learning approach to active learning.
 """
 
 command_choices = ['convert', 'autoencoder', 'encode', 'sample', 'classifier',
-                   'reconstruct', 'decode', 'visualize', 'debug']
+                   'full-classifier', 'reconstruct', 'decode', 'visualize', 'debug']
 command_help = """latens command to run. The core functionality depends on
 commands: 'convert', 'autoencoder', 'encode', 'sample', and 'classifier', in
 that order."""
@@ -83,13 +83,19 @@ sample_choices = {'random' : sam.RandomSampler,
                   'normal' : sam.NormalSampler,
                   'multi-normal' : sam.MultivariateNormalSampler,
                   'uniform' : sam.UniformSampler,
-                  'cluster' : sam.UniformClusterSampler,
                   'uniform-cluster' : sam.UniformClusterSampler,
                   'normal-cluster' : sam.NormalClusterSampler,
-                  'multi-normal-cluster' : sam.MultivariateNormalClusterSampler}
+                  'multi-normal-cluster' : sam.MultivariateNormalClusterSampler,
+                  'error' : sam.MaximizingSampler,
+                  'classifier-error' : sam.MaximizingSampler,
+                  'classifier-loss' : sam.MaximizingSampler,
+                  'classifier-incorrect' : sam.IdentitySampler}
 sample_help = """Type of sampling to use. Default is 'multi-normal'."""
 
 epoch_multiplier_help = """Runs the dataset 'mult' times per epoch. Total of
 EPOCHS * MULT epochs will be run."""
 
 show_help = """Show outputs to screen. Used mainly for visualizations."""
+
+autoencoder_type_choices = ['conv', 'vae', 'student', 'vaestudent']
+autoencoder_type_help = "Type of autoencoder to use. Default is 'conv'"

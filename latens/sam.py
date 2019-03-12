@@ -62,6 +62,9 @@ class Sampler:
     """
     return np.ones(points.shape[0], dtype=np.int64)
 
+class IdentitySampler(Sampler):
+  def sample(self, points):
+    return points
 
 class RandomSampler(Sampler):
   def sample(self, points):
@@ -70,6 +73,33 @@ class RandomSampler(Sampler):
     perm = np.random.permutation(N)
     sampling = np.zeros(N, dtype=np.int64)
     sampling[perm[:n]] = 1
+    return sampling
+
+  
+class MaximizingSampler(Sampler):
+  """Provided metrics or encodings, selects the indices which minimize some
+  function on those encodings. In the simplest case, provided MAE, return
+  examples which maximize the MAE (that is, those on which the autoencoder did
+  the worst).
+
+  Subclasses can override process.
+
+  """
+
+  def process(self, points):
+    """Given points, compute the row-wise value wished to maximized on."""
+    return np.max(points, axis=1)
+
+  def sample(self, points):
+    N = points.shape[0]
+    n = self.get_sample_size(points.shape[0])
+    logger.debug(f"points: {points.shape}, {points}")
+    points = points.reshape(-1, 1)
+    values = self.process(points)
+    indices = np.argsort(values)
+    sampling = np.zeros(N, dtype=np.int64)
+    sampling[indices[-n:]] = 1
+    logger.debug(f"sampling: {sampling}")
     return sampling
 
   
@@ -137,7 +167,7 @@ class SpatialSampler(Sampler):
 class NormalSampler(SpatialSampler):
   def __init__(self, mean=0.0, std=1.0,
                **kwargs):
-    """Sample according to a normal distribution, identical in each dimension."""
+    """Sample according to a normal distribution, like points"""
     self.mean = mean
     self.std = std
     super().__init__(**kwargs)

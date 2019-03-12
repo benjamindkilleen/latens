@@ -1,6 +1,9 @@
 data/!mnist
 data/
-models/
+**.npy
+**.tfrecord
+**checkpoint
+**.hdf5*
 **.pyc
 **.err
 **.out

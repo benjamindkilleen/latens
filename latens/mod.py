@@ -70,9 +70,32 @@ class Model():
   def evaluate(self, *args, **kwargs):
     return self.model.evaluate(*args, **kwargs)
 
+  def errors(self, dataset, steps, batch_size):
+    """Return an array giving the everage absolute error for every example in the
+    dataset.
+
+    :param dataset: tf dataset
+    :param steps: 
+    :param batch_size:
+
+    """
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    errors = np.ones(steps*batch_size)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        Y = Y.reshape(Y.shape[0], -1)
+        Y_pred = Y_pred.reshape(Y_pred.shape[0], -1)
+        errors[b:b+batch_size] = np.mean(np.abs(Y - Y_pred), axis=-1)
+    return errors
+
   def save(self, *args, **kwargs):
     return self.model.save(*args, **kwargs)
 
+  
   # load the model from a most recent checkpoint
   def load(self):
     if self.model_dir is None:
@@ -189,6 +212,65 @@ class Classifier(SequentialModel):
                             layers=layers, **kwargs)
     return classifier
 
+  def incorrect(self, dataset, steps, batch_size):
+    """Return a "sampling" as in sam.py given indices of incorrect examples."""
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    incorrect = np.zeros(steps*batch_size, dtype=np.int64)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        Y = np.argmax(Y, axis=1)
+        Y_pred = np.argmax(Y_pred, axis=1)
+        incorrect[b:b+batch_size] = np.not_equal(Y, Y_pred).astype(np.int64)
+    return incorrect
+
+  @staticmethod
+  def cross_entropy(predictions, targets, epsilon=1e-12):
+    predictions = np.clip(predictions, epsilon, 1. - epsilon)
+    return -np.sum(targets*np.log(predictions+1e-9), axis=1) / predictions.shape[0]
+  
+  def losses(self, dataset, steps, batch_size):
+    """Return a "sampling" as in sam.py given indices of incorrect examples."""
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    incorrect = np.zeros(steps*batch_size, dtype=np.int64)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        incorrect[b:b+batch_size] = Classifier.cross_entropy(Y_pred, Y)
+    return incorrect
+
+class SimpleClassifier(Classifier):
+  def __init__(self, input_shape, num_classes,
+               dense_nodes=[1024,1024],
+               **kwargs):
+    """Create a classifier.
+    """
+    self.dense_nodes = dense_nodes
+    super().__init__(input_shape, num_classes, **kwargs)
+
+  def create_layers(self):
+    layers = []
+    layers.append(keras.layers.InputLayer(self.input_shape))
+
+    layers.append(keras.layers.Flatten())
+
+    for nodes in self.dense_nodes:
+      layers += self.create_dense(nodes)
+
+    layers += self.create_dense(
+      self.num_classes,
+      activation = self.output_activation)
+
+    return layers
+  
+
+  
 class ConvClassifier(Classifier):
   def __init__(self, input_shape, num_classes,
                level_filters=[64,32,32],
@@ -418,7 +500,7 @@ class ConvAutoEncoder(AutoEncoder):
       for _ in range(self.level_depth):
         layers += self.create_conv(filters)
 
-    layers += self.create_conv(1, activation=act.clu)
+    layers += self.create_conv(1, activation=None)
     return layers
 
 class ConvVariationalAutoEncoder(ConvAutoEncoder):
@@ -440,18 +522,21 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     layers += super().create_decoding_layers()
     return layers
 
+  def compute_vae_kl(self, z_mean, z_log_std):
+    kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
+                                      - tf.square(z_mean)
+                                      - tf.exp(z_log_std), axis=-1)
+    return tf.reduce_mean(kl_batch)
+  
   @property
   def loss(self):
-    # assumes representation is batched
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
-      recon_loss = tf.reduce_sum(
+      recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      kl_batch = -0.5 * tf.reduce_sum(1 + z_log_std
-                                      - tf.square(z_mean)
-                                      - tf.exp(z_log_std), axis=-1)
-      kl_div = tf.reduce_mean(kl_batch)
+
+      kl_div = self.compute_vae_kl(z_mean, z_log_std)
       return recon_loss + kl_div
     return loss_function
 
@@ -476,7 +561,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
   """
   def __init__(self, input_shape, latent_dim, batch_size,
-               perplexity=30.0,
+               perplexity=30.0, kl_multiplier=1e4,
                **kwargs):
     """
 
@@ -484,12 +569,14 @@ class StudentAutoEncoder(ConvAutoEncoder):
     :param latent_dim: number of latent dimensions
     :param batch_size: size of each batch, needed for loss function
     :param perplexity: desired perplexity of distribution
+    :param kl_multiplier: weights the KL divergence factor
     :returns: 
     :rtype: 
 
     """
     self.batch_size = batch_size
     self.perplexity = perplexity
+    self.kl_multiplier = kl_multiplier
     super().__init__(input_shape, latent_dim, **kwargs)
 
   @staticmethod
@@ -586,7 +673,8 @@ class StudentAutoEncoder(ConvAutoEncoder):
   def calculate_sigmas(distances, desired_perplexity):
     """Calculate the sigmas for each row of `distances`"""
     func = lambda sigmas : StudentAutoEncoder.perplexity(distances, sigmas)
-    return StudentAutoEncoder.binary_search(func, desired_perplexity, n=distances.shape[0])
+    return StudentAutoEncoder.binary_search(func, desired_perplexity,
+                                            n=distances.shape[0])
 
   @staticmethod
   def joint_probability_matrix(prob_matrix):
@@ -610,27 +698,71 @@ class StudentAutoEncoder(ConvAutoEncoder):
     inv_distances = mask * inv_distances
     return inv_distances / tf.reduce_sum(inv_distances)
 
+  def compute_student_kl(self, X, Z):
+    eps = tf.constant(1e-20, tf.float32, (self.batch_size, self.batch_size))
+    P = self.calculate_P(X)
+    P = tf.where(P < eps, eps, P)
+    
+    Q = self.calculate_Q(Z)
+    Q = tf.where(Q < eps, eps, Q)
+    
+    return tf.reduce_sum(P * tf.log(P / Q))
+  
   @property
   def loss(self):
     representation = self.representation
-    eps = tf.constant(1e-12, tf.float32, (self.batch_size, self.batch_size))
+    kl_multiplier = tf.constant(self.kl_multiplier, tf.float32)
     def loss_function(inputs, outputs):
-      self.ops = []
-      
       recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      self.ops.append(tf.print("recon_loss:", recon_loss))
+      kl_div = kl_multiplier * self.compute_student_kl(inputs, representation)
+      loss = recon_loss + kl_div
+      ops = []
+      ops.append(tf.print('recon_loss:', recon_loss))
+      ops.append(tf.print('kl_div:', kl_div))
+      ops.append(tf.print('loss:', recon_loss + kl_div))
+      # with tf.control_dependencies(ops):
+      #   loss = tf.identity(loss)
+      return loss
+    return loss_function
 
-      P = self.calculate_P(inputs)
-      P = tf.where(P < eps, eps, P)
-      # self.ops.append(tf.print("P:", P))
-      Q = self.calculate_Q(representation)
-      Q = tf.where(Q < eps, eps, Q)
-      # self.ops.append(tf.print("Q:", Q))
-      kl_div = tf.reduce_sum(P * tf.log(P / Q))
-      self.ops.append(tf.print("kl_div:", kl_div))
-      
-      # with tf.control_dependencies(self.ops):
-      out = recon_loss + kl_div
-      return out
+
+class VariationalStudentAutoEncoder(
+    ConvVariationalAutoEncoder,
+    StudentAutoEncoder):
+  
+  def __init__(self, input_shape, latent_dim, batch_size,
+               perplexity=30.0, epsilon_std=1.0,
+               student_kl_multiplier=1e4,
+               vae_kl_multiplier=1,
+               **kwargs):
+    """Instantiated same way StudentAutoEncoder is."""
+    self.batch_size = batch_size
+    self.perplexity = perplexity
+    self.epsilon_std = epsilon_std
+    self.student_kl_multiplier = student_kl_multiplier
+    self.vae_kl_multiplier = vae_kl_multiplier
+    ConvAutoEncoder.__init__(self, input_shape, latent_dim,
+                             num_components=2*latent_dim, **kwargs)
+    
+  @property
+  def loss(self):
+    z_mean = self.representation[:,:self.latent_dim]
+    z_log_std = self.representation[:,self.latent_dim:]
+    student_kl_multiplier = tf.constant(self.student_kl_multiplier, tf.float32)
+    vae_kl_multiplier = tf.constant(self.vae_kl_multiplier, tf.float32)
+    def loss_function(inputs, outputs):
+      recon_loss = tf.reduce_mean(
+        tf.keras.backend.binary_crossentropy(inputs, outputs))
+      vae_kl_div = vae_kl_multiplier * self.compute_vae_kl(z_mean, z_log_std)
+      student_kl_div = self.compute_student_kl(inputs, z_mean)
+      loss = recon_loss + student_kl_div + vae_kl_div
+      ops = []
+      ops.append(tf.print('recon_loss:', recon_loss))
+      ops.append(tf.print('student_kl_div:', student_kl_div))
+      ops.append(tf.print('vae_kl_div:', vae_kl_div))
+      ops.append(tf.print('loss:', loss))
+      # with tf.control_dependencies(ops):
+      #   loss = tf.identity(loss)
+      return loss
     return loss_function

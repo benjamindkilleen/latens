@@ -35,6 +35,7 @@ class Latens:
     """Bag of state for the latens run."""
 
     # general
+    self.autoencoder_type = args.autoencoder_type[0]
     self.cores = args.cores[0]
     if self.cores == -1:
       self.cores = os.cpu_count()
@@ -44,7 +45,10 @@ class Latens:
 
     # num_somethings
     self.latent_dim = args.latent_dim[0]
-    self.num_components = 2*self.latent_dim # TODO: automate
+    if self.autoencoder_type == 'vae':
+      self.num_components = 2*self.latent_dim
+    else:
+      self.num_components = self.latent_dim
     self.num_classes = args.num_classes[0]
     self.epochs = args.epochs[0]
     self.batch_size = args.batch_size[0]
@@ -77,6 +81,11 @@ class Latens:
     self.image_shape = args.image_shape
     self.dropout = args.dropout[0]
 
+    # the full classifier
+    self.full_classifier_dir = 'models/full_classifier'
+    if not os.path.exists(self.full_classifier_dir):
+      os.mkdir(self.full_classifier_dir)
+    
     # model dir and dependent data
     self.model_root = args.model_root[0]
     if not os.path.exists(self.model_root):
@@ -90,6 +99,17 @@ class Latens:
       self.model_root, f'{self.sample}_sample_{self.sample_size}.tfrecord')
     self.cluster_labels_path = os.path.join(
       self.model_root, f'{self.sample}_cluster_labels_{self.sample_size}.npy')
+
+    # figure paths
+    self.encodings_fig_path = os.path.join(
+      self.model_root, f'encodings.pdf')
+    self.clustered_encodings_fig_path = os.path.join(
+      self.model_root, f'{self.sample}_clustered_encodings.pdf')
+    self.sampling_fig_path = os.path.join(
+      self.model_root, f'{self.sample}_sampling_{self.sample_size}.pdf')
+    self.sampling_distribution_fig_path = os.path.join(
+      self.model_root, f'{self.sample}_sampling_distribution_{self.sample_size}.pdf')
+
     
     # input tfrecord prefix and its derivatices
     self.input_prefix, _ = os.path.splitext(args.input[0])
@@ -132,24 +152,63 @@ class Latens:
       num_components=self.num_components)
   
   def make_autoencoder(self):
-    model = mod.StudentAutoEncoder(
-      self.image_shape,
-      self.latent_dim,
-      self.batch_size,
-      model_dir=self.autoencoder_dir,
-      rep_activation=self.rep_activation,
-      dropout=self.dropout,
-      tensorboard=self.tensorboard)
-    
+    if self.autoencoder_type == 'student':
+      model = mod.StudentAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        self.batch_size,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'vaestudent':
+      model = mod.VariationalStudentAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        self.batch_size,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'vae':
+      model = mod.ConvVariationalAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    elif self.autoencoder_type == 'conv':      
+      model = mod.ConvAutoEncoder(
+        self.image_shape,
+        self.latent_dim,
+        model_dir=self.autoencoder_dir,
+        rep_activation=self.rep_activation,
+        dropout=self.dropout,
+        tensorboard=self.tensorboard)
+    else:
+      raise RuntimeError
+
     model.compile(learning_rate=self.learning_rate)
     return model
 
-  def make_classifier(self, autoencoder):
+  def classifier_from_autoencoder(self, autoencoder):
     model = mod.Classifier.from_autoencoder(
       autoencoder, self.num_classes,
       model_dir=self.classifier_dir,
       tensorboard=self.tensorboard)
     
+    model.compile(learning_rate=self.learning_rate)
+    return model
+
+  def make_full_classifier(self):
+    model = mod.SimpleClassifier(
+      self.image_shape,
+      self.num_classes,
+      model_dir=self.full_classifier_dir,
+      dropout=self.dropout,
+      tensorboard=self.tensorboard)
+
     model.compile(learning_rate=self.learning_rate)
     return model
     
@@ -207,7 +266,7 @@ def cmd_convert(lat):
   """Convert the dataset in args.input[0] to tfrecord and store in the same
   directory as a .tfrecord file."""
   dat.convert_from_npz(lat.npz_path)
-
+  
   
 def cmd_autoencoder(lat):
   """Run training for the autoencoder."""
@@ -225,6 +284,7 @@ def cmd_autoencoder(lat):
     validation_steps=lat.tune_steps,
     verbose=lat.keras_verbose)
 
+
 def cmd_reconstruct(lat):
   """Run reconstruction."""
   train_set, tune_set, test_set = lat.make_data(training=False)
@@ -235,10 +295,16 @@ def cmd_reconstruct(lat):
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
   get_next = test_set.get_next
   with tf.Session() as sess:
-    for reconstruction in reconstructions:
+    for i, reconstruction in enumerate(reconstructions):
       image, label = sess.run(get_next)
-      vis.show_image(image, reconstruction)
-
+      vis.plot_image(image, reconstruction)
+      if lat.show:
+        plt.show()
+      else:
+        plt.savefig(os.path.join(lat.model_root, f'reconstruction_{i}.pdf'))
+        if i > 5:
+          break
+        
 def cmd_encode(lat):
   """Encodes the training set."""
   train_set, tune_set, test_set = lat.make_data(training=False)
@@ -279,18 +345,41 @@ def cmd_decode(lat):
 def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
-  encodings = np.load(lat.encodings_path)
+  train_set, tune_set, test_set = lat.make_data(training=False)
+
+  if lat.sample == 'error':
+    model = lat.make_autoencoder()
+    model.load()
+    encodings = model.errors(train_set.self_supervised, lat.train_steps,
+                             lat.batch_size)[:lat.train_size]
+  elif lat.sample in ['classifier-error', 'classifier-losses',
+                      'classifier-incorrect']:
+    model = lat.make_full_classifier()
+    model.load()
+    if lat.sample == 'classifier-error':
+      encodings = model.errors(train_set.labeled, lat.train_steps,
+                               lat.batch_size)[:lat.train_size]
+    elif lat.sample == 'classifier-losse':
+      encodings = model.losses(train_set.labeled, lat.train_steps,
+                               lat.batch_size)[:lat.train_size]
+    elif lat.sample == 'classifier-incorrect':
+      encodings = model.incorrect(train_set.labeled, lat.train_steps,
+                                  lat.batch_size)[:lat.train_size]    
+  else:
+    encodings = np.load(lat.encodings_path)
+    
   sampler = lat.sampler_type(sample_size=lat.sample_size)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     sampler.n_clusters = lat.num_classes
   sampling = sampler(encodings)
+  logger.debug(f"sampling: {sampling.shape}, {np.sum(sampling)}")
+
   np.save(lat.sampling_path, sampling)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     np.save(lat.cluster_labels_path, sampler.cluster_labels)
 
-  train_set, tune_set, test_set = lat.make_data(training=False)
-  sample_train_set = train_set.sample(sampling)
-  sample_train_set.save(lat.sample_path)
+  sample_set = train_set.sample(sampling)
+  sample_set.save(lat.sample_path)
 
   
 def cmd_classifier(lat):
@@ -300,7 +389,7 @@ def cmd_classifier(lat):
 
   autoencoder = lat.make_autoencoder()
   
-  classifier = lat.make_classifier(autoencoder)
+  classifier = lat.classifier_from_autoencoder(autoencoder)
   if not lat.overwrite:
     classifier.load()
 
@@ -317,6 +406,26 @@ def cmd_classifier(lat):
     steps=lat.test_steps)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
 
+def cmd_full_classifier(lat):
+  """Run training for a classifier on the full dataset."""
+  train_set, tune_set, test_set = lat.make_data()
+  classifier = lat.make_full_classifier()
+  if not lat.overwrite:
+    classifier.load()
+
+  classifier.fit(
+    train_set.labeled,
+    epochs=lat.epochs,
+    steps_per_epoch=lat.train_steps,
+    validation_data=tune_set.labeled,
+    validation_steps=lat.tune_steps,
+    verbose=lat.keras_verbose)
+
+  loss, accuracy = classifier.evaluate(
+    test_set.labeled,
+    steps=lat.test_steps)
+  logger.info(f'test accuracy: {100*accuracy:.01f}%')
+  
 
 def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
@@ -325,12 +434,13 @@ def cmd_visualize(lat):
   if os.path.exists(lat.encodings_path):
     logger.info("Plotting encoding...")
     encodings = np.load(lat.encodings_path)
+    logger.debug(f"encodings: {encodings}")
     if False and lat.latent_dim == 3:
       vis.plot_encodings_3d(encodings, labels=labels)
     else:
       vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
+      plt.savefig(lat.encodings_fig_path)    
 
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.cluster_labels_path)):
@@ -343,21 +453,21 @@ def cmd_visualize(lat):
       vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'clustered_encodings.pdf'))
+      plt.savefig(lat.clustered_encodings_fig_path)
       
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.sampling_path)):
     logger.info("Plotting sampling...")
     encodings = np.load(lat.encodings_path)
     sampling = np.load(lat.sampling_path)
-    if False and latent_dim == 3:
-      vis.plot_sampled_encodings_3d(encodings, sampling, labels=labels)
-    else:
-      vis.plot_sampled_encodings(encodings, sampling, labels=labels)
+    vis.plot_sampled_encodings(encodings, sampling, labels=labels)
+    if not lat.show:
+      plt.savefig(lat.sampling_fig_path)
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
-
+      plt.savefig(lat.sampling_distribution_fig_path)
+    
+                  
   if lat.show:
     plt.show()
 
@@ -432,11 +542,15 @@ def main():
                       default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['multi-normal'],
+                      default=['error'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,
                       help=docs.epoch_multiplier_help)
+  parser.add_argument('--autoencoder-type', '--ae', nargs=1,
+                      default=['conv'],
+                      choices=docs.autoencoder_type_choices,
+                      help=docs.autoencoder_type_help)
 
   args = parser.parse_args()
 
@@ -463,6 +577,8 @@ def main():
     cmd_sample(lat)
   elif args.command == 'classifier':
     cmd_classifier(lat)
+  elif args.command == 'full-classifier':
+    cmd_full_classifier(lat)
   elif args.command == 'reconstruct':
     cmd_reconstruct(lat)
   elif args.command == 'decode':
