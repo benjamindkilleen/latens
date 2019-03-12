@@ -433,14 +433,14 @@ def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
   images, labels = lat.load_train()
 
+  msg = 'showing' if lat.show else 'saving'
+  logger.info(f"visualizing and {msg}")
+
   if os.path.exists(lat.encodings_path):
     logger.info("Plotting encoding...")
     encodings = np.load(lat.encodings_path)
     logger.debug(f"encodings: {encodings}")
-    if False and lat.latent_dim == 3:
-      vis.plot_encodings_3d(encodings, labels=labels)
-    else:
-      vis.plot_encodings(encodings, labels=labels)
+    vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
       logger.info(f"saving encodings plot to {lat.encodings_fig_path}")
       plt.savefig(lat.encodings_fig_path)
@@ -450,10 +450,7 @@ def cmd_visualize(lat):
     logger.info("Plotting clusters...")
     encodings = np.load(lat.encodings_path)
     cluster_labels = np.load(lat.cluster_labels_path)
-    if False and lat.latent_dim == 3:
-      vis.plot_encodings_3d(encodings, labels=cluster_labels)
-    else:
-      vis.plot_encodings(encodings, labels=cluster_labels)
+    vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
       logger.info(f"saving clustered encodings plot to "

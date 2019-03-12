@@ -68,7 +68,6 @@ def plot_sampling_distribution(sampling, labels, num_classes=10):
   counts = np.zeros(num_classes, dtype=np.int64)
   for i in range(counts.shape[0]):
     counts[i] += np.sum(sampling[labels == i])
-
   ticks = [i for i in range(num_classes)]
   tick_labels = [str(i) for i in range(num_classes)]
   plt.bar(ticks, counts, color=[cmap(i/num_classes) for i in range(num_classes)])
