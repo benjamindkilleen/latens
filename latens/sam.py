@@ -94,8 +94,9 @@ class MaximizingSampler(Sampler):
     N = points.shape[0]
     n = self.get_sample_size(points.shape[0])
     logger.debug(f"points: {points.shape}, {points}")
-    points = points.reshape(-1, 1)
+    points = points.reshape(N, -1)
     values = self.process(points)
+    logger.debug(f"values: {values.shape}")
     indices = np.argsort(values)
     sampling = np.zeros(N, dtype=np.int64)
     sampling[indices[-n:]] = 1

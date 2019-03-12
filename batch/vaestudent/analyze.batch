@@ -31,7 +31,7 @@ python latens.py reconstruct -i data/mnist/mnist \
        -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
        -L $latent_dim -b $batch_size
 
-for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error classifier-error classifier-loss classfier-incorrect
+for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error classifier-error classifier-loss classifier-incorrect
 do
   python latens.py sample -i data/mnist/mnist \
          --ae $ae \

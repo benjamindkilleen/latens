@@ -299,6 +299,7 @@ def cmd_reconstruct(lat):
       image, label = sess.run(get_next)
       vis.plot_image(image, reconstruction)
       if lat.show:
+        logger.info('showing reconstruction...')
         plt.show()
       else:
         plt.savefig(os.path.join(lat.model_root, f'reconstruction_{i}.pdf'))
@@ -346,32 +347,33 @@ def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
   train_set, tune_set, test_set = lat.make_data(training=False)
+  logger.info(f"sampling with '{lat.sample}'")
 
   if lat.sample == 'error':
     model = lat.make_autoencoder()
     model.load()
-    encodings = model.errors(train_set.self_supervised, lat.train_steps,
+    points = model.errors(train_set.self_supervised, lat.train_steps,
                              lat.batch_size)[:lat.train_size]
   elif lat.sample in ['classifier-error', 'classifier-losses',
                       'classifier-incorrect']:
     model = lat.make_full_classifier()
     model.load()
     if lat.sample == 'classifier-error':
-      encodings = model.errors(train_set.labeled, lat.train_steps,
-                               lat.batch_size)[:lat.train_size]
-    elif lat.sample == 'classifier-losse':
-      encodings = model.losses(train_set.labeled, lat.train_steps,
-                               lat.batch_size)[:lat.train_size]
+      points = model.errors(train_set.labeled, lat.train_steps,
+                            lat.batch_size)[:lat.train_size]
+    elif lat.sample == 'classifier-loss':
+      points = model.losses(train_set.labeled, lat.train_steps,
+                            lat.batch_size)[:lat.train_size]
     elif lat.sample == 'classifier-incorrect':
-      encodings = model.incorrect(train_set.labeled, lat.train_steps,
-                                  lat.batch_size)[:lat.train_size]    
+      points = model.incorrect(train_set.labeled, lat.train_steps,
+                               lat.batch_size)[:lat.train_size]    
   else:
-    encodings = np.load(lat.encodings_path)
+    points = np.load(lat.encodings_path)
     
   sampler = lat.sampler_type(sample_size=lat.sample_size)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     sampler.n_clusters = lat.num_classes
-  sampling = sampler(encodings)
+  sampling = sampler(points)
   logger.debug(f"sampling: {sampling.shape}, {np.sum(sampling)}")
 
   np.save(lat.sampling_path, sampling)
@@ -440,7 +442,8 @@ def cmd_visualize(lat):
     else:
       vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
-      plt.savefig(lat.encodings_fig_path)    
+      logger.info(f"saving encodings plot to {lat.encodings_fig_path}")
+      plt.savefig(lat.encodings_fig_path)
 
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.cluster_labels_path)):
@@ -453,6 +456,8 @@ def cmd_visualize(lat):
       vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
+      logger.info(f"saving clustered encodings plot to "
+                  f"{lat.clustered_encodings_fig_path}")
       plt.savefig(lat.clustered_encodings_fig_path)
       
   if (os.path.exists(lat.encodings_path) and
@@ -462,13 +467,16 @@ def cmd_visualize(lat):
     sampling = np.load(lat.sampling_path)
     vis.plot_sampled_encodings(encodings, sampling, labels=labels)
     if not lat.show:
+      logger.info(f"saving sampling plot to {lat.sampling_fig_path}")
       plt.savefig(lat.sampling_fig_path)
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
+      logger.info(f"saving distribution plot to "
+                  f"{lat.sampling_distribution_fig_path}")
       plt.savefig(lat.sampling_distribution_fig_path)
-    
-                  
+
   if lat.show:
+    logger.info('showing plots...')
     plt.show()
 
     
@@ -565,6 +573,7 @@ def main():
   if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
+  logger.info(f"command: {args.command}")
   lat = Latens(args)
 
   if args.command == 'convert':
