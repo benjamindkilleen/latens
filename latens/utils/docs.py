@@ -86,7 +86,8 @@ sample_choices = {'random' : sam.RandomSampler,
                   'cluster' : sam.UniformClusterSampler,
                   'uniform-cluster' : sam.UniformClusterSampler,
                   'normal-cluster' : sam.NormalClusterSampler,
-                  'multi-normal-cluster' : sam.MultivariateNormalClusterSampler}
+                  'multi-normal-cluster' : sam.MultivariateNormalClusterSampler,
+                  'error' : sam.MaximizingSampler}
 sample_help = """Type of sampling to use. Default is 'multi-normal'."""
 
 epoch_multiplier_help = """Runs the dataset 'mult' times per epoch. Total of

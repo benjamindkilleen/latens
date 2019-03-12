@@ -54,7 +54,7 @@ class Model():
     if self.checkpoint_path is not None:
       callbacks.append(tf.keras.callbacks.ModelCheckpoint(
         self.checkpoint_path, verbose=1, save_weights_only=True,
-        period=1))
+        period=10))
     if self.tensorboard:
       # Need to have an actual director in which to store the logs.
       raise NotImplementedError
@@ -70,9 +70,30 @@ class Model():
   def evaluate(self, *args, **kwargs):
     return self.model.evaluate(*args, **kwargs)
 
+  def errors(self, dataset, steps, batch_size):
+    """Return an array giving the everage absolute error for every example in the
+    dataset.
+
+    :param dataset: tf dataset
+    :param steps: 
+    :param batch_size:
+
+    """
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    errors = np.ones(steps*batch_size)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        errors[b:b+batch_size] = np.mean(np.abs(Y - Y_pred), axis=(1,2,3))
+    return errors
+  
   def save(self, *args, **kwargs):
     return self.model.save(*args, **kwargs)
 
+  
   # load the model from a most recent checkpoint
   def load(self):
     if self.model_dir is None:
@@ -418,7 +439,7 @@ class ConvAutoEncoder(AutoEncoder):
       for _ in range(self.level_depth):
         layers += self.create_conv(filters)
 
-    layers += self.create_conv(1, activation=act.clu)
+    layers += self.create_conv(1, activation=None)
     return layers
 
 class ConvVariationalAutoEncoder(ConvAutoEncoder):
@@ -451,7 +472,7 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
-      recon_loss = tf.reduce_sum(
+      recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
 
       kl_div = self.compute_vae_kl(z_mean, z_log_std)
@@ -479,7 +500,7 @@ class StudentAutoEncoder(ConvAutoEncoder):
 
   """
   def __init__(self, input_shape, latent_dim, batch_size,
-               perplexity=30.0,
+               perplexity=30.0, kl_multiplier=10e4,
                **kwargs):
     """
 
@@ -487,12 +508,14 @@ class StudentAutoEncoder(ConvAutoEncoder):
     :param latent_dim: number of latent dimensions
     :param batch_size: size of each batch, needed for loss function
     :param perplexity: desired perplexity of distribution
+    :param kl_multiplier: weights the KL divergence factor
     :returns: 
     :rtype: 
 
     """
     self.batch_size = batch_size
     self.perplexity = perplexity
+    self.kl_multiplier = kl_multiplier
     super().__init__(input_shape, latent_dim, **kwargs)
 
   @staticmethod
@@ -615,25 +638,30 @@ class StudentAutoEncoder(ConvAutoEncoder):
     return inv_distances / tf.reduce_sum(inv_distances)
 
   def compute_student_kl(self, X, Z):
-    eps = tf.constant(1e-15, tf.float32, (self.batch_size, self.batch_size))
+    eps = tf.constant(1e-20, tf.float32, (self.batch_size, self.batch_size))
     P = self.calculate_P(X)
     P = tf.where(P < eps, eps, P)
     
     Q = self.calculate_Q(Z)
     Q = tf.where(Q < eps, eps, Q)
     
-    kl_div = tf.reduce_sum(P * tf.log(P / Q))
-    return kl_div
+    return tf.reduce_sum(P * tf.log(P / Q))
   
   @property
   def loss(self):
-    representation = self.representation    
+    representation = self.representation
+    kl_multiplier = tf.constant(self.kl_multiplier, tf.float32)
     def loss_function(inputs, outputs):
-      
       recon_loss = tf.reduce_mean(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
-      kl_div = self.compute_student_kl(inputs, representation)
-      return recon_loss + kl_div
+      kl_div = kl_multiplier * self.compute_student_kl(inputs, representation)
+      ops = []
+      ops.append(tf.print('recon_loss:', recon_loss))
+      ops.append(tf.print('kl_div:', kl_div))
+      ops.append(tf.print('loss:', recon_loss + kl_div))
+      # with tf.control_dependencies(ops):
+      out = recon_loss + kl_div
+      return out
     return loss_function
 
 

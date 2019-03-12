@@ -312,18 +312,28 @@ def cmd_decode(lat):
 def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
-  encodings = np.load(lat.encodings_path)
+  train_set, tune_set, test_set = lat.make_data(training=False)
+  
+  if lat.sample == 'error':
+    model = lat.make_autoencoder()
+    model.load()
+    encodings = model.errors(train_set.self_supervised, lat.train_steps,
+                             lat.batch_size)[:lat.train_size]
+  else:
+    encodings = np.load(lat.encodings_path)
+    
   sampler = lat.sampler_type(sample_size=lat.sample_size)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     sampler.n_clusters = lat.num_classes
   sampling = sampler(encodings)
+  logger.debug(f"sampling: {sampling.shape}, {np.sum(sampling)}")
+
   np.save(lat.sampling_path, sampling)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     np.save(lat.cluster_labels_path, sampler.cluster_labels)
 
-  train_set, tune_set, test_set = lat.make_data(training=False)
-  sample_train_set = train_set.sample(sampling)
-  sample_train_set.save(lat.sample_path)
+  sample_set = train_set.sample(sampling)
+  sample_set.save(lat.sample_path)
 
   
 def cmd_classifier(lat):
@@ -358,12 +368,13 @@ def cmd_visualize(lat):
   if os.path.exists(lat.encodings_path):
     logger.info("Plotting encoding...")
     encodings = np.load(lat.encodings_path)
+    logger.debug(f"encodings: {encodings}")
     if False and lat.latent_dim == 3:
       vis.plot_encodings_3d(encodings, labels=labels)
     else:
       vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'encodings.pdf'))
+      plt.savefig(os.path.join(lat.model_root, 'encodings.pdf'))
 
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.cluster_labels_path)):
@@ -376,7 +387,7 @@ def cmd_visualize(lat):
       vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'clustered_encodings.pdf'))
+      plt.savefig(os.path.join(lat.model_root, 'clustered_encodings.pdf'))
       
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.sampling_path)):
@@ -389,7 +400,7 @@ def cmd_visualize(lat):
       vis.plot_sampled_encodings(encodings, sampling, labels=labels)
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
-      plt.savefig(os.path.join(lat.output, 'sampling.pdf'))
+      plt.savefig(os.path.join(lat.model_root, 'sampling.pdf'))
 
   if lat.show:
     plt.show()
@@ -465,7 +476,7 @@ def main():
                       default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['multi-normal'],
+                      default=['error'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,

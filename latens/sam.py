@@ -73,6 +73,33 @@ class RandomSampler(Sampler):
     return sampling
 
   
+class MaximizingSampler(Sampler):
+  """Provided metrics or encodings, selects the indices which minimize some
+  function on those encodings. In the simplest case, provided MAE, return
+  examples which maximize the MAE (that is, those on which the autoencoder did
+  the worst).
+
+  Subclasses can override process.
+
+  """
+
+  def process(self, points):
+    """Given points, compute the row-wise value wished to maximized on."""
+    return np.max(points, axis=1)
+
+  def sample(self, points):
+    N = points.shape[0]
+    n = self.get_sample_size(points.shape[0])
+    logger.debug(f"points: {points.shape}, {points}")
+    points = points.reshape(-1, 1)
+    values = self.process(points)
+    indices = np.argsort(values)
+    sampling = np.zeros(N, dtype=np.int64)
+    sampling[indices[-n:]] = 1
+    logger.debug(f"sampling: {sampling}")
+    return sampling
+
+  
 class SpatialSampler(Sampler):
   def __init__(self, threshold=0.25, metric='euclidean', **kwargs):
     """Samples over a space according to some distribution.
