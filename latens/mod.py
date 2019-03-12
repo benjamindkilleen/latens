@@ -245,6 +245,31 @@ class Classifier(SequentialModel):
         incorrect[b:b+batch_size] = Classifier.cross_entropy(Y_pred, Y)
     return incorrect
 
+class SimpleClassifier(Classifier):
+  def __init__(self, input_shape, num_classes,
+               dense_nodes=[1024,1024],
+               **kwargs):
+    """Create a classifier.
+    """
+    self.dense_nodes = dense_nodes
+    super().__init__(input_shape, num_classes, **kwargs)
+
+  def create_layers(self):
+    layers = []
+    layers.append(keras.layers.InputLayer(self.input_shape))
+
+    layers.append(keras.layers.Flatten())
+
+    for nodes in self.dense_nodes:
+      layers += self.create_dense(nodes)
+
+    layers += self.create_dense(
+      self.num_classes,
+      activation = self.output_activation)
+
+    return layers
+  
+
   
 class ConvClassifier(Classifier):
   def __init__(self, input_shape, num_classes,

@@ -167,7 +167,7 @@ class SpatialSampler(Sampler):
 class NormalSampler(SpatialSampler):
   def __init__(self, mean=0.0, std=1.0,
                **kwargs):
-    """Sample according to a normal distribution, identical in each dimension."""
+    """Sample according to a normal distribution, like points"""
     self.mean = mean
     self.std = std
     super().__init__(**kwargs)
