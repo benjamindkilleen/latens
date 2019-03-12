@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#SBATCH --job-name=train
+#SBATCH --output=train.out
+#SBATCH --error=train.err
+#SBATCH -p gpu2
+#SBATCH --gres=gpu:1
+#SBATCH --time=8:00:00
+#SBATCH --account=pi-glk
+#SBATCH --mem-per-cpu=32000
+
+# Proper way to load:
+module unload python
+module load Anaconda3/2018.12; \
+source activate tf-gpu-1.12.0
+
+cd /project2/glk/latens
+
+epochs=300
+latent_dim=2
+ae=conv
+
+echo "Starting training..."
+python latens.py autoencoder -i data/mnist/mnist.tfrecord \
+       --ae $ae \
+       -m models/mnist_e${epochs}_L${latent_dim} \
+       -e $epochs -L $latent_dim \
+       --overwrite --keras-verbose 2
+echo "Finished."
