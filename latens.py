@@ -102,7 +102,7 @@ class Latens:
 
     # figure paths
     self.encodings_fig_path = os.path.join(
-      self.model_root, '{self.sample}_encodings.pdf')
+      self.model_root, f'encodings.pdf')
     self.clustered_encodings_fig_path = os.path.join(
       self.model_root, f'{self.sample}_clustered_encodings.pdf')
     self.sampling_fig_path = os.path.join(
@@ -202,7 +202,7 @@ class Latens:
     return model
 
   def make_full_classifier(self):
-    model = mod.ConvClassifier(
+    model = mod.SimpleClassifier(
       self.image_shape,
       self.num_classes,
       model_dir=self.full_classifier_dir,
@@ -295,10 +295,16 @@ def cmd_reconstruct(lat):
   reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
   get_next = test_set.get_next
   with tf.Session() as sess:
-    for reconstruction in reconstructions:
+    for i, reconstruction in enumerate(reconstructions):
       image, label = sess.run(get_next)
-      vis.show_image(image, reconstruction)
-
+      vis.plot_image(image, reconstruction)
+      if lat.show:
+        plt.show()
+      else:
+        plt.savefig(os.path.join(lat.model_root, f'reconstruction_{i}.pdf'))
+        if i > 5:
+          break
+        
 def cmd_encode(lat):
   """Encodes the training set."""
   train_set, tune_set, test_set = lat.make_data(training=False)

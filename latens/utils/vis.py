@@ -1,15 +1,16 @@
 """Utils for visualizing artifice output. (Mostly for testing).
 """
 
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import numpy as np
 import logging
 
-
 logger = logging.getLogger('artifice')
 
 max_plot = 5000
+cmap = plt.get_cmap('tab10')
 
 def plot_image(*images, columns=10, ticks=False):
   columns = min(columns, len(images))
@@ -33,9 +34,13 @@ def plot_encodings(encodings, labels=None, num_classes=10):
     plt.plot(xs, ys, 'b,')
   else:
     ls = labels
+    handles = []
     for i in range(num_classes):
-      plt.plot(xs[ls == i], ys[ls == i], f'C{i},', label=str(i))
-    plt.legend()
+      color = cmap(i/num_classes)
+      plt.plot(xs[ls == i], ys[ls == i], c=color, linestyle='',
+               alpha=0.3, marker=',', label=str(i))
+      handles.append(mpatches.Patch(color=color, label=str(i)))
+    plt.legend(handles=handles)
   plt.title("Latent Space Encodings")
 
 def plot_sampled_encodings(encodings, sampling, labels=None, num_classes=10):
@@ -48,11 +53,14 @@ def plot_sampled_encodings(encodings, sampling, labels=None, num_classes=10):
   if labels is None:
     plt.plot(xs[sampled], ys[sampled], 'b.', markersize=1)
   else:
+    handles = []
     for i in range(num_classes):
       which = np.logical_and(sampled, labels == i)
-      plt.plot(xs[which], ys[which], f'C{i}.', markersize=2,
-               label=str(i))
-    plt.legend()
+      color = cmap(i/num_classes)
+      plt.plot(xs[which], ys[which], c=color, linestyle='',
+               marker='o', markersize=0.5, label=str(i))
+      handles.append(mpatches.Patch(color=color, label=str(i)))
+    plt.legend(handles=handles)
   plt.title("Latent Space Sampling")
 
 def plot_sampling_distribution(sampling, labels, num_classes=10):
@@ -63,7 +71,7 @@ def plot_sampling_distribution(sampling, labels, num_classes=10):
 
   ticks = [i for i in range(num_classes)]
   tick_labels = [str(i) for i in range(num_classes)]
-  plt.bar(ticks, counts, color='gray')
+  plt.bar(ticks, counts, color=[cmap(i/num_classes) for i in range(num_classes)])
   plt.xlabel("Class Label")
   plt.ylabel("Count")
   plt.xticks(ticks, tick_labels)
