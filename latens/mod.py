@@ -54,7 +54,7 @@ class Model():
     if self.checkpoint_path is not None:
       callbacks.append(tf.keras.callbacks.ModelCheckpoint(
         self.checkpoint_path, verbose=1, save_weights_only=True,
-        period=10))
+        period=1))
     if self.tensorboard:
       # Need to have an actual director in which to store the logs.
       raise NotImplementedError
@@ -87,9 +87,11 @@ class Model():
       for b in range(0, steps, batch_size):
         X,Y = sess.run(get_next)
         Y_pred = predictions[b:b+batch_size]
-        errors[b:b+batch_size] = np.mean(np.abs(Y - Y_pred), axis=(1,2,3))
+        Y = Y.reshape(Y.shape[0], -1)
+        Y_pred = Y_pred.reshape(Y_pred.shape[0], -1)
+        errors[b:b+batch_size] = np.mean(np.abs(Y - Y_pred), axis=-1)
     return errors
-  
+
   def save(self, *args, **kwargs):
     return self.model.save(*args, **kwargs)
 
@@ -210,6 +212,40 @@ class Classifier(SequentialModel):
                             layers=layers, **kwargs)
     return classifier
 
+  def incorrect(self, dataset, steps, batch_size):
+    """Return a "sampling" as in sam.py given indices of incorrect examples."""
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    incorrect = np.zeros(steps*batch_size, dtype=np.int64)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        Y = np.argmax(Y, axis=1)
+        Y_pred = np.argmax(Y_pred, axis=1)
+        incorrect[b:b+batch_size] = np.not_equal(Y, Y_pred).astype(np.int64)
+    return incorrect
+
+  @staticmethod
+  def cross_entropy(predictions, targets, epsilon=1e-12):
+    predictions = np.clip(predictions, epsilon, 1. - epsilon)
+    return -np.sum(targets*np.log(predictions+1e-9), axis=1) / predictions.shape[0]
+  
+  def losses(self, dataset, steps, batch_size):
+    """Return a "sampling" as in sam.py given indices of incorrect examples."""
+    predictions = self.predict(dataset, steps=steps)
+
+    get_next = dataset.make_one_shot_iterator().get_next()
+    incorrect = np.zeros(steps*batch_size, dtype=np.int64)
+    with tf.Session() as sess:
+      for b in range(0, steps, batch_size):
+        X,Y = sess.run(get_next)
+        Y_pred = predictions[b:b+batch_size]
+        incorrect[b:b+batch_size] = Classifier.cross_entropy(Y_pred, Y)
+    return incorrect
+
+  
 class ConvClassifier(Classifier):
   def __init__(self, input_shape, num_classes,
                level_filters=[64,32,32],

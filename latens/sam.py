@@ -62,6 +62,9 @@ class Sampler:
     """
     return np.ones(points.shape[0], dtype=np.int64)
 
+class IdentitySampler(Sampler):
+  def sample(self, points):
+    return points
 
 class RandomSampler(Sampler):
   def sample(self, points):
