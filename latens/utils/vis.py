@@ -1,8 +1,12 @@
 """Utils for visualizing artifice output. (Mostly for testing).
 """
 
-import matplotlib.patches as mpatches
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
+plt.ioff()
+
+import matplotlib.patches as mpatches
 from mpl_toolkits import mplot3d
 import numpy as np
 import logging
@@ -68,7 +72,6 @@ def plot_sampling_distribution(sampling, labels, num_classes=10):
   counts = np.zeros(num_classes, dtype=np.int64)
   for i in range(counts.shape[0]):
     counts[i] += np.sum(sampling[labels == i])
-
   ticks = [i for i in range(num_classes)]
   tick_labels = [str(i) for i in range(num_classes)]
   plt.bar(ticks, counts, color=[cmap(i/num_classes) for i in range(num_classes)])

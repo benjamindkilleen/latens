@@ -11,6 +11,11 @@ handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('%(levelname)s:latens:%(message)s'))
 logger.addHandler(handler)
 
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+plt.ioff()
+
 import sys
 import os
 import argparse
@@ -21,7 +26,6 @@ from latens import mod, sam
 from shutil import rmtree
 from time import time
 import numpy as np
-import matplotlib.pyplot as plt
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -292,13 +296,15 @@ def cmd_reconstruct(lat):
   model = lat.make_autoencoder()
   model.load()
 
-  reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
+  reconstructions = model.predict(test_set.self_supervised, steps=1,
+                                  verbose=lat.keras_verbose)
   get_next = test_set.get_next
   with tf.Session() as sess:
     for i, reconstruction in enumerate(reconstructions):
       image, label = sess.run(get_next)
       vis.plot_image(image, reconstruction)
       if lat.show:
+        logger.info('showing reconstruction...')
         plt.show()
       else:
         plt.savefig(os.path.join(lat.model_root, f'reconstruction_{i}.pdf'))
@@ -315,7 +321,7 @@ def cmd_encode(lat):
   encodings = model.encode(
     train_set.encoded,
     steps=lat.single_train_steps,
-    verbose=1)[:lat.train_size]
+    verbose=lat.keras_verbose)[:lat.train_size]
   
   logger.debug(f"encodings:\n{encodings}")
   
@@ -333,7 +339,8 @@ def cmd_decode(lat):
   model = lat.make_autoencoder()
   model.load()
   
-  reconstructions = model.decode(encodings[:lat.batch_size], verbose=1,
+  reconstructions = model.decode(encodings[:lat.batch_size],
+                                 verbose=lat.keras_verbose,
                                  batch_size=lat.batch_size)
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(test_set, reconstructions):
@@ -346,32 +353,33 @@ def cmd_sample(lat):
   """Run sampling on the encoding (assumed to exist) and store in a new tfrecord
   file."""
   train_set, tune_set, test_set = lat.make_data(training=False)
+  logger.info(f"sampling with '{lat.sample}'")
 
   if lat.sample == 'error':
     model = lat.make_autoencoder()
     model.load()
-    encodings = model.errors(train_set.self_supervised, lat.train_steps,
+    points = model.errors(train_set.self_supervised, lat.train_steps,
                              lat.batch_size)[:lat.train_size]
   elif lat.sample in ['classifier-error', 'classifier-losses',
                       'classifier-incorrect']:
     model = lat.make_full_classifier()
     model.load()
     if lat.sample == 'classifier-error':
-      encodings = model.errors(train_set.labeled, lat.train_steps,
-                               lat.batch_size)[:lat.train_size]
-    elif lat.sample == 'classifier-losse':
-      encodings = model.losses(train_set.labeled, lat.train_steps,
-                               lat.batch_size)[:lat.train_size]
+      points = model.errors(train_set.labeled, lat.train_steps,
+                            lat.batch_size)[:lat.train_size]
+    elif lat.sample == 'classifier-loss':
+      points = model.losses(train_set.labeled, lat.train_steps,
+                            lat.batch_size)[:lat.train_size]
     elif lat.sample == 'classifier-incorrect':
-      encodings = model.incorrect(train_set.labeled, lat.train_steps,
-                                  lat.batch_size)[:lat.train_size]    
+      points = model.incorrect(train_set.labeled, lat.train_steps,
+                               lat.batch_size)[:lat.train_size]    
   else:
-    encodings = np.load(lat.encodings_path)
+    points = np.load(lat.encodings_path)
     
   sampler = lat.sampler_type(sample_size=lat.sample_size)
   if issubclass(lat.sampler_type, sam.ClusterSampler):
     sampler.n_clusters = lat.num_classes
-  sampling = sampler(encodings)
+  sampling = sampler(points)
   logger.debug(f"sampling: {sampling.shape}, {np.sum(sampling)}")
 
   np.save(lat.sampling_path, sampling)
@@ -431,30 +439,32 @@ def cmd_visualize(lat):
   """Visualize the decodings that the model makes."""
   images, labels = lat.load_train()
 
+  msg = 'showing' if lat.show else 'saving'
+  logger.info(f"visualizing and {msg}")
+
   if os.path.exists(lat.encodings_path):
     logger.info("Plotting encoding...")
     encodings = np.load(lat.encodings_path)
     logger.debug(f"encodings: {encodings}")
-    if False and lat.latent_dim == 3:
-      vis.plot_encodings_3d(encodings, labels=labels)
-    else:
-      vis.plot_encodings(encodings, labels=labels)
+    vis.plot_encodings(encodings, labels=labels)
     if not lat.show:
-      plt.savefig(lat.encodings_fig_path)    
+      logger.info(f"saving encodings plot to {lat.encodings_fig_path}")
+      plt.savefig(lat.encodings_fig_path)
+      logger.info(f"saving successful")
 
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.cluster_labels_path)):
     logger.info("Plotting clusters...")
     encodings = np.load(lat.encodings_path)
     cluster_labels = np.load(lat.cluster_labels_path)
-    if False and lat.latent_dim == 3:
-      vis.plot_encodings_3d(encodings, labels=cluster_labels)
-    else:
-      vis.plot_encodings(encodings, labels=cluster_labels)
+    vis.plot_encodings(encodings, labels=cluster_labels)
     plt.title("Clustered Encodings")
     if not lat.show:
+      logger.info(f"saving clustered encodings plot to "
+                  f"{lat.clustered_encodings_fig_path}")
       plt.savefig(lat.clustered_encodings_fig_path)
-      
+      logger.info(f"saving successful")
+
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.sampling_path)):
     logger.info("Plotting sampling...")
@@ -462,13 +472,18 @@ def cmd_visualize(lat):
     sampling = np.load(lat.sampling_path)
     vis.plot_sampled_encodings(encodings, sampling, labels=labels)
     if not lat.show:
+      logger.info(f"saving sampling plot to {lat.sampling_fig_path}")
       plt.savefig(lat.sampling_fig_path)
+      logger.info(f"saving successful")
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
+      logger.info(f"saving distribution plot to "
+                  f"{lat.sampling_distribution_fig_path}")
       plt.savefig(lat.sampling_distribution_fig_path)
-    
-                  
+      logger.info(f"saving successful")
+
   if lat.show:
+    logger.info('showing plots...')
     plt.show()
 
     
@@ -565,6 +580,7 @@ def main():
   if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
+  logger.info(f"command: {args.command}")
   lat = Latens(args)
 
   if args.command == 'convert':

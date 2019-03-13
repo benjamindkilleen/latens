@@ -79,7 +79,7 @@ class Model():
     :param batch_size:
 
     """
-    predictions = self.predict(dataset, steps=steps)
+    predictions = self.predict(dataset, steps=steps, verbose=0)
 
     get_next = dataset.make_one_shot_iterator().get_next()
     errors = np.ones(steps*batch_size)
@@ -214,7 +214,7 @@ class Classifier(SequentialModel):
 
   def incorrect(self, dataset, steps, batch_size):
     """Return a "sampling" as in sam.py given indices of incorrect examples."""
-    predictions = self.predict(dataset, steps=steps)
+    predictions = self.predict(dataset, steps=steps, verbose=0)
 
     get_next = dataset.make_one_shot_iterator().get_next()
     incorrect = np.zeros(steps*batch_size, dtype=np.int64)
@@ -234,7 +234,7 @@ class Classifier(SequentialModel):
   
   def losses(self, dataset, steps, batch_size):
     """Return a "sampling" as in sam.py given indices of incorrect examples."""
-    predictions = self.predict(dataset, steps=steps)
+    predictions = self.predict(dataset, steps=steps, verbose=0)
 
     get_next = dataset.make_one_shot_iterator().get_next()
     incorrect = np.zeros(steps*batch_size, dtype=np.int64)
