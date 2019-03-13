@@ -6,7 +6,7 @@
 \beamer@subsectionintoc {3}{2}{Variational AE}{39}{0}{3}
 \beamer@subsectionintoc {3}{3}{t-SNE Style AE}{42}{0}{3}
 \beamer@subsectionintoc {3}{4}{Variational t-SNE Style AE}{46}{0}{3}
-\beamer@subsectionintoc {3}{5}{Reconstruction Error Sampling}{47}{0}{3}
-\beamer@sectionintoc {4}{Discussion}{49}{0}{4}
-\beamer@sectionintoc {5}{Future Work}{53}{0}{5}
-\beamer@sectionintoc {6}{References}{57}{0}{6}
+\beamer@subsectionintoc {3}{5}{Reconstruction Error Sampling}{49}{0}{3}
+\beamer@sectionintoc {4}{Discussion}{51}{0}{4}
+\beamer@sectionintoc {5}{Future Work}{55}{0}{5}
+\beamer@sectionintoc {6}{References}{59}{0}{6}

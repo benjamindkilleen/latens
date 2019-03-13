@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 MAR 2019 12:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 MAR 2019 13:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -810,6 +810,12 @@ LaTeX Warning: Label `fig:semi-supervised' multiply defined.
 
 
 LaTeX Warning: Label `fig:conv-uniform' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
 
 
 LaTeX Warning: Label `' multiply defined.
@@ -1728,99 +1734,109 @@ Overfull \vbox (35.17262pt too high) detected at line 558
 [46
 
  <../models/mnist_vaestudent_e300_L2_b64/encodings.pdf>]
-<../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf, id=4401, 462.5279
+<../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf,
+ id=4403, 462.52798pt x 346.89601pt>
+File: ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000
+.pdf Graphic file (type pdf)
+
+<use ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000.
+pdf>
+Package pdftex.def Info: ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cl
+uster_sampling_1000.pdf used on input line 570.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 570.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 570
+ []
+
+[47
+
+ <../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf
+>]
+<../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_distribut
+ion_1000.pdf, id=4482, 462.52798pt x 346.89601pt>
+File: ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_dist
+ribution_1000.pdf Graphic file (type pdf)
+
+<use ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_distr
+ibution_1000.pdf>
+Package pdftex.def Info: ../models/mnist_vaestudent_e300_L2_b64/multi-normal-cl
+uster_sampling_distribution_1000.pdf used on input line 581.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 581.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 581
+ []
+
+[48
+
+ <../models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_distribu
+tion_1000.pdf>]
+<../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf, id=4553, 462.5279
 8pt x 346.89601pt>
 File: ../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf Graphic file 
 (type pdf)
 
 <use ../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/error_sampling_100
-0.pdf used on input line 571.
+0.pdf used on input line 595.
 (pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
 
 
-Package hyperref Warning: Ignoring empty anchor on input line 571.
+Package hyperref Warning: Ignoring empty anchor on input line 595.
 
 
-Overfull \vbox (35.17262pt too high) detected at line 571
+Overfull \vbox (35.17262pt too high) detected at line 595
  []
 
-[47
+[49
 
  <../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf>]
 <../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf, id=4
-480, 462.52798pt x 346.89601pt>
+633, 462.52798pt x 346.89601pt>
 File: ../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf 
 Graphic file (type pdf)
 
 <use ../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/error_sampling_dis
-tribution_1000.pdf used on input line 582.
+tribution_1000.pdf used on input line 606.
 (pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
 
 
-Package hyperref Warning: Ignoring empty anchor on input line 582.
+Package hyperref Warning: Ignoring empty anchor on input line 606.
 
 
-Overfull \vbox (35.17262pt too high) detected at line 582
+Overfull \vbox (35.17262pt too high) detected at line 606
  []
 
-[48
+[50
 
  <../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf>]
 File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
 
 <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
- on input line 603.
+ on input line 627.
 (pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
 
-<../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf, id=4551
+<../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf, id=4704
 , 462.52798pt x 346.89601pt>
 File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
 phic file (type pdf)
 
 <use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
-mpling_1000.pdf used on input line 603.
+mpling_1000.pdf used on input line 627.
 (pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
 
 
-Package hyperref Warning: Ignoring empty anchor on input line 603.
-
-[49
-
-]
-File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
-
- <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
-Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
- on input line 603.
-(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
-File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
-phic file (type pdf)
-
-<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
-Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
-mpling_1000.pdf used on input line 603.
-(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
-
-[50
-
-]
-File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
-
- <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
-Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
- on input line 603.
-(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
-File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
-phic file (type pdf)
-
-<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
-Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
-mpling_1000.pdf used on input line 603.
-(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+Package hyperref Warning: Ignoring empty anchor on input line 627.
 
 [51
 
@@ -1829,26 +1845,60 @@ File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
 
  <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
- on input line 603.
+ on input line 627.
 (pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
 File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
 phic file (type pdf)
 
 <use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
 Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
-mpling_1000.pdf used on input line 603.
+mpling_1000.pdf used on input line 627.
 (pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
 
 [52
 
- <../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>]
+]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 627.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 627.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
 [53
 
-] [54
+]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
 
-] [55
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 627.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 627.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+[54
+
+ <../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>]
+[55
 
 ] [56
+
+] [57
+
+] [58
 
 ] (./presentation.bbl
 
@@ -1858,7 +1908,7 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <5> not available
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
 ** the default language instead.
-) [57
+) [59
 
  </usr/local/texlive/2015/texmf-dist/tex/latex/beamer/art/beamericonarticle.pdf
 >]
@@ -1871,24 +1921,24 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <5> not available
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 627.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 627.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 651.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 651.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 627.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 627.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 651.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 651.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: C947FDE00F4045659F8D94805479782B;615.
+(rerunfilecheck)             Checksum: D8B04B9355E9CF589A8C5EFA68EBE9AC;615.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 627.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 651.
  ) 
 Here is how much of TeX's memory you used:
- 18478 strings out of 493089
- 360607 string characters out of 6134842
+ 18494 strings out of 493089
+ 361395 string characters out of 6134842
  413060 words of memory out of 5000000
- 21331 multiletter control sequences out of 15000+600000
+ 21343 multiletter control sequences out of 15000+600000
  13246 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,60p,418b,679s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1905,10 +1955,10 @@ local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
 ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
 al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on presentation.pdf (57 pages, 20562809 bytes).
+Output written on presentation.pdf (59 pages, 21345351 bytes).
 PDF statistics:
- 5020 PDF objects out of 5155 (max. 8388607)
- 3691 compressed objects within 37 object streams
- 145 named destinations out of 1000 (max. 500000)
- 301 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 5172 PDF objects out of 6186 (max. 8388607)
+ 3775 compressed objects within 38 object streams
+ 149 named destinations out of 1000 (max. 500000)
+ 311 words of extra memory for PDF output out of 10000 (max. 10000000)
 
