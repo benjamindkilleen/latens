@@ -34,7 +34,6 @@
     "fig:scientific-images"
     "sec:method"
     "fig:overview"
-    "alg:uniform-sampling"
     "sec:results"
     "fig:conv-encodings"
     "fig:conv-uniform"

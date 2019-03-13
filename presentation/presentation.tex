@@ -134,102 +134,102 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Method}
-  \begin{itemize}
-  \item \textbf{Goal:} explore learned latent space $\mathbb{R}^L$
-    representations for optimal query selection. \pause{}
-  \item \textbf{Constraint:} $L = 2$ \pause{}
-  \item \textbf{Train} multiple auto-encoders:
-    \begin{itemize}
-    \item Convolutional \cite{krizhevsky_imagenet_2012}
-    \item Variational (VAE) \cite{kingma_auto-encoding_2013}
-    \item ``t-SNE style'' \cite{maaten_learning_2009}
-    \item ``Variational t-SNE style''
-    \end{itemize}
-    \pause{}
-  \item \textbf{Explore} multiple sampling strategies:
-    \begin{itemize}
-    \item Distribution based
-    \item Cluster based (hierarchical)
-    \item Performance based
-    \end{itemize}
-  \end{itemize}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Method}
+%   \begin{itemize}
+%   \item \textbf{Goal:} explore learned latent space $\mathbb{R}^L$
+%     representations for optimal query selection. \pause{}
+%   \item \textbf{Constraint:} $L = 2$ \pause{}
+%   \item \textbf{Train} multiple auto-encoders:
+%     \begin{itemize}
+%     \item Convolutional \cite{krizhevsky_imagenet_2012}
+%     \item Variational (VAE) \cite{kingma_auto-encoding_2013}
+%     \item ``t-SNE style'' \cite{maaten_learning_2009}
+%     \item ``Variational t-SNE style''
+%     \end{itemize}
+%     \pause{}
+%   \item \textbf{Explore} multiple sampling strategies:
+%     \begin{itemize}
+%     \item Distribution based
+%     \item Cluster based (hierarchical)
+%     \item Performance based
+%     \end{itemize}
+%   \end{itemize}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Convolutional Auto-encoder}
-  \begin{itemize}
-  \item $3\times 3$ convolution with 64 kernels (3x)
-  \item $2\times 2$ max-pooling
-  \item $3\times 3$ convolution with 32 kernels (3x)
-  \item $2\times 2$ max-pooling
-  \item $3\times 3$ convolution with 32 kernels (3x)
-  \item $2\times 2$ max-pooling
-  \item 1024-node dense layer (2x)
-  \item $L$-node dense layer, no activation
-  \item 1024-node dense layer (2x)    
-  \item $3\times 3$ convolution with 64 kernels (3x)
-  \item $2\times 2$ transpose convolution
-  \item $3\times 3$ convolution with 32 kernels (3x)
-  \item $2\times 2$ transpose convolution
-  \item $3\times 3$ convolution with 32 kernels (3x)
-  \item $2\times 2$ transpose convolution
-  \end{itemize}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Convolutional Auto-encoder}
+%   \begin{itemize}
+%   \item $3\times 3$ convolution with 64 kernels (3x)
+%   \item $2\times 2$ max-pooling
+%   \item $3\times 3$ convolution with 32 kernels (3x)
+%   \item $2\times 2$ max-pooling
+%   \item $3\times 3$ convolution with 32 kernels (3x)
+%   \item $2\times 2$ max-pooling
+%   \item 1024-node dense layer (2x)
+%   \item $L$-node dense layer, no activation
+%   \item 1024-node dense layer (2x)    
+%   \item $3\times 3$ convolution with 64 kernels (3x)
+%   \item $2\times 2$ transpose convolution
+%   \item $3\times 3$ convolution with 32 kernels (3x)
+%   \item $2\times 2$ transpose convolution
+%   \item $3\times 3$ convolution with 32 kernels (3x)
+%   \item $2\times 2$ transpose convolution
+%   \end{itemize}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Architectures}
-  \begin{itemize}
-  \item VAE:
-    \begin{itemize}
-    \item $2L$-node dense layer.
-    \item Normal-distribution sampling layer.
-    \item loss: binary cross-entropy with KL divergence from normal
-      $\kl(Z||\mathcal{N})$.
-    \end{itemize}
-    \pause{}
-  \item ``t-SNE style''
-    \begin{itemize}
-    \item loss: binary cross, entropy with added $\kl(P||Q)$ for batches of 64
-    \end{itemize}
-    \pause{}
-  \item ``Variational t-SNE style'':
-    \begin{itemize}
-    \item $2L$-node dense layer.
-    \item Normal-distribution sampling layer.
-    \item loss: combination of binary cross-entropy, VAE-like
-      $\kl(Z||\mathcal{N})$, and t-SNE style $\kl(P||Q)$.
-    \end{itemize}
-  \end{itemize}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Architectures}
+%   \begin{itemize}
+%   \item VAE:
+%     \begin{itemize}
+%     \item $2L$-node dense layer.
+%     \item Normal-distribution sampling layer.
+%     \item loss: binary cross-entropy with KL divergence from normal
+%       $\kl(Z||\mathcal{N})$.
+%     \end{itemize}
+%     \pause{}
+%   \item ``t-SNE style''
+%     \begin{itemize}
+%     \item loss: binary cross, entropy with added $\kl(P||Q)$ for batches of 64
+%     \end{itemize}
+%     \pause{}
+%   \item ``Variational t-SNE style'':
+%     \begin{itemize}
+%     \item $2L$-node dense layer.
+%     \item Normal-distribution sampling layer.
+%     \item loss: combination of binary cross-entropy, VAE-like
+%       $\kl(Z||\mathcal{N})$, and t-SNE style $\kl(P||Q)$.
+%     \end{itemize}
+%   \end{itemize}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Sampling}
-  \begin{algorithm}[H]
-    \begin{algorithmic}[1]
-      \Require encoding $Z \in \mathbb{R}^L$, probability distribution
-      $f : \mathbb{R}^L \rightarrow \mathbb{R}$, distance metric
-      $d : \mathbb{R}^{2 \times L} \rightarrow \mathbb{R}$, distance threshold
-      $t \in \mathbb{R}$, $n \in \mathbb{N}$.
+% \begin{frame}
+%   \frametitle{Sampling}
+%   \begin{algorithm}[H]
+%     \begin{algorithmic}[1]
+%       \Require encoding $Z \in \mathbb{R}^L$, probability distribution
+%       $f : \mathbb{R}^L \rightarrow \mathbb{R}$, distance metric
+%       $d : \mathbb{R}^{2 \times L} \rightarrow \mathbb{R}$, distance threshold
+%       $t \in \mathbb{R}$, $n \in \mathbb{N}$.
       
-      \State $Q \gets \{\}$ %
-      \While {$|Q| < n$} %
-      \State Draw $z \sim f$ %
-      \For {$z_i \in Z$} \Comment the $i$th row of $Z$ %
-      \If {$d(z, z_i) < t$} %
-      \State $Q \gets Q \cup \{i\}$ %
-      \EndIf %
-      \EndFor %
-      \EndWhile %
-      \State %
-      \Return $Q$
-    \end{algorithmic}
-    \caption{Select examples from the encoding $Z$ according to a distribution
-      $f$.}
-    \label{alg:uniform-sampling}
-  \end{algorithm}
-\end{frame}
+%       \State $Q \gets \{\}$ %
+%       \While {$|Q| < n$} %
+%       \State Draw $z \sim f$ %
+%       \For {$z_i \in Z$} \Comment the $i$th row of $Z$ %
+%       \If {$d(z, z_i) < t$} %
+%       \State $Q \gets Q \cup \{i\}$ %
+%       \EndIf %
+%       \EndFor %
+%       \EndWhile %
+%       \State %
+%       \Return $Q$
+%     \end{algorithmic}
+%     \caption{Select examples from the encoding $Z$ according to a distribution
+%       $f$.}
+%     \label{alg:uniform-sampling}
+%   \end{algorithm}
+% \end{frame}
 
 \section{Results}
 \label{sec:results}
@@ -332,82 +332,82 @@
   \end{figure}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Normal Spatial Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/normal_sampling_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Normal Spatial Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/normal_sampling_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Normal Spatial Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Normal Spatial Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Clustering}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Clustering}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Cluster Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Cluster Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Cluster Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Cluster Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Normal Sampling inside Clusters}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Normal Sampling inside Clusters}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Normal Sampling inside Clusters}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distribution_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Normal Sampling inside Clusters}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distribution_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
 \subsection{Variational AE}
 
@@ -526,7 +526,7 @@
   \end{figure}
 \end{frame}
 
-\subsection{Variational t-SNE Style AE}
+% \subsection{Variational t-SNE Style AE}
 
 % \begin{frame}
 %   \frametitle{Variational t-SNE Style Auto-encoder}
@@ -546,64 +546,64 @@
 %   \end{columns}
 % \end{frame}
 
-\begin{frame}
-  \frametitle{Variational t-SNE Style Auto-encoder}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_vaestudent_e300_L2_b64/encodings}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Variational t-SNE Style Auto-encoder}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_vaestudent_e300_L2_b64/encodings}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
 
-\begin{frame}
-  \frametitle{Normal Sampling inside Clusters}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Normal Sampling inside Clusters}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Clustered Normal Spatial Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_distribution_1000}
-    \caption{}
-    \label{}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Clustered Normal Spatial Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_vaestudent_e300_L2_b64/multi-normal-cluster_sampling_distribution_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}
+% \end{frame}
 
 
-\subsection{Reconstruction Error Sampling}
+% \subsection{Reconstruction Error Sampling}
 
-\begin{frame}
-  \frametitle{Reconstruction Error Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_student_e300_L2_b64/error_sampling_1000}
-    \caption{}
-    \label{}
-  \end{figure}  
-\end{frame}
+% \begin{frame}
+%   \frametitle{Reconstruction Error Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_student_e300_L2_b64/error_sampling_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}  
+% \end{frame}
 
-\begin{frame}
-  \frametitle{Reconstruction Error Sampling}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]
-    {models/mnist_student_e300_L2_b64/error_sampling_distribution_1000}
-    \caption{}
-    \label{}
-  \end{figure}  
-\end{frame}
+% \begin{frame}
+%   \frametitle{Reconstruction Error Sampling}
+%   \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]
+%     {models/mnist_student_e300_L2_b64/error_sampling_distribution_1000}
+%     \caption{}
+%     \label{}
+%   \end{figure}  
+% \end{frame}
 
 \section{Discussion}
 \begin{frame}
