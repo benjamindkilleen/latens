@@ -1,8 +1,12 @@
 """Utils for visualizing artifice output. (Mostly for testing).
 """
 
-import matplotlib.patches as mpatches
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
+plt.ioff()
+
+import matplotlib.patches as mpatches
 from mpl_toolkits import mplot3d
 import numpy as np
 import logging

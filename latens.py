@@ -11,6 +11,11 @@ handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('%(levelname)s:latens:%(message)s'))
 logger.addHandler(handler)
 
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+plt.ioff()
+
 import sys
 import os
 import argparse
@@ -21,7 +26,6 @@ from latens import mod, sam
 from shutil import rmtree
 from time import time
 import numpy as np
-import matplotlib.pyplot as plt
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -292,7 +296,8 @@ def cmd_reconstruct(lat):
   model = lat.make_autoencoder()
   model.load()
 
-  reconstructions = model.predict(test_set.self_supervised, steps=1, verbose=1)
+  reconstructions = model.predict(test_set.self_supervised, steps=1,
+                                  verbose=lat.keras_verbose)
   get_next = test_set.get_next
   with tf.Session() as sess:
     for i, reconstruction in enumerate(reconstructions):
@@ -316,7 +321,7 @@ def cmd_encode(lat):
   encodings = model.encode(
     train_set.encoded,
     steps=lat.single_train_steps,
-    verbose=1)[:lat.train_size]
+    verbose=lat.keras_verbose)[:lat.train_size]
   
   logger.debug(f"encodings:\n{encodings}")
   
@@ -334,7 +339,8 @@ def cmd_decode(lat):
   model = lat.make_autoencoder()
   model.load()
   
-  reconstructions = model.decode(encodings[:lat.batch_size], verbose=1,
+  reconstructions = model.decode(encodings[:lat.batch_size],
+                                 verbose=lat.keras_verbose,
                                  batch_size=lat.batch_size)
   if tf.executing_eagerly():
     for (original, _), reconstruction in zip(test_set, reconstructions):
@@ -444,6 +450,7 @@ def cmd_visualize(lat):
     if not lat.show:
       logger.info(f"saving encodings plot to {lat.encodings_fig_path}")
       plt.savefig(lat.encodings_fig_path)
+      logger.info(f"saving successful")
 
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.cluster_labels_path)):
@@ -456,7 +463,8 @@ def cmd_visualize(lat):
       logger.info(f"saving clustered encodings plot to "
                   f"{lat.clustered_encodings_fig_path}")
       plt.savefig(lat.clustered_encodings_fig_path)
-      
+      logger.info(f"saving successful")
+
   if (os.path.exists(lat.encodings_path) and
       os.path.exists(lat.sampling_path)):
     logger.info("Plotting sampling...")
@@ -466,11 +474,13 @@ def cmd_visualize(lat):
     if not lat.show:
       logger.info(f"saving sampling plot to {lat.sampling_fig_path}")
       plt.savefig(lat.sampling_fig_path)
+      logger.info(f"saving successful")
     vis.plot_sampling_distribution(sampling, labels)
     if not lat.show:
       logger.info(f"saving distribution plot to "
                   f"{lat.sampling_distribution_fig_path}")
       plt.savefig(lat.sampling_distribution_fig_path)
+      logger.info(f"saving successful")
 
   if lat.show:
     logger.info('showing plots...')

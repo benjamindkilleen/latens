@@ -11,7 +11,7 @@
 
 # Proper way to load:
 module unload python
-module load Anaconda3/2018.12; \
+module load Anaconda3/2018.12
 source activate tf-gpu-1.12.0
 
 cd /project2/glk/latens
@@ -25,23 +25,23 @@ echo "Starting analysis..."
 python latens.py encode -i data/mnist/mnist \
        --ae $ae \
        -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
-       -L $latent_dim -b $batch_size
+       -L $latent_dim -b $batch_size --keras-verbose 2
 python latens.py reconstruct -i data/mnist/mnist \
        --ae $ae \
        -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
-       -L $latent_dim -b $batch_size
+       -L $latent_dim -b $batch_size --keras-verbose 2
 
 for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error classifier-error classifier-loss classifier-incorrect
 do
   python latens.py sample -i data/mnist/mnist \
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
-         -L $latent_dim -b $batch_size \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
          --sample $sample
   python latens.py visualize -i data/mnist/mnist \
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
-         -L $latent_dim -b $batch_size \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
          --sample $sample
 done
              
