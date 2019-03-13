@@ -1,0 +1,106 @@
+\documentclass[10pt, usenames, dvipsnames, table]{beamer}
+\usetheme{Berkeley}
+\usecolortheme{beetle}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{array}
+\RequirePackage{fix-cm}
+\usepackage{colortbl}
+
+\newcommand{\heading}[1]{
+  \begin{frame}
+    \title{#1}
+    \subtitle{}
+    \author{}
+    \institute{}
+    \date{}
+    \maketitle
+  \end{frame}
+}
+
+\definecolor{midyellow}{HTML}{FFE599}
+\definecolor{midgray}{HTML}{B3B3B3}
+\definecolor{midgreen}{HTML}{F19C99}
+\definecolor{midred}{HTML}{B9E0A5}
+
+\renewcommand{\r}{\color{red}}
+\newcommand{\g}{\color{ForestGreen}}
+\renewcommand{\b}{\color{blue}}
+
+\newcommand{\rcell}{\cellcolor{red!25}}
+\newcommand{\gcell}{\cellcolor{ForestGreen!25}}
+\newcommand{\bcell}{\cellcolor{blue!25}}
+
+\newcommand{\light}{\color{Cyan}}
+\renewcommand{\mid}{\color{MidnightBlue}}
+\newcommand{\dark}{\color{Blue}}
+
+\newcommand{\lightcell}{\cellcolor{Cyan!25}}
+\newcommand{\midcell}{\cellcolor{MidnightBlue!25}}
+\newcommand{\darkcell}{\cellcolor{Blue!25}}
+
+\title{Query Selection based on Latent Space Sampling}
+\author{Benjamin Killeen}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+
+\section{Motivation}
+\label{sec:motivation}
+\begin{frame}
+  \frametitle{Motivation}
+  
+\end{frame}
+
+\end{document}
+
+Full classifier output:
+\begin{verbatim}
+Epoch 1/10
+781/782 [============================>.] - ETA: 0s - loss: 0.5675 - acc: 0.8668
+782/782 [==============================] - 11s 14ms/step - loss: 0.5670 - acc: 0.8669 - val_loss: 0.2813 - val_acc: 0.9219
+Epoch 2/10
+781/782 [============================>.] - ETA: 0s - loss: 0.2607 - acc: 0.9270
+782/782 [==============================] - 7s 9ms/step - loss: 0.2607 - acc: 0.9269 - val_loss: 0.2217 - val_acc: 0.9395
+Epoch 3/10
+780/782 [============================>.] - ETA: 0s - loss: 0.2108 - acc: 0.9406
+782/782 [==============================] - 7s 9ms/step - loss: 0.2107 - acc: 0.9407 - val_loss: 0.1884 - val_acc: 0.9454
+Epoch 4/10
+780/782 [============================>.] - ETA: 0s - loss: 0.1794 - acc: 0.9490
+782/782 [==============================] - 7s 9ms/step - loss: 0.1792 - acc: 0.9490 - val_loss: 0.1678 - val_acc: 0.9512
+Epoch 5/10
+779/782 [============================>.] - ETA: 0s - loss: 0.1563 - acc: 0.9558
+782/782 [==============================] - 7s 9ms/step - loss: 0.1561 - acc: 0.9558 - val_loss: 0.1481 - val_acc: 0.9578
+Epoch 6/10
+778/782 [============================>.] - ETA: 0s - loss: 0.1391 - acc: 0.9607
+782/782 [==============================] - 7s 9ms/step - loss: 0.1393 - acc: 0.9606 - val_loss: 0.1402 - val_acc: 0.9601
+Epoch 7/10
+777/782 [============================>.] - ETA: 0s - loss: 0.1243 - acc: 0.9647
+782/782 [==============================] - 7s 9ms/step - loss: 0.1240 - acc: 0.9648 - val_loss: 0.1263 - val_acc: 0.9638
+Epoch 8/10
+777/782 [============================>.] - ETA: 0s - loss: 0.1131 - acc: 0.9685
+782/782 [==============================] - 7s 9ms/step - loss: 0.1129 - acc: 0.9686 - val_loss: 0.1178 - val_acc: 0.9655
+Epoch 9/10
+776/782 [============================>.] - ETA: 0s - loss: 0.1026 - acc: 0.9716
+782/782 [==============================] - 8s 11ms/step - loss: 0.1024 - acc: 0.9717 - val_loss: 0.1109 - val_acc: 0.9670
+Epoch 10/10
+775/782 [============================>.] - ETA: 0s - loss: 0.0945 - acc: 0.9742
+782/782 [==============================] - 7s 9ms/step - loss: 0.0942 - acc: 0.9743 - val_loss: 0.1056 - val_acc: 0.9686
+157/157 [==============================] - 3s 20ms/step
+INFO:latens:test accuracy: 97.1%
+\end{verbatim}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
