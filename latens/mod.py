@@ -533,7 +533,7 @@ class ConvVariationalAutoEncoder(ConvAutoEncoder):
     z_mean = self.representation[:,:self.latent_dim]
     z_log_std = self.representation[:,self.latent_dim:]
     def loss_function(inputs, outputs):
-      recon_loss = tf.reduce_mean(
+      recon_loss = tf.reduce_sum(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
 
       kl_div = self.compute_vae_kl(z_mean, z_log_std)
@@ -752,7 +752,7 @@ class VariationalStudentAutoEncoder(
     student_kl_multiplier = tf.constant(self.student_kl_multiplier, tf.float32)
     vae_kl_multiplier = tf.constant(self.vae_kl_multiplier, tf.float32)
     def loss_function(inputs, outputs):
-      recon_loss = tf.reduce_mean(
+      recon_loss = tf.reduce_sum(
         tf.keras.backend.binary_crossentropy(inputs, outputs))
       vae_kl_div = vae_kl_multiplier * self.compute_vae_kl(z_mean, z_log_std)
       student_kl_div = self.compute_student_kl(inputs, z_mean)
