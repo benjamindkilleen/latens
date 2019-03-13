@@ -360,7 +360,7 @@ def cmd_sample(lat):
     model.load()
     points = model.errors(train_set.self_supervised, lat.train_steps,
                              lat.batch_size)[:lat.train_size]
-  elif lat.sample in ['classifier-error', 'classifier-losses',
+  elif lat.sample in ['classifier-error', 'classifier-loss',
                       'classifier-incorrect']:
     model = lat.make_full_classifier()
     model.load()
