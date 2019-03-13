@@ -3,6 +3,14 @@
  (lambda ()
    (TeX-add-to-alist 'LaTeX-provided-class-options
                      '(("beamer" "10pt" "usenames" "dvipsnames" "table")))
+   (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
+   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
    (TeX-run-style-hooks
     "latex2e"
     "beamer"
@@ -10,19 +18,27 @@
     "graphicx"
     "array"
     "fix-cm"
-    "colortbl")
+    "colortbl"
+    "hyperref"
+    "graphbox"
+    "algorithm"
+    "algpseudocode")
    (TeX-add-symbols
-    '("heading" 1)
-    "g"
-    "rcell"
-    "gcell"
-    "bcell"
-    "light"
-    "dark"
-    "lightcell"
-    "midcell"
-    "darkcell")
+    "kl")
    (LaTeX-add-labels
-    "sec:motivation"))
+    "sec:motivation"
+    "fig:supervised"
+    "fig:imagenet"
+    "fig:unsupervised"
+    "fig:semi-supervised"
+    "fig:scientific-images"
+    "sec:method"
+    "fig:overview"
+    "alg:uniform-sampling"
+    "sec:results"
+    "fig:conv-encodings"
+    "fig:conv-uniform"
+    "sec:references")
+   (LaTeX-add-bibliographies))
  :latex)
 

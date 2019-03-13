@@ -2,7 +2,7 @@
 """
 
 import matplotlib as mpl
-mpl.use('Agg')
+mpl.use('Agg')                  # TODO: only do this when lat.show == false.
 import matplotlib.pyplot as plt
 plt.ioff()
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  12 MAR 2019 13:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 MAR 2019 12:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -756,25 +756,131 @@ Package: fix-cm 2015/01/14 v1.1t fixes to LaTeX
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 ))
-(./presentation.aux)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphbox/graphbox.sty
+Package: graphbox 2014/08/31 v1.0 extension for graphicx to adjust containing b
+ox
+\Gin@box@box=\box53
+\Gin@box@width=\skip60
+\Gin@box@height=\skip61
+\Gin@box@raise=\skip62
+\Gin@box@hspace=\skip63
+\Gin@box@bwidth=\skip64
+\Gin@box@bheight=\skip65
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count154
+\float@exts=\toks45
+\float@box=\box54
+\@float@everytoks=\toks46
+\@floatcapt=\box55
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks47
+\c@algorithm=\count155
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count156
+\c@ALG@rem=\count157
+\c@ALG@nested=\count158
+\ALG@tlm=\skip66
+\ALG@thistlm=\skip67
+\c@ALG@Lnr=\count159
+\c@ALG@blocknr=\count160
+\c@ALG@storecount=\count161
+\c@ALG@tmpcounter=\count162
+\ALG@tmplength=\skip68
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (./presentation.aux
+
+LaTeX Warning: Label `fig:semi-supervised' multiply defined.
+
+
+LaTeX Warning: Label `fig:conv-uniform' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+)
 \openout1 = `presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -812,17 +918,17 @@ LaTeX Font Info:    ... okay on input line 46.
 
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count154
+\scratchcounter=\count163
 \scratchdimen=\dimen192
-\scratchbox=\box53
-\nofMPsegments=\count155
-\nofMParguments=\count156
-\everyMPshowfont=\toks45
-\MPscratchCnt=\count157
+\scratchbox=\box56
+\nofMPsegments=\count164
+\nofMParguments=\count165
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count166
 \MPscratchDim=\dimen193
-\MPnumerator=\count158
-\makeMPintoPDFobject=\count159
-\everyMPtoPDFconversion=\toks46
+\MPnumerator=\count167
+\makeMPintoPDFobject=\count168
+\everyMPtoPDFconversion=\toks49
 ) (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -839,8 +945,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring OFF on input line 46.
+\AtBeginShipoutBox=\box57
+Package hyperref Info: Link coloring OFF on input line 20.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -848,68 +954,68 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count160
+\c@section@level=\count169
 )
-LaTeX Info: Redefining \ref on input line 46.
-LaTeX Info: Redefining \pageref on input line 46.
-LaTeX Info: Redefining \nameref on input line 46.
+LaTeX Info: Redefining \ref on input line 20.
+LaTeX Info: Redefining \pageref on input line 20.
+LaTeX Info: Redefining \nameref on input line 20.
 
 (./presentation.out) (./presentation.out)
 \@outlinefile=\write5
 \openout5 = `presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 46.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 20.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 46.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 20.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 46.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 46.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 46.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 46.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 46.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 20.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 46.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 46.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 46.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 20.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 46.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 46.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 46.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 20.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 46.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 46.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 20.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 46.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 20.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 46.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 46.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 46.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 46.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 46.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 20.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 46.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 46.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 20.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 20.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 4
-6.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 2
+0.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 
-46.
+20.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 46.
+ut line 20.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/beamer/translator/dicts/translato
 r-basic-dictionary/translator-basic-dictionary-English.dict
@@ -935,16 +1041,827 @@ Dictionary: translator-numbers-dictionary, Language: English
 r-theorem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 46.
+LaTeX Info: Redefining \includegraphics on input line 20.
 
 (./presentation.nav) [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updm
 ap/pdftex.map}
 
 ] (./presentation.toc) [2
 
-] [3
+]
+<../docs/supervised.pdf, id=159, 1192.455pt x 338.26375pt>
+File: ../docs/supervised.pdf Graphic file (type pdf)
+
+<use ../docs/supervised.pdf>
+Package pdftex.def Info: ../docs/supervised.pdf used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 41.23508pt.
+LaTeX Font Info:    Try loading font information for U+msa on input line 62.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 62.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
+line 62.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
+File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
+thkerncmss.
+) <../docs/imagenet.png, id=161, 2047.65pt x 2047.65pt>
+File: ../docs/imagenet.png Graphic file (type png)
+
+<use ../docs/imagenet.png>
+Package pdftex.def Info: ../docs/imagenet.png used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 145.3498pt.
+ [3
+
+ <../docs/supervised.pdf> <../docs/imagenet.png (PNG copy)>]
+File: ../docs/supervised.pdf Graphic file (type pdf)
+ <use ../docs/supervised.pdf>
+Package pdftex.def Info: ../docs/supervised.pdf used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 41.23508pt.
+File: ../docs/imagenet.png Graphic file (type png)
+ <use ../docs/imagenet.png>
+Package pdftex.def Info: ../docs/imagenet.png used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 145.3498pt.
+ [4
 
 ]
+File: ../docs/supervised.pdf Graphic file (type pdf)
+
+<use ../docs/supervised.pdf>
+Package pdftex.def Info: ../docs/supervised.pdf used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 41.23508pt.
+File: ../docs/imagenet.png Graphic file (type png)
+ <use ../docs/imagenet.png>
+Package pdftex.def Info: ../docs/imagenet.png used on input line 62.
+(pdftex.def)             Requested size: 145.3713pt x 145.3498pt.
+ [5
+
+]
+<../docs/unsupervised.pdf, id=368, 1208.515pt x 446.66875pt>
+File: ../docs/unsupervised.pdf Graphic file (type pdf)
+
+<use ../docs/unsupervised.pdf>
+Package pdftex.def Info: ../docs/unsupervised.pdf used on input line 79.
+(pdftex.def)             Requested size: 116.29527pt x 42.97922pt.
+
+<../docs/visualize_decoding.pdf, id=369, 722.7pt x 361.35pt>
+File: ../docs/visualize_decoding.pdf Graphic file (type pdf)
+
+<use ../docs/visualize_decoding.pdf>
+Package pdftex.def Info: ../docs/visualize_decoding.pdf used on input line 79.
+(pdftex.def)             Requested size: 159.90933pt x 79.95488pt.
+ [6
+
+]
+File: ../docs/unsupervised.pdf Graphic file (type pdf)
+ <use ../docs/unsupervised.pdf>
+Package pdftex.def Info: ../docs/unsupervised.pdf used on input line 79.
+(pdftex.def)             Requested size: 116.29527pt x 42.97922pt.
+File: ../docs/visualize_decoding.pdf Graphic file (type pdf)
+
+<use ../docs/visualize_decoding.pdf>
+Package pdftex.def Info: ../docs/visualize_decoding.pdf used on input line 79.
+(pdftex.def)             Requested size: 159.90933pt x 79.95488pt.
+ [7
+
+]
+File: ../docs/unsupervised.pdf Graphic file (type pdf)
+ <use ../docs/unsupervised.pdf>
+Package pdftex.def Info: ../docs/unsupervised.pdf used on input line 79.
+(pdftex.def)             Requested size: 116.29527pt x 42.97922pt.
+File: ../docs/visualize_decoding.pdf Graphic file (type pdf)
+
+<use ../docs/visualize_decoding.pdf>
+Package pdftex.def Info: ../docs/visualize_decoding.pdf used on input line 79.
+(pdftex.def)             Requested size: 159.90933pt x 79.95488pt.
+ [8
+
+ <../docs/unsupervised.pdf> <../docs/visualize_decoding.pdf>]
+<../docs/semi_supervised.pdf, id=968, 1890.06125pt x 842.14626pt>
+File: ../docs/semi_supervised.pdf Graphic file (type pdf)
+
+<use ../docs/semi_supervised.pdf>
+Package pdftex.def Info: ../docs/semi_supervised.pdf used on input line 89.
+(pdftex.def)             Requested size: 290.74263pt x 129.54185pt.
+ [9
+
+ <../docs/semi_supervised.pdf>]
+<../docs/query_selection.pdf, id=1192, 1890.06125pt x 1221.56375pt>
+File: ../docs/query_selection.pdf Graphic file (type pdf)
+
+<use ../docs/query_selection.pdf>
+Package pdftex.def Info: ../docs/query_selection.pdf used on input line 99.
+(pdftex.def)             Requested size: 290.74263pt x 187.90518pt.
+pdfTeX warning (ext4): destination with the same identifier (name{fig:semi-supe
+rvised}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.99 \end{frame}
+                
+Overfull \vbox (5.00856pt too high) detected at line 99
+ []
+
+[10
+
+ <../docs/query_selection.pdf>]
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 121.
+
+
+<../docs/gyros.png, id=1452, 803.0pt x 602.25pt>
+File: ../docs/gyros.png Graphic file (type png)
+ <use ../docs/gyros.png>
+Package pdftex.def Info: ../docs/gyros.png used on input line 121.
+(pdftex.def)             Requested size: 145.3713pt x 109.0252pt.
+
+[11
+
+]
+File: ../docs/gyros.png Graphic file (type png)
+ <use ../docs/gyros.png>
+Package pdftex.def Info: ../docs/gyros.png used on input line 121.
+(pdftex.def)             Requested size: 145.3713pt x 109.0252pt.
+ [12
+
+]
+File: ../docs/gyros.png Graphic file (type png)
+ <use ../docs/gyros.png>
+Package pdftex.def Info: ../docs/gyros.png used on input line 121.
+(pdftex.def)             Requested size: 145.3713pt x 109.0252pt.
+ [13
+
+ <../docs/gyros.png (PNG copy)>] <../docs/overview.pdf, id=1570, 1822.81pt x 12
+07.51125pt>
+File: ../docs/overview.pdf Graphic file (type pdf)
+
+<use ../docs/overview.pdf>
+Package pdftex.def Info: ../docs/overview.pdf used on input line 135.
+(pdftex.def)             Requested size: 232.59499pt x 154.0708pt.
+ [14
+
+ <../docs/overview.pdf>] [15
+
+] [16
+
+] [17
+
+] [18
+
+]
+[19
+
+] [20
+
+] [21
+
+] [22
+
+] [23
+
+]
+<../models/mnist_conv_e300_L2_b64/encodings.pdf, id=2787, 462.52798pt x 346.896
+01pt>
+File: ../models/mnist_conv_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+ <use ../models/mnist_conv_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/encodings.pdf used on
+ input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+
+<../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf, id=2788, 72.27pt x 36.1
+35pt>
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf Graphic file (type 
+pdf)
+ <use ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf 
+used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+
+<../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf, id=2789, 462.52798
+pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf Graphic file (
+type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000
+.pdf used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+ [24
+
+ <../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf>]
+File: ../models/mnist_conv_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/encodings.pdf used on
+ input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf Graphic file (type 
+pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf 
+used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf Graphic file (
+type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000
+.pdf used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+ [25
+
+ <../models/mnist_conv_e300_L2_b64/encodings.pdf>]
+File: ../models/mnist_conv_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/encodings.pdf used on
+ input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf Graphic file (type 
+pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf 
+used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf Graphic file (
+type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000
+.pdf used on input line 256.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+ [26
+
+ <../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>]
+File: ../models/mnist_conv_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/encodings.pdf used on
+ input line 279.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf Graphic file (type 
+pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_1.pdf 
+used on input line 279.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf Graphic file (
+type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000
+.pdf used on input line 279.
+(pdftex.def)             Requested size: 145.3713pt x 109.02933pt.
+ [27
+
+]
+<../models/mnist_conv_e300_L2_b64/reconstruction_0.pdf, id=3030, 72.27pt x 36.1
+35pt>
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_0.pdf Graphic file (type 
+pdf)
+ <use ../models/mnist_conv_e300_L2_b64/reconstruction_0.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_0.pdf 
+used on input line 300.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+
+<../models/mnist_conv_e300_L2_b64/reconstruction_2.pdf, id=3031, 72.27pt x 36.1
+35pt>
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_2.pdf Graphic file (type 
+pdf)
+ <use ../models/mnist_conv_e300_L2_b64/reconstruction_2.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_2.pdf 
+used on input line 300.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+
+<../models/mnist_conv_e300_L2_b64/reconstruction_3.pdf, id=3032, 72.27pt x 36.1
+35pt>
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_3.pdf Graphic file (type 
+pdf)
+ <use ../models/mnist_conv_e300_L2_b64/reconstruction_3.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_3.pdf 
+used on input line 300.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+
+<../models/mnist_conv_e300_L2_b64/reconstruction_5.pdf, id=3033, 72.27pt x 36.1
+35pt>
+File: ../models/mnist_conv_e300_L2_b64/reconstruction_5.pdf Graphic file (type 
+pdf)
+ <use ../models/mnist_conv_e300_L2_b64/reconstruction_5.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/reconstruction_5.pdf 
+used on input line 300.
+(pdftex.def)             Requested size: 145.3713pt x 72.68936pt.
+ [28
+
+ <../models/mnist_conv_e300_L2_b64/reconstruction_0.pdf> <../models/mnist_conv_
+e300_L2_b64/reconstruction_2.pdf
+
+pdfTeX warning: pdflatex (file ../models/mnist_conv_e300_L2_b64/reconstruction_
+2.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <../models/mnist_conv_e300_L2_b64/reconstruction_3.pdf
+
+pdfTeX warning: pdflatex (file ../models/mnist_conv_e300_L2_b64/reconstruction_
+3.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <../models/mnist_conv_e300_L2_b64/reconstruction_5.pdf
+
+pdfTeX warning: pdflatex (file ../models/mnist_conv_e300_L2_b64/reconstruction_
+5.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+>]
+File: ../models/mnist_conv_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+ <use ../models/mnist_conv_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/encodings.pdf used on
+ input line 311.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+Overfull \vbox (35.17262pt too high) detected at line 311
+ []
+
+[29
+
+]
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf Graphic file (
+type pdf)
+ <use ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_1000
+.pdf used on input line 322.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+Overfull \vbox (35.17262pt too high) detected at line 322
+ []
+
+[30
+
+]
+<../models/mnist_conv_e300_L2_b64/uniform_sampling_distribution_1000.pdf, id=31
+71, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/uniform_sampling_distribution_1000.pdf G
+raphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform_sampling_distribution_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform_sampling_dist
+ribution_1000.pdf used on input line 333.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+pdfTeX warning (ext4): destination with the same identifier (name{fig:conv-unif
+orm}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.333 \end{frame}
+                 
+Overfull \vbox (35.17262pt too high) detected at line 333
+ []
+
+[31
+
+ <../models/mnist_conv_e300_L2_b64/uniform_sampling_distribution_1000.pdf>]
+<../models/mnist_conv_e300_L2_b64/normal_sampling_1000.pdf, id=3244, 462.52798p
+t x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/normal_sampling_1000.pdf Graphic file (t
+ype pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/normal_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/normal_sampling_1000.
+pdf used on input line 344.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 344.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 344
+ []
+
+[32
+
+ <../models/mnist_conv_e300_L2_b64/normal_sampling_1000.pdf>]
+<../models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000.pdf, id=332
+3, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000.pdf Gr
+aphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/normal_sampling_distr
+ibution_1000.pdf used on input line 355.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 355.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 355
+ []
+
+[33
+
+ <../models/mnist_conv_e300_L2_b64/normal_sampling_distribution_1000.pdf>]
+<../models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings.pdf, id=3
+395, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings.pdf 
+Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform-cluster_clust
+ered_encodings.pdf used on input line 366.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 366.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 366
+ []
+
+[34
+
+ <../models/mnist_conv_e300_L2_b64/uniform-cluster_clustered_encodings.pdf>]
+<../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000.pdf, id=3475, 4
+62.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000.pdf Graphi
+c file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampl
+ing_1000.pdf used on input line 377.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 377.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 377
+ []
+
+[35
+
+ <../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_1000.pdf>]
+<../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_1000.pd
+f, id=3554, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_10
+00.pdf Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_100
+0.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/uniform-cluster_sampl
+ing_distribution_1000.pdf used on input line 388.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 388.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 388
+ []
+
+[36
+
+ <../models/mnist_conv_e300_L2_b64/uniform-cluster_sampling_distribution_1000.p
+df>]
+<../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf, id=36
+26, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf G
+raphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_
+sampling_1000.pdf used on input line 399.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 399.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 399
+ []
+
+[37
+
+ <../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf>]
+<../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distribution_10
+00.pdf, id=3705, 462.52798pt x 346.89601pt>
+File: ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distributi
+on_1000.pdf Graphic file (type pdf)
+
+<use ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distributio
+n_1000.pdf>
+Package pdftex.def Info: ../models/mnist_conv_e300_L2_b64/multi-normal-cluster_
+sampling_distribution_1000.pdf used on input line 410.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 410.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 410
+ []
+
+[38
+
+ <../models/mnist_conv_e300_L2_b64/multi-normal-cluster_sampling_distribution_1
+000.pdf>]
+<../models/mnist_vae_e300_L2_b64/encodings.pdf, id=3776, 462.52798pt x 346.8960
+1pt>
+File: ../models/mnist_vae_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+ <use ../models/mnist_vae_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_vae_e300_L2_b64/encodings.pdf used on 
+input line 441.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 441.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 441
+ []
+
+[39
+
+ <../models/mnist_vae_e300_L2_b64/encodings.pdf>]
+<../models/mnist_vae_e300_L2_b64/multi-normal_sampling_1000.pdf, id=3857, 462.5
+2798pt x 346.89601pt>
+File: ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_1000.pdf Graphic fi
+le (type pdf)
+
+<use ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_
+1000.pdf used on input line 452.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 452.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 452
+ []
+
+[40
+
+ <../models/mnist_vae_e300_L2_b64/multi-normal_sampling_1000.pdf>]
+<../models/mnist_vae_e300_L2_b64/multi-normal_sampling_distribution_1000.pdf, i
+d=3936, 462.52798pt x 346.89601pt>
+File: ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_distribution_1000.p
+df Graphic file (type pdf)
+
+<use ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_distribution_1000.pd
+f>
+Package pdftex.def Info: ../models/mnist_vae_e300_L2_b64/multi-normal_sampling_
+distribution_1000.pdf used on input line 463.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 463.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 463
+ []
+
+[41
+
+ <../models/mnist_vae_e300_L2_b64/multi-normal_sampling_distribution_1000.pdf>]
+
+<../models/mnist_student_e300_L2_b64/encodings.pdf, id=4006, 462.52798pt x 346.
+89601pt>
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 494.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 494.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 494
+ []
+
+[42
+
+ <../models/mnist_student_e300_L2_b64/encodings.pdf>]
+<../models/mnist_student_e300_L2_b64/multi-normal-cluster_clustered_encodings.p
+df, id=4088, 462.52798pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/multi-normal-cluster_clustered_encodi
+ngs.pdf Graphic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/multi-normal-cluster_clustered_encodin
+gs.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/multi-normal-clust
+er_clustered_encodings.pdf used on input line 505.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 505.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 505
+ []
+
+[43
+
+ <../models/mnist_student_e300_L2_b64/multi-normal-cluster_clustered_encodings.
+pdf>]
+<../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf, id
+=4171, 462.52798pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_1000.pd
+f Graphic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf
+>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/multi-normal-clust
+er_sampling_1000.pdf used on input line 516.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 516.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 516
+ []
+
+[44
+
+ <../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_1000.pdf>]
+<../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_distribution
+_1000.pdf, id=4250, 462.52798pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_distrib
+ution_1000.pdf Graphic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_distribu
+tion_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/multi-normal-clust
+er_sampling_distribution_1000.pdf used on input line 527.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 527.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 527
+ []
+
+[45
+
+ <../models/mnist_student_e300_L2_b64/multi-normal-cluster_sampling_distributio
+n_1000.pdf>]
+<../models/mnist_vaestudent_e300_L2_b64/encodings.pdf, id=4321, 462.52798pt x 3
+46.89601pt>
+File: ../models/mnist_vaestudent_e300_L2_b64/encodings.pdf Graphic file (type p
+df)
+ <use ../models/mnist_vaestudent_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_vaestudent_e300_L2_b64/encodings.pdf u
+sed on input line 558.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 558.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 558
+ []
+
+[46
+
+ <../models/mnist_vaestudent_e300_L2_b64/encodings.pdf>]
+<../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf, id=4401, 462.5279
+8pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf Graphic file 
+(type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/error_sampling_100
+0.pdf used on input line 571.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 571.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 571
+ []
+
+[47
+
+ <../models/mnist_student_e300_L2_b64/error_sampling_1000.pdf>]
+<../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf, id=4
+480, 462.52798pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf 
+Graphic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/error_sampling_dis
+tribution_1000.pdf used on input line 582.
+(pdftex.def)             Requested size: 290.74263pt x 218.06924pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 582.
+
+
+Overfull \vbox (35.17262pt too high) detected at line 582
+ []
+
+[48
+
+ <../models/mnist_student_e300_L2_b64/error_sampling_distribution_1000.pdf>]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+<../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf, id=4551
+, 462.52798pt x 346.89601pt>
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+
+Package hyperref Warning: Ignoring empty anchor on input line 603.
+
+[49
+
+]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+[50
+
+]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+[51
+
+]
+File: ../models/mnist_student_e300_L2_b64/encodings.pdf Graphic file (type pdf)
+
+ <use ../models/mnist_student_e300_L2_b64/encodings.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/encodings.pdf used
+ on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+File: ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf Gra
+phic file (type pdf)
+
+<use ../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>
+Package pdftex.def Info: ../models/mnist_student_e300_L2_b64/classifier-loss_sa
+mpling_1000.pdf used on input line 603.
+(pdftex.def)             Requested size: 142.46548pt x 106.84853pt.
+
+[52
+
+ <../models/mnist_student_e300_L2_b64/classifier-loss_sampling_1000.pdf>]
+[53
+
+] [54
+
+] [55
+
+] [56
+
+] (./presentation.bbl
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <5> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 26.
+
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+) [57
+
+ </usr/local/texlive/2015/texmf-dist/tex/latex/beamer/art/beamericonarticle.pdf
+>]
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
 
@@ -954,31 +1871,44 @@ ap/pdftex.map}
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 65.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 65.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 627.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 627.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 65.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 65.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 627.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 627.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: B340711AA59207060021F2D932B13EDC;45.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 65.
+(rerunfilecheck)             Checksum: C947FDE00F4045659F8D94805479782B;615.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 627.
  ) 
 Here is how much of TeX's memory you used:
- 17132 strings out of 493089
- 332136 string characters out of 6134842
- 395210 words of memory out of 5000000
- 20213 multiletter control sequences out of 15000+600000
- 5758 words of font info for 21 fonts, out of 8000000 for 9000
+ 18478 strings out of 493089
+ 360607 string characters out of 6134842
+ 413060 words of memory out of 5000000
+ 21331 multiletter control sequences out of 15000+600000
+ 13246 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,16n,58p,418b,569s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
-Output written on presentation.pdf (3 pages, 42294 bytes).
+ 56i,16n,60p,418b,679s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on presentation.pdf (57 pages, 20562809 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
- 9 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 5020 PDF objects out of 5155 (max. 8388607)
+ 3691 compressed objects within 37 object streams
+ 145 named destinations out of 1000 (max. 500000)
+ 301 words of extra memory for PDF output out of 10000 (max. 10000000)
 

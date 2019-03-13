@@ -108,7 +108,7 @@ class Latens:
     self.encodings_fig_path = os.path.join(
       self.model_root, f'encodings.pdf')
     self.clustered_encodings_fig_path = os.path.join(
-      self.model_root, f'{self.sample}_clustered_encodings.pdf')
+      self.model_root, f'clustered_encodings.pdf')
     self.sampling_fig_path = os.path.join(
       self.model_root, f'{self.sample}_sampling_{self.sample_size}.pdf')
     self.sampling_distribution_fig_path = os.path.join(
