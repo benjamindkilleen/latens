@@ -12,9 +12,7 @@ handler.setFormatter(logging.Formatter('%(levelname)s:latens:%(message)s'))
 logger.addHandler(handler)
 
 import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
-plt.ioff()
 
 import sys
 import os
@@ -67,6 +65,7 @@ class Latens:
     self.train_size = args.splits[0]
     self.tune_size = args.splits[1]
     self.test_size = args.splits[2]
+    self.recon_size = self.test_size
 
     # number of steps for different iterations
     self.epoch_multiplier = args.epoch_multiplier[0]
@@ -75,6 +74,7 @@ class Latens:
     self.single_train_steps = int(np.ceil(self.train_size / self.batch_size))
     self.tune_steps = int(np.ceil(self.tune_size / self.batch_size))
     self.test_steps = int(np.ceil(self.test_size / self.batch_size))
+    self.recon_steps = self.test_steps
     self.sample_steps = int(np.ceil(
       self.epoch_multiplier * self.sample_size / self.batch_size))
 
@@ -103,6 +103,8 @@ class Latens:
       self.model_root, f'{self.sample}_sample_{self.sample_size}.tfrecord')
     self.cluster_labels_path = os.path.join(
       self.model_root, f'{self.sample}_cluster_labels_{self.sample_size}.npy')
+    self.recon_path = os.path.join(
+      self.model_root, f'test_set_reconstruction.tfrecord')
 
     # figure paths
     self.encodings_fig_path = os.path.join(
@@ -150,6 +152,14 @@ class Latens:
   def make_sample_data(self):
     return dat.TrainDataInput(
       self.sample_path,
+      num_parallel_calls=self.cores,
+      batch_size=self.batch_size,
+      num_classes=self.num_classes,
+      num_components=self.num_components)
+  
+  def make_recon_data(self):
+    return dat.DataInput(
+      self.recon_path,
       num_parallel_calls=self.cores,
       batch_size=self.batch_size,
       num_classes=self.num_classes,
@@ -205,8 +215,18 @@ class Latens:
     model.compile(learning_rate=self.learning_rate)
     return model
 
+  def make_classifier(self):
+    model = mod.ConvClassifier(
+      self.image_shape,
+      self.num_classes,
+      model_dir=self.classifier_dir,
+      tensorboard=self.tensorboard)
+    
+    model.compile(learning_rate=self.learning_rate)
+    return model
+
   def make_full_classifier(self):
-    model = mod.SimpleClassifier(
+    model = mod.ConvClassifier(
       self.image_shape,
       self.num_classes,
       model_dir=self.full_classifier_dir,
@@ -290,7 +310,7 @@ def cmd_autoencoder(lat):
 
 
 def cmd_reconstruct(lat):
-  """Run reconstruction."""
+  """Run reconstruction on just a few examples for visualization."""
   train_set, tune_set, test_set = lat.make_data(training=False)
 
   model = lat.make_autoencoder()
@@ -298,7 +318,7 @@ def cmd_reconstruct(lat):
 
   reconstructions = model.predict(test_set.self_supervised, steps=1,
                                   verbose=lat.keras_verbose)
-  get_next = test_set.get_next
+  get_next = test_set.get_next()
   with tf.Session() as sess:
     for i, reconstruction in enumerate(reconstructions):
       image, label = sess.run(get_next)
@@ -310,7 +330,43 @@ def cmd_reconstruct(lat):
         plt.savefig(os.path.join(lat.model_root, f'reconstruction_{i}.pdf'))
         if i > 5:
           break
+
         
+def cmd_recon(lat):
+  """Run reconstruction on the test set and save it """
+  train_set, tune_set, test_set = lat.make_data(training=False)
+
+  model = lat.make_autoencoder()
+  model.load()
+
+  reconstructions = model.predict(test_set.self_supervised, steps=lat.test_steps,
+                                  verbose=lat.keras_verbose)[:lat.test_size]
+
+  logger.debug(f"reconstructions: {reconstructions.shape}")
+  
+  # save the reconstructions
+  recon_dataset = tf.data.Dataset.from_tensor_slices(reconstructions)
+  recon_dataset = tf.data.Dataset.zip((recon_dataset, test_set.labels))
+  logger.debug(f"recon_dataset: {recon_dataset}")
+  recon_set = dat.DataInput(recon_dataset)
+
+  recon_set.save(lat.recon_path)
+  
+
+def cmd_evaluate(lat):
+  """Evaluate the performance of the full classifier on the reconstructed test
+  set."""
+  train_set, tune_set, test_set = lat.make_data(training=False)
+  recon_set = lat.make_recon_data()
+  classifier = lat.make_full_classifier()
+  classifier.load()
+  
+  loss, accuracy = classifier.evaluate(
+    recon_set.labeled,
+    steps=lat.recon_steps)
+  logger.info(f'full classifier: loss: {loss:.01f}, accuracy: {100*accuracy:.01f}%')
+
+  
 def cmd_encode(lat):
   """Encodes the training set."""
   train_set, tune_set, test_set = lat.make_data(training=False)
@@ -368,7 +424,7 @@ def cmd_sample(lat):
       points = model.errors(train_set.labeled, lat.train_steps,
                             lat.batch_size)[:lat.train_size]
     elif lat.sample == 'classifier-loss':
-      points = model.losses(train_set.labeled, lat.train_steps,
+      points = modepl.losses(train_set.labeled, lat.train_steps,
                             lat.batch_size)[:lat.train_size]
     elif lat.sample == 'classifier-incorrect':
       points = model.incorrect(train_set.labeled, lat.train_steps,
@@ -397,7 +453,8 @@ def cmd_classifier(lat):
 
   autoencoder = lat.make_autoencoder()
   
-  classifier = lat.classifier_from_autoencoder(autoencoder)
+  # classifier = lat.classifier_from_autoencoder(autoencoder)
+  classifier = lat.make_classifier()
   if not lat.overwrite:
     classifier.load()
 
@@ -557,7 +614,7 @@ def main():
                       default=[1000], type=int,
                       help=docs.sample_size_help)
   parser.add_argument('--sample', nargs=1, choices=docs.sample_choices,
-                      default=['error'],
+                      default=['multi-normal'],
                       help=docs.sample_help)
   parser.add_argument('--epoch-multiplier', '--mult', nargs=1,
                       default=[1], type=int,
@@ -580,6 +637,10 @@ def main():
   if args.eager: # or args.command == 'reconstruct':
     tf.enable_eager_execution()
 
+  if not args.show:
+    mpl.use('Agg')
+    plt.ioff()
+
   logger.info(f"command: {args.command}")
   lat = Latens(args)
 
@@ -595,6 +656,10 @@ def main():
     cmd_classifier(lat)
   elif args.command == 'full-classifier':
     cmd_full_classifier(lat)
+  elif args.command == 'recon':
+    cmd_recon(lat)
+  elif args.command == 'evaluate':
+    cmd_evaluate(lat)
   elif args.command == 'reconstruct':
     cmd_reconstruct(lat)
   elif args.command == 'decode':

@@ -205,8 +205,6 @@ class Classifier(SequentialModel):
 
     """
     layers = autoencoder.encoding_layers
-    for layer in layers:
-      layer.trainable = False
     layers[-1] = keras.layers.Dense(num_classes, activation='softmax')
     classifier = Classifier(autoencoder.input_shape, num_classes,
                             layers=layers, **kwargs)

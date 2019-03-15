@@ -248,7 +248,7 @@ class ClusterSampler(SpatialSampler):
     cluster_labels = self.cluster(points)
     for i in range(self.n_clusters):
       cluster_which = cluster_labels == i
-      cluster_n = int(n * np.sum(cluster_which) / N)
+      cluster_n = int(round(n * np.sum(cluster_which) / N))
       cluster_points = points[cluster_which]
       cluster_sampling = super().sample(cluster_points, n=cluster_n)
       sampling[cluster_which] += cluster_sampling

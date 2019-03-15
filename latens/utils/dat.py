@@ -143,10 +143,18 @@ def save_dataset(record_name, dataset,
   logger.info(f"writing dataset to {record_name}...")
   writer = tf.python_io.TFRecordWriter(record_name)
   with tf.Session() as sess:
-    example = sess.run(next_example)
-    writer.write(proto_from_example(example))
+    i = 0
+    while True:
+      try:
+        example = sess.run(next_example)
+        writer.write(proto_from_example(example))
+      except tf.errors.OutOfRangeError:
+        break
+      i += 1
+
 
   writer.close()
+  logger.info(f"wrote {i} examples")
 
   
 class Data(object):
@@ -226,6 +234,10 @@ class Data(object):
                         num_parallel_calls=self.num_parallel_calls))
 
   @property
+  def labels(self):
+    return self._dataset.map(lambda x,y : y,
+                             num_parallel_calls=self.num_parallel_calls)
+  
   def get_next(self):
     return self._dataset.make_one_shot_iterator().get_next()
         
