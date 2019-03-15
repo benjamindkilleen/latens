@@ -6,10 +6,70 @@
 \headcommand {\sectionentry {1}{Motivation}{3}{Motivation}{0}}
 \headcommand {\beamer@sectionpages {1}{2}}
 \headcommand {\beamer@subsectionpages {1}{2}}
-\headcommand {\slideentry {1}{0}{1}{3/3}{}{0}}
-\headcommand {\beamer@framepages {3}{3}}
-\headcommand {\beamer@partpages {1}{3}}
-\headcommand {\beamer@subsectionpages {3}{3}}
-\headcommand {\beamer@sectionpages {3}{3}}
-\headcommand {\beamer@documentpages {3}}
-\headcommand {\def \inserttotalframenumber {3}}
+\headcommand {\slideentry {1}{0}{1}{3/5}{}{0}}
+\headcommand {\beamer@framepages {3}{5}}
+\headcommand {\slideentry {1}{0}{2}{6/8}{}{0}}
+\headcommand {\beamer@framepages {6}{8}}
+\headcommand {\slideentry {1}{0}{3}{9/9}{}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\slideentry {1}{0}{4}{10/10}{}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\slideentry {1}{0}{5}{11/13}{}{0}}
+\headcommand {\beamer@framepages {11}{13}}
+\headcommand {\sectionentry {2}{Method}{14}{Method}{0}}
+\headcommand {\beamer@sectionpages {3}{13}}
+\headcommand {\beamer@subsectionpages {3}{13}}
+\headcommand {\slideentry {2}{0}{1}{14/14}{}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\sectionentry {3}{Results}{15}{Results}{0}}
+\headcommand {\beamer@sectionpages {14}{14}}
+\headcommand {\beamer@subsectionpages {14}{14}}
+\headcommand {\slideentry {3}{0}{1}{15/17}{}{0}}
+\headcommand {\beamer@framepages {15}{17}}
+\headcommand {\slideentry {3}{0}{2}{18/18}{}{0}}
+\headcommand {\beamer@framepages {18}{18}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{19}{Convolutional AE}}\headcommand {\beamer@subsectionpages {15}{18}}
+\headcommand {\slideentry {3}{1}{1}{19/19}{Convolutional AE}{0}}
+\headcommand {\beamer@framepages {19}{19}}
+\headcommand {\slideentry {3}{1}{2}{20/20}{Convolutional AE}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\slideentry {3}{1}{3}{21/21}{Convolutional AE}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\slideentry {3}{1}{4}{22/22}{Convolutional AE}{0}}
+\headcommand {\beamer@framepages {22}{22}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{23}{Variational AE}}\headcommand {\beamer@subsectionpages {19}{22}}
+\headcommand {\slideentry {3}{2}{1}{23/23}{Variational AE}{0}}
+\headcommand {\beamer@framepages {23}{23}}
+\headcommand {\slideentry {3}{2}{2}{24/24}{Variational AE}{0}}
+\headcommand {\beamer@framepages {24}{24}}
+\headcommand {\slideentry {3}{2}{3}{25/25}{Variational AE}{0}}
+\headcommand {\beamer@framepages {25}{25}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{26}{t-SNE Style AE}}\headcommand {\beamer@subsectionpages {23}{25}}
+\headcommand {\slideentry {3}{3}{1}{26/26}{t-SNE Style AE}{0}}
+\headcommand {\beamer@framepages {26}{26}}
+\headcommand {\slideentry {3}{3}{2}{27/27}{t-SNE Style AE}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\slideentry {3}{3}{3}{28/28}{t-SNE Style AE}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\slideentry {3}{3}{4}{29/29}{t-SNE Style AE}{0}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\sectionentry {4}{Discussion}{30}{Discussion}{0}}
+\headcommand {\beamer@sectionpages {15}{29}}
+\headcommand {\beamer@subsectionpages {26}{29}}
+\headcommand {\slideentry {4}{0}{1}{30/33}{}{0}}
+\headcommand {\beamer@framepages {30}{33}}
+\headcommand {\sectionentry {5}{Future Work}{34}{Future Work}{0}}
+\headcommand {\beamer@sectionpages {30}{33}}
+\headcommand {\beamer@subsectionpages {30}{33}}
+\headcommand {\slideentry {5}{0}{1}{34/37}{}{0}}
+\headcommand {\beamer@framepages {34}{37}}
+\headcommand {\sectionentry {6}{References}{38}{References}{0}}
+\headcommand {\beamer@sectionpages {34}{37}}
+\headcommand {\beamer@subsectionpages {34}{37}}
+\headcommand {\slideentry {6}{0}{1}{38/38}{}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\beamer@partpages {1}{38}}
+\headcommand {\beamer@subsectionpages {38}{38}}
+\headcommand {\beamer@sectionpages {38}{38}}
+\headcommand {\beamer@documentpages {38}}
+\headcommand {\def \inserttotalframenumber {24}}

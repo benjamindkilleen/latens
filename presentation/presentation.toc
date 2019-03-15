@@ -1,2 +1,10 @@
 \beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{Motivation}{3}{0}{1}
+\beamer@sectionintoc {2}{Method}{14}{0}{2}
+\beamer@sectionintoc {3}{Results}{15}{0}{3}
+\beamer@subsectionintoc {3}{1}{Convolutional AE}{19}{0}{3}
+\beamer@subsectionintoc {3}{2}{Variational AE}{23}{0}{3}
+\beamer@subsectionintoc {3}{3}{t-SNE Style AE}{26}{0}{3}
+\beamer@sectionintoc {4}{Discussion}{30}{0}{4}
+\beamer@sectionintoc {5}{Future Work}{34}{0}{5}
+\beamer@sectionintoc {6}{References}{38}{0}{6}
