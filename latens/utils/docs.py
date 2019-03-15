@@ -11,7 +11,7 @@ Latens. An Unsupervised Learning approach to active learning.
 
 command_choices = ['convert', 'autoencoder', 'encode', 'sample', 'classifier',
                    'full-classifier', 'reconstruct', 'recon', 'evaluate',
-                   'decode', 'visualize', 'debug']
+                   'decode', 'visualize', 'visualize-classifiers', 'debug']
 command_help = """latens command to run. The core functionality depends on
 commands: 'convert', 'autoencoder', 'encode', 'sample', and 'classifier', in
 that order."""

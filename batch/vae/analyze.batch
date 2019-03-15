@@ -20,6 +20,7 @@ epochs=300
 latent_dim=2
 batch_size=64
 ae=vae
+class_epochs=50
 
 echo "Starting analysis..."
 python latens.py encode -i data/mnist/mnist \
@@ -31,12 +32,18 @@ python latens.py reconstruct -i data/mnist/mnist \
        -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
        -L $latent_dim -b $batch_size --keras-verbose 2
 
-for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error classifier-error classifier-loss classifier-incorrect
+for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error # classifier-error classifier-loss classifier-incorrect
 do
   python latens.py sample -i data/mnist/mnist \
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
          -L $latent_dim -b $batch_size --keras-verbose 2 \
+         --sample $sample
+  python latens.py classifier -i data/mnist/mnist \
+         --ae $ae \
+         -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
+         -e $class_epochs --overwrite \
          --sample $sample
   python latens.py visualize -i data/mnist/mnist \
          --ae $ae \
@@ -44,5 +51,8 @@ do
          -L $latent_dim -b $batch_size --keras-verbose 2 \
          --sample $sample
 done
+
+python latens.py visualize-classifiers \
+       -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size}
              
 echo "Finished."

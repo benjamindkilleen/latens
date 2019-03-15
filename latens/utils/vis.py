@@ -8,10 +8,20 @@ from mpl_toolkits import mplot3d
 import numpy as np
 import logging
 
+from latens.utils.docs import sample_choices
+
 logger = logging.getLogger('artifice')
 
 max_plot = 5000
 cmap = plt.get_cmap('tab10')
+
+# which sample types we want to plot
+samples = ['random',
+           'uniform', 'multi-normal',
+           'uniform-cluster', 'multi-normal-cluster',
+           'error']
+sample_colors = ['black', 'blue', 'green', 'cyan', 'yellow', 'red']
+
 
 def plot_image(*images, columns=10, ticks=False):
   columns = min(columns, len(images))
@@ -114,6 +124,39 @@ def plot_sampled_encodings_3d(encodings, sampling, labels=None, num_classes=10):
       ax.scatter3D(xs[which], ys[which], zs[which], c=f'C{i}',
                    marker='o')
   plt.title("Latent Space Sampling")
+
+
+def plot_hist_val_losses(hists):
+  fig, ax = plt.subplots()
+  for i, sample in enumerate(samples):
+    ax.plot(hists[sample]['val_loss'], c=sample_colors[i], label=sample)
+  plt.title("Classifier Validation Losses")  
+
+def plot_hist_val_accs(hists):
+  fig, ax = plt.subplots()
+  for i, sample in enumerate(samples):
+    ax.plot(hists[sample]['val_acc'], c=sample_colors[i], label=sample)
+  plt.title("Classifier Validation Accuracies")  
+
+def plot_hist_test_losses(hists):
+  fig, ax = plt.subplots()
+  losses = [hists[sample]['test_loss'] for sample in samples]
+  ticks = list(range(len(samples)))
+  plt.bar(ticks, losses, color=sample_colors)
+  plt.xlabel("Sampling Type")
+  plt.ylabel("Loss")
+  plt.xticks(ticks, samples)
+  plt.title("Classifier Test Losses")
+
+def plot_hist_test_accs(hists):
+  fig, ax = plt.subplots()
+  losses = [hists[sample]['test_acc'] for sample in samples]
+  ticks = list(range(len(samples)))
+  plt.bar(ticks, losses, color=sample_colors)
+  plt.xlabel("Sampling Type")
+  plt.ylabel("Accuracy")
+  plt.xticks(ticks, samples)
+  plt.title("Classifier Test Losses")
   
 def show_image(*images, **kwargs):
   plot_image(*images, **kwargs)

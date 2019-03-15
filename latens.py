@@ -24,6 +24,7 @@ from latens import mod, sam
 from shutil import rmtree
 from time import time
 import numpy as np
+import json
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -95,7 +96,10 @@ class Latens:
     if not os.path.exists(self.model_root):
       os.mkdir(self.model_root)
     self.autoencoder_dir = os.path.join(self.model_root, 'autoencoder')
-    self.classifier_dir = os.path.join(self.model_root, 'classifier')
+    self.classifier_dir = os.path.join(
+      self.model_root, f'{self.sample}_classifier_{self.sample_size}')
+    self.classifier_history_path = os.path.join(
+      self.classifier_dir, 'history.json')
     self.encodings_path = os.path.join(self.model_root, 'encodings.npy')
     self.sampling_path = os.path.join(
       self.model_root, f'{self.sample}_sampling_{self.sample_size}.npy')
@@ -116,6 +120,19 @@ class Latens:
     self.sampling_distribution_fig_path = os.path.join(
       self.model_root, f'{self.sample}_sampling_distribution_{self.sample_size}.pdf')
 
+    # visualize classifiers fig paths
+    self.hist_val_losses_fig_path = os.path.join(
+      self.model_root, f'classifier_val_losses_{self.sample_size}.pdf')
+    self.hist_val_accs_fig_path = os.path.join(
+      self.model_root, f'classifier_val_accs_{self.sample_size}.pdf')
+    self.hist_test_losses_fig_path = os.path.join(
+      self.model_root, f'classifier_test_losses_{self.sample_size}.pdf')
+    self.hist_test_accs_fig_path = os.path.join(
+      self.model_root, f'classifier_test_accs_{self.sample_size}.pdf')
+    
+    # for visualizing all outputs
+    self.classifier_history_paths = glob(os.path.join(
+      self.model_root, f'*_classifier_{self.sample_size}', 'history.json'))
     
     # input tfrecord prefix and its derivatices
     self.input_prefix, _ = os.path.splitext(args.input[0])
@@ -129,7 +146,32 @@ class Latens:
   def load_train(self):
     data = np.load(self.npz_path)
     return data['data'][:self.train_size] / 255., data['labels'][:self.train_size]
-    
+
+  def save_classifier_history(self, history):
+    with open(self.classifier_history_path, 'w') as f:
+      f.write(json.dumps(history))
+
+  def load_classifier_history(self, path=None):
+    if path is None:
+      path = self.classifier_history_path
+    if not os.path.exists(path):
+      return None
+    with open(path, 'r') as f:
+      out = json.loads(f.read())
+    return out
+
+  def load_classifier_histories(self):
+    """Load all the available classifier histories with the same sample size.
+
+    :returns: a mapping from sample type to each history dictionary
+    """
+    hists = {}
+    for path in self.classifier_history_paths:
+      hist = self.load_classifier_history(path)
+      sample = hist['sample']
+      hists[sample] = hist
+    return hists
+
   def make_data(self, training=True):
     """Make the train, test, and split sets.
 
@@ -282,7 +324,8 @@ def cmd_debug(lat):
 
   loss, accuracy = classifier.evaluate(
     test_set.labeled,
-    steps = args.splits[2] // args.batch_size[0])
+    steps = args.splits[2] // args.batch_size[0],
+    verbose=args.keras_verbose[0])
   logger.info(f'test accuracy: {accuracy:.03f}')
   
   
@@ -363,7 +406,8 @@ def cmd_evaluate(lat):
   
   loss, accuracy = classifier.evaluate(
     recon_set.labeled,
-    steps=lat.recon_steps)
+    steps=lat.recon_steps,
+    verbose=lat.keras_verbose)
   logger.info(f'full classifier: loss: {loss:.01f}, accuracy: {100*accuracy:.01f}%')
 
   
@@ -458,7 +502,7 @@ def cmd_classifier(lat):
   if not lat.overwrite:
     classifier.load()
 
-  classifier.fit(
+  hist = classifier.fit(
     sample_set.labeled,
     epochs=lat.epochs,
     steps_per_epoch=lat.sample_steps,
@@ -468,9 +512,17 @@ def cmd_classifier(lat):
 
   loss, accuracy = classifier.evaluate(
     test_set.labeled,
-    steps=lat.test_steps)
+    steps=lat.test_steps,
+    verbose=lat.keras_verbose)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
 
+  history = hist.history
+  history['test_loss'] = loss
+  history['test_acc'] = accuracy
+  history['sample'] = lat.sample
+  lat.save_classifier_history(history)
+
+  
 def cmd_full_classifier(lat):
   """Run training for a classifier on the full dataset."""
   train_set, tune_set, test_set = lat.make_data()
@@ -488,7 +540,8 @@ def cmd_full_classifier(lat):
 
   loss, accuracy = classifier.evaluate(
     test_set.labeled,
-    steps=lat.test_steps)
+    steps=lat.test_steps,
+    verbose=lat.keras_verbose)
   logger.info(f'test accuracy: {100*accuracy:.01f}%')
   
 
@@ -541,6 +594,46 @@ def cmd_visualize(lat):
 
   if lat.show:
     logger.info('showing plots...')
+    plt.show()
+
+
+def cmd_visualize_classifiers(lat):
+  """Visualize the training and test-accuracy of all available classifiers."""
+  hists = lat.load_classifier_histories()
+             
+  vis.plot_hist_val_losses(hists)
+  if not lat.show:
+    logger.info(f"saving hist losses plot to "
+                f"{lat.hist_val_losses_fig_path}")
+    plt.savefig(lat.hist_val_losses_fig_path)
+    logger.info(f"saving successful")
+
+  vis.plot_hist_val_accs(hists)
+  if not lat.show:
+    logger.info(f"saving hist losses plot to "
+                f"{lat.hist_val_accs_fig_path}")
+    plt.savefig(lat.hist_val_accs_fig_path)
+    logger.info(f"saving successful")
+
+  vis.plot_hist_test_losses(hists)
+  if not lat.show:
+    logger.info(f"saving hist losses plot to "
+                f"{lat.hist_test_losses_fig_path}")
+    plt.savefig(lat.hist_test_losses_fig_path)
+    logger.info(f"saving successful")
+
+  vis.plot_hist_test_accs(hists)
+  if not lat.show:
+    logger.info(f"saving hist losses plot to "
+                f"{lat.hist_test_accs_fig_path}")
+    plt.savefig(lat.hist_test_accs_fig_path)
+    logger.info(f"saving successful")
+
+  test_accs = [hists[sample]['test_acc'] for sample in vis.samples]
+  logger.info(f"test accs for {lat.autoencoder_type}:"
+              f"{test_accs}")
+
+  if lat.show:
     plt.show()
 
     
@@ -666,6 +759,8 @@ def main():
     cmd_decode(lat)
   elif args.command == 'visualize':
     cmd_visualize(lat)
+  elif args.command == 'visualize-classifiers':
+    cmd_visualize_classifiers(lat)
   elif args.command == 'debug':
     cmd_debug(lat)
   else:
