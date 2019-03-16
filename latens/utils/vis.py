@@ -20,7 +20,7 @@ samples = ['random',
            'uniform', 'multi-normal',
            'uniform-cluster', 'multi-normal-cluster',
            'error']
-sample_colors = ['black', 'blue', 'green', 'cyan', 'yellow', 'red']
+sample_colors = ['black', 'royalblue', 'seagreen', 'teal', 'mediumorchid', 'firebrick']
 
 
 def plot_image(*images, columns=10, ticks=False):
@@ -125,18 +125,19 @@ def plot_sampled_encodings_3d(encodings, sampling, labels=None, num_classes=10):
                    marker='o')
   plt.title("Latent Space Sampling")
 
-
 def plot_hist_val_losses(hists):
   fig, ax = plt.subplots()
   for i, sample in enumerate(samples):
     ax.plot(hists[sample]['val_loss'], c=sample_colors[i], label=sample)
-  plt.title("Classifier Validation Losses")  
+  plt.title("Classifier Validation Losses")
+  plt.legend()
 
 def plot_hist_val_accs(hists):
   fig, ax = plt.subplots()
   for i, sample in enumerate(samples):
     ax.plot(hists[sample]['val_acc'], c=sample_colors[i], label=sample)
-  plt.title("Classifier Validation Accuracies")  
+  plt.title("Classifier Validation Accuracies")
+  plt.legend()
 
 def plot_hist_test_losses(hists):
   fig, ax = plt.subplots()
@@ -150,14 +151,14 @@ def plot_hist_test_losses(hists):
 
 def plot_hist_test_accs(hists):
   fig, ax = plt.subplots()
-  losses = [hists[sample]['test_acc'] for sample in samples]
+  accs = [hists[sample]['test_acc'] for sample in samples]
   ticks = list(range(len(samples)))
-  plt.bar(ticks, losses, color=sample_colors)
+  plt.bar(ticks, accs, color=sample_colors)
   plt.xlabel("Sampling Type")
   plt.ylabel("Accuracy")
   plt.xticks(ticks, samples)
   plt.title("Classifier Test Losses")
-  
+
 def show_image(*images, **kwargs):
   plot_image(*images, **kwargs)
   plt.show()
