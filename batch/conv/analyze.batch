@@ -21,6 +21,8 @@ latent_dim=2
 batch_size=64
 ae=conv
 class_epochs=50
+sample_size=100
+mult=10
 
 echo "Starting analysis..."
 python latens.py encode -i data/mnist/mnist \
@@ -38,21 +40,25 @@ do
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
          -L $latent_dim -b $batch_size --keras-verbose 2 \
+         --sample-size $sample_size \
          --sample $sample
   python latens.py classifier -i data/mnist/mnist \
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
          -L $latent_dim -b $batch_size --keras-verbose 2 \
          -e $class_epochs --overwrite \
-         --sample $sample
+         --sample-size $sample_size \
+         --sample $sample --mult $mult
   python latens.py visualize -i data/mnist/mnist \
          --ae $ae \
          -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
          -L $latent_dim -b $batch_size --keras-verbose 2 \
+         --sample-size $sample_size \
          --sample $sample
 done
 
 python latens.py visualize-classifiers \
+       --ae $ae \
        -m models/mnist_${ae}_e${epochs}_L${latent_dim}_b${batch_size}
 
 echo "Finished."
