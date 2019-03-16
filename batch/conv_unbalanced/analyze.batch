@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#SBATCH --job-name=analysis
+#SBATCH --output=analysis.out
+#SBATCH --error=analysis.err
+#SBATCH -p gpu2
+#SBATCH --gres=gpu:1
+#SBATCH --time=8:00:00
+#SBATCH --account=pi-glk
+#SBATCH --mem-per-cpu=32000
+
+# Proper way to load:
+module unload python
+module load Anaconda3/2018.12
+source activate tf-gpu-1.12.0
+
+cd /project2/glk/latens
+
+epochs=300
+latent_dim=2
+batch_size=64
+ae=conv
+dataset=unbalanced_mnist
+class_epochs=50
+sample_size=100
+mult=10
+
+echo "Starting analysis..."
+python latens.py encode -i data/$dataset/$dataset \
+       --ae $ae \
+       -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+       -L $latent_dim -b $batch_size --keras-verbose 2
+python latens.py reconstruct -i data/$dataset/$dataset \
+       --ae $ae \
+       -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+       -L $latent_dim -b $batch_size --keras-verbose 2
+
+for sample in random normal multi-normal uniform uniform-cluster normal-cluster multi-normal-cluster error # classifier-error classifier-loss classifier-incorrect
+do
+  python latens.py sample -i data/$dataset/$dataset \
+         --ae $ae \
+         -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
+         --sample-size $sample_size \
+         --sample $sample
+  python latens.py classifier -i data/$dataset/$dataset \
+         --ae $ae \
+         -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
+         -e $class_epochs --overwrite \
+         --sample-size $sample_size \
+         --sample $sample --mult $mult
+  python latens.py visualize -i data/$dataset/$dataset \
+         --ae $ae \
+         -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+         -L $latent_dim -b $batch_size --keras-verbose 2 \
+         --sample-size $sample_size \
+         --sample $sample
+done
+
+python latens.py visualize-classifiers \
+       --ae $ae \
+       -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size}
+
+echo "Finished."

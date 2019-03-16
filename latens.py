@@ -25,6 +25,7 @@ from shutil import rmtree
 from time import time
 import numpy as np
 import json
+from scipy import ndimage
 
 if sys.version_info < (3,6):
   logger.error(f"Use python{3.6} or higher.")
@@ -636,7 +637,57 @@ def cmd_visualize_classifiers(lat):
   if lat.show:
     plt.show()
 
-    
+
+def cmd_subsample(lat):
+  """Subsample the MNIST training set for the input.
+
+  Should only be run on MNIST or similar data.
+
+  This is a deterministic function, to be run once. It theorizes that, perhaps,
+  even digits are more prevalent to collect than odds, and so it increases the
+  number of examples for each by a factor of 2/5 and decreases examples from the
+  odds be the same amount, keeping the training set size the same. So now evens
+  have 7000 examples each, while odds have 3000.
+
+  Takes as input the original mnist.npz file, saves it as
+  data/unbalanced_mnist/unbalanced_mnist.npz.
+
+  When inserting new examples, applies a small translation [from 0 to 3 pixels]
+  in a random direction, according to a uniform distribution.
+
+  When finished, also converts the newly created npz file to a tfrecord.
+
+  """
+  data = np.load(lat.npz_path)
+  eval_images = data['data'][lat.train_size:]
+  eval_labels = data['labels'][lat.train_size:]
+  images = data['data'][:lat.train_size]
+  labels = data['labels'][:lat.train_size]
+  logger.debug(f'images: {images.shape}')
+
+  n = 2000
+  logger.info(f"subsampling...")
+  for i in range(0, lat.num_classes, 2):
+    logger.info(f"filling {i+1} with examples from {i}")
+    even_indices = np.where(labels == i)[0][:n] # examples to fill with
+    odd_indices = np.where(labels == i+1)[0][:n] # examples to fill in
+    for even_idx, odd_idx in zip(even_indices, odd_indices):
+      translation = list(np.random.uniform(0,2,size=2))
+      rotation = np.random.uniform(-np.pi/36, np.pi/36)
+      image = images[even_idx]
+      image = ndimage.rotate(image, rotation, reshape=False)
+      image = ndimage.shift(image, translation)
+      images[odd_idx] = image
+      labels[odd_idx] = i
+  
+  new_images = np.concatenate((images, eval_images), axis=0)
+  new_labels = np.concatenate((labels, eval_labels), axis=0)
+  npz_path = 'data/unbalanced_mnist/unbalanced_mnist.npz'
+  np.savez(npz_path, data=new_images, labels=new_labels)
+  logger.info(f'saved subsample to {npz_path}')
+  dat.convert_from_npz(npz_path)
+
+  
 def main():
   parser = argparse.ArgumentParser(description=docs.description)
   parser.add_argument('command', choices=docs.command_choices,
@@ -761,6 +812,8 @@ def main():
     cmd_visualize(lat)
   elif args.command == 'visualize-classifiers':
     cmd_visualize_classifiers(lat)
+  elif args.command == 'subsample':
+    cmd_subsample(lat)
   elif args.command == 'debug':
     cmd_debug(lat)
   else:

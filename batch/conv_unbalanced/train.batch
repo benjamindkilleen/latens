@@ -20,7 +20,7 @@ epochs=300
 latent_dim=2
 batch_size=64
 ae=conv
-dataset=mnist
+dataset=unbalanced_mnist
 
 echo "Starting training..."
 python latens.py autoencoder -i data/$dataset/$dataset \

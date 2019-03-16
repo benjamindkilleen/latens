@@ -19,8 +19,8 @@ cd /project2/glk/latens
 epochs=300
 latent_dim=2
 batch_size=64
-ae=conv
-dataset=mnist
+ae=student
+dataset=unbalanced_mnist
 
 echo "Starting training..."
 python latens.py autoencoder -i data/$dataset/$dataset \
