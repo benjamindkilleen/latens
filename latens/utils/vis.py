@@ -157,7 +157,7 @@ def plot_hist_test_accs(hists):
   plt.xlabel("Sampling Type")
   plt.ylabel("Accuracy")
   plt.xticks(ticks, samples)
-  plt.title("Classifier Test Losses")
+  plt.title("Classifier Test Accuracies")
 
 def show_image(*images, **kwargs):
   plot_image(*images, **kwargs)

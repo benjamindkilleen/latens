@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=analysis
-#SBATCH --output=analysis.out
-#SBATCH --error=analysis.err
+#SBATCH --output=analysis_100.out
+#SBATCH --error=analysis_100.err
 #SBATCH -p gpu2
 #SBATCH --gres=gpu:1
 #SBATCH --time=8:00:00
