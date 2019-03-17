@@ -60,6 +60,7 @@ done
 
 python latens.py visualize-classifiers \
        --ae $ae \
-       -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size}
+       -m models/${dataset}_${ae}_e${epochs}_L${latent_dim}_b${batch_size} \
+       --sample-size $sample_size
 
 echo "Finished."

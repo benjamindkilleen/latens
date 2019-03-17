@@ -630,7 +630,8 @@ def cmd_visualize_classifiers(lat):
     plt.savefig(lat.hist_test_accs_fig_path)
     logger.info(f"saving successful")
 
-  test_accs = [hists[sample]['test_acc'] for sample in vis.samples]
+  key = 'test_acc'
+  test_accs = [f'{hists[sample][key]:.03f}' for sample in vis.samples]
   logger.info(f"test accs for {lat.autoencoder_type}:"
               f"{test_accs}")
 
@@ -669,8 +670,8 @@ def cmd_subsample(lat):
   logger.info(f"subsampling...")
   for i in range(0, lat.num_classes, 2):
     logger.info(f"filling {i+1} with examples from {i}")
-    even_indices = np.where(labels == i)[0][:n] # examples to fill with
-    odd_indices = np.where(labels == i+1)[0][:n] # examples to fill in
+    even_indices = np.random.permutation(np.where(labels == i)[0])[:n] # examples to fill with
+    odd_indices = np.random.permutation(np.where(labels == i+1)[0])[:n] # examples to fill in
     for even_idx, odd_idx in zip(even_indices, odd_indices):
       translation = list(np.random.uniform(0,2,size=2))
       rotation = np.random.uniform(-np.pi/36, np.pi/36)
