@@ -3,7 +3,7 @@
 \usepackage{INTERSPEECH2016}
 
 \usepackage{graphicx}
-\graphicspath{ {images/} }
+\graphicspath{ {../} }
 \usepackage{amssymb,amsmath,bm,bbm}
 \usepackage{hyperref}
 \usepackage{textcomp}
@@ -47,51 +47,84 @@
 \begin{abstract}
   The advent of deep learning has facilitated remarkable success on increasingly
   complex tasks. Large datasets are integral to this success, providing example
-  labels which guide training, but these labels are not always readily
-  available. The field of active learning addresses this issue by considering
-  ``curious'' learners which iteratively select query sets that, when annotated,
-  will most inform training. Crucially, this selection depends upon the
-  performance of a supervised learner on already-labeled examples, initially
-  selected randomly. Using techniques from unsupervised learning, our approach
-  leverages the unlabeled data to inform both query selection as well as
-  supervised training. Using an auto-encoder (AE), we consider various sampling
-  strategies in the learned latent space which will produce informative
-  examples. We further investigate the transfer of knowledge from the AE to a
-  supervised learner, in this case a classifier.
+  labels which guide training, but many tasks are unrelated to existing
+  datasets. In these cases, the choice of an \emph{initial query set} for
+  annotation is crucial. A ``well-sampled'' query set can facilitate downstream
+  approaches like semi-supervised or active learning, both of which require a
+  small, labeled dataset. In this paper, we focus on sampling strategies using
+  latent-space representations learned by auto-encoders, a self-supervised
+  variant of deep neural networks. Furthermore, we constrain our latent-space to
+  just two dimensions. Although potentially limiting, this focus allows for an
+  easy visualization of latent spaces well-suited for initial exploration of the
+  topic. We evaluate each sampling strategy using a simple classifier trained on
+  just the initial query set.\footnote{Code available
+    \href{https://github.com/bendkill/latens}{here}.}
 \end{abstract}
-\noindent{\bf Index Terms}: active learning, unsupervised learning, computer
+\noindent{\bf Index Terms}: semi-supervised learning, active learning, computer
 vision
 
 \section{Introduction}
 \label{sec:introduction}
 
 The collection and annotation of large datasets has been critical to the success
-of deep learning. Wherever such a dataset is available, it seems, the focus of
-the community eventually results in a supervised learner with high performance
-\emph{on that dataset}. Although that performance may extend to examples from
-similar tasks, many application domains are outside the scope of established
-datasets, and relevant annotations may not exist at all. This is the case
-especially for scientific image analysis, where the unique nature of each
-experiment sets it apart from conventional tasks and the labeling itself is the
-ultimate goal. In this context, one aims to train a supervised learner on as few
-labeled examples as possible, possibly leveraging the unlabeled data to do so.
+of deep learning. Wherever such data is available, it seems, the focus of the
+community eventually results in a supervised learner with high performance, as
+evaluated on the associated test set. Although that performance may extend to
+examples from similar tasks, many application domains exist outside the scope of
+established datasets. This is the case especially for scientific image analysis,
+where the unique nature of each experiment sets it apart from conventional tasks
+and obtaining labels can require significant investment, monetary- or
+labor-wise, due to task complexity. Object detection, for instance, requires
+more in-depth annotation than simple classification. In general, these scenarios
+call for an approach that minimizes the labeling required to learn a specific
+task.
 
-% \section{Related Work}
-% \label{sec:related-work}
+Several sub-fields of machine learning confront this challenge. An active
+learning approach, firstly, iteratively selects new examples for labeling in the
+hopes of improving model performance at every step \cite{settles_active_2012}. A
+popular sampling strategy incorporates the uncertainty of the model for each
+unlabeled example \cite{settles_active_2012, lewis_sequential_1994}. Here, the
+\emph{initial query set} is used to train the first iteration of the model,
+before any active learning can take place. Typically, the initial query set is
+selected randomly. This works well in many cases, but we hypothesize that a
+well-sampled initial query set would result in a better initial model,
+accelerating the active learning process. Although such tests are beyond the
+scope of this paper, they remain an active area of inquiry. Secondly, a
+semi-supervised approach, uses both labeled and unlabeled data during training
+\cite{zhu_semi-supervised_2005}. Since the initial query set is actually the
+\emph{only} query set, a well-sampled training set is of the utmost importance
+for semi-supervised learning.
+
+At this point, the meaning of ``well-sampled'' is, admittedly, not readily
+apparent. One would hope, for instance, that a well-sampled query set contains
+instances from every class, in the case of classification, or from a wide range
+of values, in the case of regression. Moreover, the representation of these
+classes or values seemingly ought to be well-balanced, as if sampled
+\emph{i.i.d.} not from the larger data, which may contain biases, but from the
+natural distribution itself. However, these properties, however, are distinctly
+qualitative. One way to quantitatively evaluate the quality of a sampling would
+be through the performance of a downstream approach that uses an initial query
+set, such as semi-supervised or active learning. In our experiments, we choose a
+much simpler downstream approach, namely using the initial query set as the sole
+training set for a simple classifier. The accuracy of this classifier, measured
+on a withheld test set, serves as our measure for the ``well-sampled-ness'' of a
+query set.
+
+In this paper, we focus on sampling strategies that rely on a latent-space
+representation of the unlabeled set. In particular, we use three types of
+auto-encoders (AEs) to learn a two-dimensional \emph{encoding} of the training
+set, which we sample according to four strategies. We compare these combinations
+with random sampling from  and error-based sampling
 
 \section{Method}
 \label{sec:method}
 
-\begin{figure*}
+\begin{figure}
   \centering
-  \includegraphics[width=0.9\linewidth]{overview}
-  \caption{an overview of the query selection process. Given a large, unlabeled
-    dataset, we train an autoencoder to generate latent space representations of
-    each example. Next, the ``latent space sampling'' identifies examples which
-    are well-spread-out in the low-dimensional encoding. Finally, the selected
-    examples in the original dataset are labeled for training.}
+  \includegraphics[width=\linewidth]{docs/query_selection}
+  \caption{an overview of latent space sampling for query selection.}
   \label{fig:overview}
-\end{figure*}
+\end{figure}
 
 Given the nature of this report, we separate the discussion of our envisioned
 method, in Section~\ref{sec:discussion}, with the description of our current
@@ -176,7 +209,7 @@ desired for our purposes.
 z
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{visualize_decoding}
+  \includegraphics[width=\linewidth]{docs/visualize_decoding}
   \caption{a visualization of the latent space $[0,1]^{10}$ learned by a simple
     convolutional autoencoder. The $i$th row corresponds to variation of the
     $i$th latent dimension from $0$ to $1$, fixing all other coordinates at

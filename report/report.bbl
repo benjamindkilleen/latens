@@ -21,6 +21,27 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{zhu_semi-supervised_2005}
+\BIBentryALTinterwordspacing
+X.~J. Zhu, ``\BIBforeignlanguage{en}{Semi-{Supervised} {Learning} {Literature}
+  {Survey}},'' University of Wisconsin-Madison Department of Computer Sciences,
+  Technical {Report}, 2005. [Online]. Available:
+  \url{https://minds.wisconsin.edu/handle/1793/60444}
+\BIBentrySTDinterwordspacing
+
+\bibitem{settles_active_2012}
+\BIBentryALTinterwordspacing
+B.~Settles, ``Active {Learning},'' \emph{Synthesis Lectures on Artificial
+  Intelligence and Machine Learning}, vol.~6, no.~1, pp. 1--114, Jun. 2012.
+  [Online]. Available:
+  \url{https://www.morganclaypool.com/doi/abs/10.2200/S00429ED1V01Y201207AIM018}
+\BIBentrySTDinterwordspacing
+
+\bibitem{lewis_sequential_1994}
+D.~D. Lewis and W.~A. Gale, ``A sequential algorithm for training text
+  classifiers,'' in \emph{{SIGIR}’94}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Springer, 1994, pp. 3--12.
+
 \bibitem{krizhevsky_imagenet_2012}
 \BIBentryALTinterwordspacing
 A.~Krizhevsky, I.~Sutskever, and G.~E. Hinton, ``{ImageNet} {Classification}
