@@ -5,5 +5,3 @@ data/
 **checkpoint
 **.hdf5*
 **.pyc
-**.err
-**.out

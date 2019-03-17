@@ -1,0 +1,1202 @@
+Starting training...
+Epoch 1/300
+
+Epoch 00001: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0001.hdf5
+ - 70s - loss: 15945.5197 - mean_absolute_error: 0.1556 - val_loss: 12425.6608 - val_mean_absolute_error: 0.1376
+Epoch 2/300
+
+Epoch 00002: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0002.hdf5
+ - 51s - loss: 12785.7119 - mean_absolute_error: 0.1426 - val_loss: 12095.8484 - val_mean_absolute_error: 0.1299
+Epoch 3/300
+
+Epoch 00003: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0003.hdf5
+ - 51s - loss: 12376.5753 - mean_absolute_error: 0.1372 - val_loss: 11536.9724 - val_mean_absolute_error: 0.1321
+Epoch 4/300
+
+Epoch 00004: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0004.hdf5
+ - 51s - loss: 12120.3262 - mean_absolute_error: 0.1340 - val_loss: 11298.4578 - val_mean_absolute_error: 0.1264
+Epoch 5/300
+
+Epoch 00005: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0005.hdf5
+ - 51s - loss: 11901.8928 - mean_absolute_error: 0.1314 - val_loss: 11020.0795 - val_mean_absolute_error: 0.1216
+Epoch 6/300
+
+Epoch 00006: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0006.hdf5
+ - 51s - loss: 11676.3805 - mean_absolute_error: 0.1288 - val_loss: 10729.3617 - val_mean_absolute_error: 0.1224
+Epoch 7/300
+
+Epoch 00007: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0007.hdf5
+ - 51s - loss: 11409.6943 - mean_absolute_error: 0.1259 - val_loss: 10617.2921 - val_mean_absolute_error: 0.1151
+Epoch 8/300
+
+Epoch 00008: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0008.hdf5
+ - 51s - loss: 11169.6094 - mean_absolute_error: 0.1227 - val_loss: 10150.0588 - val_mean_absolute_error: 0.1143
+Epoch 9/300
+
+Epoch 00009: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0009.hdf5
+ - 51s - loss: 10947.5875 - mean_absolute_error: 0.1198 - val_loss: 9977.8151 - val_mean_absolute_error: 0.1101
+Epoch 10/300
+
+Epoch 00010: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0010.hdf5
+ - 51s - loss: 10775.0487 - mean_absolute_error: 0.1175 - val_loss: 9782.9742 - val_mean_absolute_error: 0.1093
+Epoch 11/300
+
+Epoch 00011: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0011.hdf5
+ - 51s - loss: 10622.7592 - mean_absolute_error: 0.1155 - val_loss: 10525.4531 - val_mean_absolute_error: 0.1202
+Epoch 12/300
+
+Epoch 00012: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0012.hdf5
+ - 51s - loss: 10492.7985 - mean_absolute_error: 0.1136 - val_loss: 9639.2779 - val_mean_absolute_error: 0.1041
+Epoch 13/300
+
+Epoch 00013: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0013.hdf5
+ - 51s - loss: 10412.9500 - mean_absolute_error: 0.1124 - val_loss: 9632.2363 - val_mean_absolute_error: 0.1087
+Epoch 14/300
+
+Epoch 00014: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0014.hdf5
+ - 51s - loss: 10294.9467 - mean_absolute_error: 0.1108 - val_loss: 9493.6014 - val_mean_absolute_error: 0.1056
+Epoch 15/300
+
+Epoch 00015: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0015.hdf5
+ - 51s - loss: 10222.5582 - mean_absolute_error: 0.1097 - val_loss: 9334.8103 - val_mean_absolute_error: 0.1019
+Epoch 16/300
+
+Epoch 00016: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0016.hdf5
+ - 51s - loss: 10149.8054 - mean_absolute_error: 0.1086 - val_loss: 9320.2827 - val_mean_absolute_error: 0.1035
+Epoch 17/300
+
+Epoch 00017: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0017.hdf5
+ - 51s - loss: 10093.0000 - mean_absolute_error: 0.1078 - val_loss: 9307.8835 - val_mean_absolute_error: 0.1021
+Epoch 18/300
+
+Epoch 00018: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0018.hdf5
+ - 51s - loss: 10016.7666 - mean_absolute_error: 0.1067 - val_loss: 9987.6259 - val_mean_absolute_error: 0.1115
+Epoch 19/300
+
+Epoch 00019: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0019.hdf5
+ - 51s - loss: 9964.2132 - mean_absolute_error: 0.1063 - val_loss: 9157.3828 - val_mean_absolute_error: 0.0993
+Epoch 20/300
+
+Epoch 00020: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0020.hdf5
+ - 51s - loss: 9933.8967 - mean_absolute_error: 0.1058 - val_loss: 9171.2324 - val_mean_absolute_error: 0.1000
+Epoch 21/300
+
+Epoch 00021: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0021.hdf5
+ - 51s - loss: 9905.6554 - mean_absolute_error: 0.1052 - val_loss: 9284.6750 - val_mean_absolute_error: 0.1018
+Epoch 22/300
+
+Epoch 00022: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0022.hdf5
+ - 51s - loss: 9858.5530 - mean_absolute_error: 0.1048 - val_loss: 9018.0544 - val_mean_absolute_error: 0.0962
+Epoch 23/300
+
+Epoch 00023: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0023.hdf5
+ - 51s - loss: 9820.8280 - mean_absolute_error: 0.1043 - val_loss: 9135.2556 - val_mean_absolute_error: 0.0965
+Epoch 24/300
+
+Epoch 00024: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0024.hdf5
+ - 52s - loss: 9801.0912 - mean_absolute_error: 0.1039 - val_loss: 9061.1456 - val_mean_absolute_error: 0.0972
+Epoch 25/300
+
+Epoch 00025: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0025.hdf5
+ - 51s - loss: 9766.8534 - mean_absolute_error: 0.1035 - val_loss: 8976.8194 - val_mean_absolute_error: 0.0968
+Epoch 26/300
+
+Epoch 00026: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0026.hdf5
+ - 51s - loss: 9729.2007 - mean_absolute_error: 0.1031 - val_loss: 8995.1515 - val_mean_absolute_error: 0.0960
+Epoch 27/300
+
+Epoch 00027: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0027.hdf5
+ - 51s - loss: 9701.4752 - mean_absolute_error: 0.1027 - val_loss: 8927.0748 - val_mean_absolute_error: 0.0957
+Epoch 28/300
+
+Epoch 00028: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0028.hdf5
+ - 51s - loss: 9690.9958 - mean_absolute_error: 0.1025 - val_loss: 8901.7084 - val_mean_absolute_error: 0.0952
+Epoch 29/300
+
+Epoch 00029: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0029.hdf5
+ - 51s - loss: 9658.8789 - mean_absolute_error: 0.1023 - val_loss: 8952.8228 - val_mean_absolute_error: 0.0938
+Epoch 30/300
+
+Epoch 00030: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0030.hdf5
+ - 53s - loss: 9647.4133 - mean_absolute_error: 0.1020 - val_loss: 8888.7784 - val_mean_absolute_error: 0.0954
+Epoch 31/300
+
+Epoch 00031: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0031.hdf5
+ - 51s - loss: 9625.7459 - mean_absolute_error: 0.1018 - val_loss: 8862.2668 - val_mean_absolute_error: 0.0946
+Epoch 32/300
+
+Epoch 00032: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0032.hdf5
+ - 51s - loss: 9612.9519 - mean_absolute_error: 0.1016 - val_loss: 8977.1362 - val_mean_absolute_error: 0.0960
+Epoch 33/300
+
+Epoch 00033: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0033.hdf5
+ - 51s - loss: 9575.0305 - mean_absolute_error: 0.1012 - val_loss: 8849.7401 - val_mean_absolute_error: 0.0940
+Epoch 34/300
+
+Epoch 00034: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0034.hdf5
+ - 51s - loss: 9572.2218 - mean_absolute_error: 0.1011 - val_loss: 8855.4148 - val_mean_absolute_error: 0.0954
+Epoch 35/300
+
+Epoch 00035: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0035.hdf5
+ - 51s - loss: 9531.8935 - mean_absolute_error: 0.1010 - val_loss: 8832.1992 - val_mean_absolute_error: 0.0948
+Epoch 36/300
+
+Epoch 00036: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0036.hdf5
+ - 51s - loss: 9536.4667 - mean_absolute_error: 0.1008 - val_loss: 8825.9251 - val_mean_absolute_error: 0.0945
+Epoch 37/300
+
+Epoch 00037: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0037.hdf5
+ - 51s - loss: 9525.6852 - mean_absolute_error: 0.1005 - val_loss: 8815.4683 - val_mean_absolute_error: 0.0944
+Epoch 38/300
+
+Epoch 00038: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0038.hdf5
+ - 51s - loss: 9512.2104 - mean_absolute_error: 0.1002 - val_loss: 8801.2784 - val_mean_absolute_error: 0.0936
+Epoch 39/300
+
+Epoch 00039: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0039.hdf5
+ - 51s - loss: 9500.9799 - mean_absolute_error: 0.1003 - val_loss: 8801.9138 - val_mean_absolute_error: 0.0942
+Epoch 40/300
+
+Epoch 00040: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0040.hdf5
+ - 51s - loss: 9469.0489 - mean_absolute_error: 0.1001 - val_loss: 8762.1449 - val_mean_absolute_error: 0.0922
+Epoch 41/300
+
+Epoch 00041: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0041.hdf5
+ - 51s - loss: 9470.2635 - mean_absolute_error: 0.0999 - val_loss: 8919.2681 - val_mean_absolute_error: 0.0978
+Epoch 42/300
+
+Epoch 00042: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0042.hdf5
+ - 51s - loss: 9435.8119 - mean_absolute_error: 0.0997 - val_loss: 8778.1706 - val_mean_absolute_error: 0.0925
+Epoch 43/300
+
+Epoch 00043: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0043.hdf5
+ - 51s - loss: 9441.6430 - mean_absolute_error: 0.0994 - val_loss: 8778.9583 - val_mean_absolute_error: 0.0945
+Epoch 44/300
+
+Epoch 00044: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0044.hdf5
+ - 51s - loss: 9421.6382 - mean_absolute_error: 0.0993 - val_loss: 8715.7256 - val_mean_absolute_error: 0.0927
+Epoch 45/300
+
+Epoch 00045: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0045.hdf5
+ - 51s - loss: 9412.0106 - mean_absolute_error: 0.0992 - val_loss: 8751.9097 - val_mean_absolute_error: 0.0934
+Epoch 46/300
+
+Epoch 00046: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0046.hdf5
+ - 51s - loss: 9413.3766 - mean_absolute_error: 0.0991 - val_loss: 8770.3039 - val_mean_absolute_error: 0.0936
+Epoch 47/300
+
+Epoch 00047: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0047.hdf5
+ - 51s - loss: 9377.6615 - mean_absolute_error: 0.0990 - val_loss: 8807.8186 - val_mean_absolute_error: 0.0928
+Epoch 48/300
+
+Epoch 00048: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0048.hdf5
+ - 51s - loss: 9361.0488 - mean_absolute_error: 0.0990 - val_loss: 8659.8390 - val_mean_absolute_error: 0.0918
+Epoch 49/300
+
+Epoch 00049: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0049.hdf5
+ - 51s - loss: 9356.7232 - mean_absolute_error: 0.0988 - val_loss: 8839.0410 - val_mean_absolute_error: 0.0965
+Epoch 50/300
+
+Epoch 00050: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0050.hdf5
+ - 51s - loss: 9350.9513 - mean_absolute_error: 0.0986 - val_loss: 8662.3621 - val_mean_absolute_error: 0.0919
+Epoch 51/300
+
+Epoch 00051: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0051.hdf5
+ - 51s - loss: 9343.9316 - mean_absolute_error: 0.0985 - val_loss: 8719.4445 - val_mean_absolute_error: 0.0944
+Epoch 52/300
+
+Epoch 00052: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0052.hdf5
+ - 51s - loss: 9343.6874 - mean_absolute_error: 0.0985 - val_loss: 8710.8404 - val_mean_absolute_error: 0.0940
+Epoch 53/300
+
+Epoch 00053: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0053.hdf5
+ - 51s - loss: 9334.4366 - mean_absolute_error: 0.0985 - val_loss: 8684.6502 - val_mean_absolute_error: 0.0938
+Epoch 54/300
+
+Epoch 00054: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0054.hdf5
+ - 51s - loss: 9324.8323 - mean_absolute_error: 0.0984 - val_loss: 8672.4675 - val_mean_absolute_error: 0.0936
+Epoch 55/300
+
+Epoch 00055: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0055.hdf5
+ - 51s - loss: 9296.3742 - mean_absolute_error: 0.0982 - val_loss: 8674.1736 - val_mean_absolute_error: 0.0926
+Epoch 56/300
+
+Epoch 00056: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0056.hdf5
+ - 51s - loss: 9291.5711 - mean_absolute_error: 0.0980 - val_loss: 8637.1848 - val_mean_absolute_error: 0.0909
+Epoch 57/300
+
+Epoch 00057: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0057.hdf5
+ - 51s - loss: 9282.7656 - mean_absolute_error: 0.0979 - val_loss: 8583.5724 - val_mean_absolute_error: 0.0917
+Epoch 58/300
+
+Epoch 00058: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0058.hdf5
+ - 51s - loss: 9286.3192 - mean_absolute_error: 0.0978 - val_loss: 8654.2833 - val_mean_absolute_error: 0.0909
+Epoch 59/300
+
+Epoch 00059: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0059.hdf5
+ - 51s - loss: 9261.5323 - mean_absolute_error: 0.0977 - val_loss: 8679.5937 - val_mean_absolute_error: 0.0913
+Epoch 60/300
+
+Epoch 00060: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0060.hdf5
+ - 51s - loss: 9263.3059 - mean_absolute_error: 0.0978 - val_loss: 8601.2123 - val_mean_absolute_error: 0.0929
+Epoch 61/300
+
+Epoch 00061: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0061.hdf5
+ - 51s - loss: 9259.6417 - mean_absolute_error: 0.0979 - val_loss: 8918.6901 - val_mean_absolute_error: 0.0947
+Epoch 62/300
+
+Epoch 00062: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0062.hdf5
+ - 51s - loss: 9249.2318 - mean_absolute_error: 0.0977 - val_loss: 8603.5881 - val_mean_absolute_error: 0.0919
+Epoch 63/300
+
+Epoch 00063: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0063.hdf5
+ - 51s - loss: 9255.1952 - mean_absolute_error: 0.0978 - val_loss: 8575.2171 - val_mean_absolute_error: 0.0913
+Epoch 64/300
+
+Epoch 00064: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0064.hdf5
+ - 51s - loss: 9222.5928 - mean_absolute_error: 0.0974 - val_loss: 8542.8330 - val_mean_absolute_error: 0.0909
+Epoch 65/300
+
+Epoch 00065: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0065.hdf5
+ - 51s - loss: 9222.1623 - mean_absolute_error: 0.0973 - val_loss: 9102.6775 - val_mean_absolute_error: 0.1008
+Epoch 66/300
+
+Epoch 00066: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0066.hdf5
+ - 51s - loss: 9215.9024 - mean_absolute_error: 0.0972 - val_loss: 8548.6742 - val_mean_absolute_error: 0.0912
+Epoch 67/300
+
+Epoch 00067: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0067.hdf5
+ - 51s - loss: 9206.9760 - mean_absolute_error: 0.0973 - val_loss: 8568.7659 - val_mean_absolute_error: 0.0918
+Epoch 68/300
+
+Epoch 00068: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0068.hdf5
+ - 51s - loss: 9194.4162 - mean_absolute_error: 0.0971 - val_loss: 8505.9893 - val_mean_absolute_error: 0.0908
+Epoch 69/300
+
+Epoch 00069: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0069.hdf5
+ - 51s - loss: 9202.4399 - mean_absolute_error: 0.0972 - val_loss: 8601.8303 - val_mean_absolute_error: 0.0910
+Epoch 70/300
+
+Epoch 00070: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0070.hdf5
+ - 51s - loss: 9180.6661 - mean_absolute_error: 0.0971 - val_loss: 8516.3926 - val_mean_absolute_error: 0.0914
+Epoch 71/300
+
+Epoch 00071: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0071.hdf5
+ - 51s - loss: 9176.6307 - mean_absolute_error: 0.0970 - val_loss: 8531.9567 - val_mean_absolute_error: 0.0915
+Epoch 72/300
+
+Epoch 00072: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0072.hdf5
+ - 51s - loss: 9183.7501 - mean_absolute_error: 0.0971 - val_loss: 8550.2125 - val_mean_absolute_error: 0.0920
+Epoch 73/300
+
+Epoch 00073: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0073.hdf5
+ - 51s - loss: 9161.4865 - mean_absolute_error: 0.0970 - val_loss: 8589.5689 - val_mean_absolute_error: 0.0915
+Epoch 74/300
+
+Epoch 00074: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0074.hdf5
+ - 51s - loss: 9176.0855 - mean_absolute_error: 0.0972 - val_loss: 8660.4594 - val_mean_absolute_error: 0.0940
+Epoch 75/300
+
+Epoch 00075: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0075.hdf5
+ - 51s - loss: 9152.2709 - mean_absolute_error: 0.0969 - val_loss: 8578.5098 - val_mean_absolute_error: 0.0931
+Epoch 76/300
+
+Epoch 00076: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0076.hdf5
+ - 51s - loss: 9138.8251 - mean_absolute_error: 0.0970 - val_loss: 8598.2091 - val_mean_absolute_error: 0.0911
+Epoch 77/300
+
+Epoch 00077: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0077.hdf5
+ - 51s - loss: 9147.8171 - mean_absolute_error: 0.0969 - val_loss: 8528.6048 - val_mean_absolute_error: 0.0897
+Epoch 78/300
+
+Epoch 00078: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0078.hdf5
+ - 51s - loss: 9133.5615 - mean_absolute_error: 0.0970 - val_loss: 8482.7370 - val_mean_absolute_error: 0.0921
+Epoch 79/300
+
+Epoch 00079: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0079.hdf5
+ - 51s - loss: 9129.9539 - mean_absolute_error: 0.0970 - val_loss: 8492.5317 - val_mean_absolute_error: 0.0911
+Epoch 80/300
+
+Epoch 00080: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0080.hdf5
+ - 51s - loss: 9131.2718 - mean_absolute_error: 0.0969 - val_loss: 8472.5498 - val_mean_absolute_error: 0.0913
+Epoch 81/300
+
+Epoch 00081: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0081.hdf5
+ - 51s - loss: 9127.3566 - mean_absolute_error: 0.0968 - val_loss: 8488.8134 - val_mean_absolute_error: 0.0919
+Epoch 82/300
+
+Epoch 00082: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0082.hdf5
+ - 51s - loss: 9112.3561 - mean_absolute_error: 0.0966 - val_loss: 8450.9233 - val_mean_absolute_error: 0.0906
+Epoch 83/300
+
+Epoch 00083: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0083.hdf5
+ - 51s - loss: 9100.3021 - mean_absolute_error: 0.0963 - val_loss: 8533.8721 - val_mean_absolute_error: 0.0917
+Epoch 84/300
+
+Epoch 00084: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0084.hdf5
+ - 51s - loss: 9106.6548 - mean_absolute_error: 0.0965 - val_loss: 8456.8024 - val_mean_absolute_error: 0.0918
+Epoch 85/300
+
+Epoch 00085: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0085.hdf5
+ - 51s - loss: 9103.8114 - mean_absolute_error: 0.0964 - val_loss: 8757.5803 - val_mean_absolute_error: 0.0968
+Epoch 86/300
+
+Epoch 00086: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0086.hdf5
+ - 51s - loss: 9100.0741 - mean_absolute_error: 0.0963 - val_loss: 8503.8211 - val_mean_absolute_error: 0.0908
+Epoch 87/300
+
+Epoch 00087: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0087.hdf5
+ - 51s - loss: 9077.6529 - mean_absolute_error: 0.0961 - val_loss: 8559.3535 - val_mean_absolute_error: 0.0907
+Epoch 88/300
+
+Epoch 00088: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0088.hdf5
+ - 51s - loss: 9082.5856 - mean_absolute_error: 0.0965 - val_loss: 8607.4746 - val_mean_absolute_error: 0.0933
+Epoch 89/300
+
+Epoch 00089: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0089.hdf5
+ - 51s - loss: 9062.6726 - mean_absolute_error: 0.0964 - val_loss: 8529.3269 - val_mean_absolute_error: 0.0925
+Epoch 90/300
+
+Epoch 00090: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0090.hdf5
+ - 51s - loss: 9081.2175 - mean_absolute_error: 0.0966 - val_loss: 8454.7394 - val_mean_absolute_error: 0.0923
+Epoch 91/300
+
+Epoch 00091: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0091.hdf5
+ - 51s - loss: 9066.9246 - mean_absolute_error: 0.0967 - val_loss: 8461.4476 - val_mean_absolute_error: 0.0909
+Epoch 92/300
+
+Epoch 00092: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0092.hdf5
+ - 51s - loss: 9052.4433 - mean_absolute_error: 0.0965 - val_loss: 8472.9968 - val_mean_absolute_error: 0.0917
+Epoch 93/300
+
+Epoch 00093: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0093.hdf5
+ - 51s - loss: 9047.1611 - mean_absolute_error: 0.0963 - val_loss: 8465.5204 - val_mean_absolute_error: 0.0897
+Epoch 94/300
+
+Epoch 00094: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0094.hdf5
+ - 51s - loss: 9043.4202 - mean_absolute_error: 0.0961 - val_loss: 8481.6794 - val_mean_absolute_error: 0.0923
+Epoch 95/300
+
+Epoch 00095: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0095.hdf5
+ - 51s - loss: 9058.7177 - mean_absolute_error: 0.0965 - val_loss: 8488.7620 - val_mean_absolute_error: 0.0916
+Epoch 96/300
+
+Epoch 00096: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0096.hdf5
+ - 51s - loss: 9051.3796 - mean_absolute_error: 0.0964 - val_loss: 8445.8625 - val_mean_absolute_error: 0.0900
+Epoch 97/300
+
+Epoch 00097: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0097.hdf5
+ - 51s - loss: 9023.8510 - mean_absolute_error: 0.0964 - val_loss: 8418.1792 - val_mean_absolute_error: 0.0911
+Epoch 98/300
+
+Epoch 00098: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0098.hdf5
+ - 51s - loss: 9047.1286 - mean_absolute_error: 0.0966 - val_loss: 8499.7062 - val_mean_absolute_error: 0.0921
+Epoch 99/300
+
+Epoch 00099: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0099.hdf5
+ - 51s - loss: 9031.8037 - mean_absolute_error: 0.0969 - val_loss: 8421.4311 - val_mean_absolute_error: 0.0909
+Epoch 100/300
+
+Epoch 00100: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0100.hdf5
+ - 51s - loss: 9020.1180 - mean_absolute_error: 0.0964 - val_loss: 8425.7261 - val_mean_absolute_error: 0.0925
+Epoch 101/300
+
+Epoch 00101: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0101.hdf5
+ - 51s - loss: 9019.9612 - mean_absolute_error: 0.0964 - val_loss: 8509.4452 - val_mean_absolute_error: 0.0914
+Epoch 102/300
+
+Epoch 00102: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0102.hdf5
+ - 51s - loss: 9012.1412 - mean_absolute_error: 0.0965 - val_loss: 8401.7472 - val_mean_absolute_error: 0.0908
+Epoch 103/300
+
+Epoch 00103: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0103.hdf5
+ - 51s - loss: 9025.2203 - mean_absolute_error: 0.0965 - val_loss: 8414.7511 - val_mean_absolute_error: 0.0913
+Epoch 104/300
+
+Epoch 00104: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0104.hdf5
+ - 51s - loss: 9004.5903 - mean_absolute_error: 0.0961 - val_loss: 8364.5418 - val_mean_absolute_error: 0.0903
+Epoch 105/300
+
+Epoch 00105: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0105.hdf5
+ - 51s - loss: 9006.0960 - mean_absolute_error: 0.0969 - val_loss: 8404.4286 - val_mean_absolute_error: 0.0911
+Epoch 106/300
+
+Epoch 00106: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0106.hdf5
+ - 51s - loss: 8995.6447 - mean_absolute_error: 0.0966 - val_loss: 8368.4859 - val_mean_absolute_error: 0.0913
+Epoch 107/300
+
+Epoch 00107: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0107.hdf5
+ - 51s - loss: 8993.5685 - mean_absolute_error: 0.0964 - val_loss: 8392.5715 - val_mean_absolute_error: 0.0917
+Epoch 108/300
+
+Epoch 00108: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0108.hdf5
+ - 51s - loss: 9011.5663 - mean_absolute_error: 0.0965 - val_loss: 8415.2079 - val_mean_absolute_error: 0.0912
+Epoch 109/300
+
+Epoch 00109: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0109.hdf5
+ - 51s - loss: 8983.2051 - mean_absolute_error: 0.0964 - val_loss: 8403.2006 - val_mean_absolute_error: 0.0910
+Epoch 110/300
+
+Epoch 00110: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0110.hdf5
+ - 51s - loss: 8996.3030 - mean_absolute_error: 0.0967 - val_loss: 8369.4094 - val_mean_absolute_error: 0.0928
+Epoch 111/300
+
+Epoch 00111: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0111.hdf5
+ - 51s - loss: 8979.2551 - mean_absolute_error: 0.0963 - val_loss: 8398.8379 - val_mean_absolute_error: 0.0914
+Epoch 112/300
+
+Epoch 00112: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0112.hdf5
+ - 51s - loss: 8987.4905 - mean_absolute_error: 0.0959 - val_loss: 8362.3324 - val_mean_absolute_error: 0.0908
+Epoch 113/300
+
+Epoch 00113: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0113.hdf5
+ - 51s - loss: 8961.1488 - mean_absolute_error: 0.0960 - val_loss: 8384.1450 - val_mean_absolute_error: 0.0910
+Epoch 114/300
+
+Epoch 00114: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0114.hdf5
+ - 51s - loss: 8972.1961 - mean_absolute_error: 0.0964 - val_loss: 8378.4262 - val_mean_absolute_error: 0.0903
+Epoch 115/300
+
+Epoch 00115: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0115.hdf5
+ - 51s - loss: 8971.0738 - mean_absolute_error: 0.0960 - val_loss: 8393.7832 - val_mean_absolute_error: 0.0908
+Epoch 116/300
+
+Epoch 00116: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0116.hdf5
+ - 51s - loss: 8981.6489 - mean_absolute_error: 0.0962 - val_loss: 8412.2462 - val_mean_absolute_error: 0.0922
+Epoch 117/300
+
+Epoch 00117: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0117.hdf5
+ - 51s - loss: 8964.1216 - mean_absolute_error: 0.0966 - val_loss: 8373.5508 - val_mean_absolute_error: 0.0913
+Epoch 118/300
+
+Epoch 00118: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0118.hdf5
+ - 51s - loss: 8950.2109 - mean_absolute_error: 0.0966 - val_loss: 8659.6616 - val_mean_absolute_error: 0.0975
+Epoch 119/300
+
+Epoch 00119: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0119.hdf5
+ - 51s - loss: 8955.4762 - mean_absolute_error: 0.0960 - val_loss: 8363.9580 - val_mean_absolute_error: 0.0917
+Epoch 120/300
+
+Epoch 00120: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0120.hdf5
+ - 51s - loss: 8955.9745 - mean_absolute_error: 0.0963 - val_loss: 8436.6358 - val_mean_absolute_error: 0.0927
+Epoch 121/300
+
+Epoch 00121: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0121.hdf5
+ - 51s - loss: 8948.7255 - mean_absolute_error: 0.0962 - val_loss: 8395.0805 - val_mean_absolute_error: 0.0898
+Epoch 122/300
+
+Epoch 00122: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0122.hdf5
+ - 51s - loss: 8957.4629 - mean_absolute_error: 0.0961 - val_loss: 8554.0134 - val_mean_absolute_error: 0.0944
+Epoch 123/300
+
+Epoch 00123: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0123.hdf5
+ - 51s - loss: 8934.8025 - mean_absolute_error: 0.0961 - val_loss: 8372.3189 - val_mean_absolute_error: 0.0904
+Epoch 124/300
+
+Epoch 00124: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0124.hdf5
+ - 51s - loss: 8926.0842 - mean_absolute_error: 0.0966 - val_loss: 8371.7324 - val_mean_absolute_error: 0.0914
+Epoch 125/300
+
+Epoch 00125: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0125.hdf5
+ - 51s - loss: 8939.7925 - mean_absolute_error: 0.0963 - val_loss: 8385.2052 - val_mean_absolute_error: 0.0926
+Epoch 126/300
+
+Epoch 00126: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0126.hdf5
+ - 51s - loss: 8941.9624 - mean_absolute_error: 0.0960 - val_loss: 8343.5841 - val_mean_absolute_error: 0.0900
+Epoch 127/300
+
+Epoch 00127: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0127.hdf5
+ - 51s - loss: 8910.1172 - mean_absolute_error: 0.0953 - val_loss: 8414.0872 - val_mean_absolute_error: 0.0905
+Epoch 128/300
+
+Epoch 00128: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0128.hdf5
+ - 51s - loss: 8923.2798 - mean_absolute_error: 0.0959 - val_loss: 8347.0871 - val_mean_absolute_error: 0.0911
+Epoch 129/300
+
+Epoch 00129: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0129.hdf5
+ - 51s - loss: 8922.9787 - mean_absolute_error: 0.0960 - val_loss: 8442.5677 - val_mean_absolute_error: 0.0918
+Epoch 130/300
+
+Epoch 00130: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0130.hdf5
+ - 51s - loss: 8919.5887 - mean_absolute_error: 0.0965 - val_loss: 8330.4643 - val_mean_absolute_error: 0.0904
+Epoch 131/300
+
+Epoch 00131: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0131.hdf5
+ - 51s - loss: 8892.8047 - mean_absolute_error: 0.0965 - val_loss: 8386.8665 - val_mean_absolute_error: 0.0911
+Epoch 132/300
+
+Epoch 00132: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0132.hdf5
+ - 51s - loss: 8934.6496 - mean_absolute_error: 0.0966 - val_loss: 8304.0686 - val_mean_absolute_error: 0.0906
+Epoch 133/300
+
+Epoch 00133: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0133.hdf5
+ - 51s - loss: 8931.1627 - mean_absolute_error: 0.0966 - val_loss: 8382.7998 - val_mean_absolute_error: 0.0914
+Epoch 134/300
+
+Epoch 00134: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0134.hdf5
+ - 51s - loss: 8919.1503 - mean_absolute_error: 0.0959 - val_loss: 8371.3283 - val_mean_absolute_error: 0.0912
+Epoch 135/300
+
+Epoch 00135: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0135.hdf5
+ - 51s - loss: 8906.2611 - mean_absolute_error: 0.0959 - val_loss: 8340.7871 - val_mean_absolute_error: 0.0911
+Epoch 136/300
+
+Epoch 00136: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0136.hdf5
+ - 51s - loss: 8903.7651 - mean_absolute_error: 0.0962 - val_loss: 8368.0429 - val_mean_absolute_error: 0.0906
+Epoch 137/300
+
+Epoch 00137: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0137.hdf5
+ - 51s - loss: 8910.3922 - mean_absolute_error: 0.0962 - val_loss: 8294.9764 - val_mean_absolute_error: 0.0903
+Epoch 138/300
+
+Epoch 00138: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0138.hdf5
+ - 51s - loss: 8884.3053 - mean_absolute_error: 0.0955 - val_loss: 8314.6662 - val_mean_absolute_error: 0.0892
+Epoch 139/300
+
+Epoch 00139: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0139.hdf5
+ - 51s - loss: 8865.3187 - mean_absolute_error: 0.0958 - val_loss: 8292.2678 - val_mean_absolute_error: 0.0915
+Epoch 140/300
+
+Epoch 00140: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0140.hdf5
+ - 51s - loss: 8888.4657 - mean_absolute_error: 0.0956 - val_loss: 8323.7201 - val_mean_absolute_error: 0.0912
+Epoch 141/300
+
+Epoch 00141: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0141.hdf5
+ - 51s - loss: 8893.2882 - mean_absolute_error: 0.0958 - val_loss: 8343.7272 - val_mean_absolute_error: 0.0917
+Epoch 142/300
+
+Epoch 00142: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0142.hdf5
+ - 51s - loss: 8880.8609 - mean_absolute_error: 0.0963 - val_loss: 8334.1546 - val_mean_absolute_error: 0.0918
+Epoch 143/300
+
+Epoch 00143: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0143.hdf5
+ - 51s - loss: 8881.7660 - mean_absolute_error: 0.0962 - val_loss: 8292.6792 - val_mean_absolute_error: 0.0918
+Epoch 144/300
+
+Epoch 00144: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0144.hdf5
+ - 51s - loss: 8866.4104 - mean_absolute_error: 0.0967 - val_loss: 8336.0249 - val_mean_absolute_error: 0.0915
+Epoch 145/300
+
+Epoch 00145: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0145.hdf5
+ - 51s - loss: 8866.6564 - mean_absolute_error: 0.0958 - val_loss: 8297.8020 - val_mean_absolute_error: 0.0904
+Epoch 146/300
+
+Epoch 00146: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0146.hdf5
+ - 51s - loss: 8866.3175 - mean_absolute_error: 0.0959 - val_loss: 8259.4236 - val_mean_absolute_error: 0.0898
+Epoch 147/300
+
+Epoch 00147: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0147.hdf5
+ - 51s - loss: 8867.7907 - mean_absolute_error: 0.0961 - val_loss: 8273.6865 - val_mean_absolute_error: 0.0914
+Epoch 148/300
+
+Epoch 00148: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0148.hdf5
+ - 51s - loss: 8859.2703 - mean_absolute_error: 0.0967 - val_loss: 8316.9981 - val_mean_absolute_error: 0.0907
+Epoch 149/300
+
+Epoch 00149: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0149.hdf5
+ - 51s - loss: 8865.2668 - mean_absolute_error: 0.0967 - val_loss: 8284.4526 - val_mean_absolute_error: 0.0922
+Epoch 150/300
+
+Epoch 00150: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0150.hdf5
+ - 51s - loss: 8867.0611 - mean_absolute_error: 0.0963 - val_loss: 8364.8986 - val_mean_absolute_error: 0.0933
+Epoch 151/300
+
+Epoch 00151: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0151.hdf5
+ - 51s - loss: 8853.2886 - mean_absolute_error: 0.0963 - val_loss: 8285.1979 - val_mean_absolute_error: 0.0919
+Epoch 152/300
+
+Epoch 00152: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0152.hdf5
+ - 51s - loss: 8844.0660 - mean_absolute_error: 0.0970 - val_loss: 8307.6295 - val_mean_absolute_error: 0.0904
+Epoch 153/300
+
+Epoch 00153: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0153.hdf5
+ - 51s - loss: 8857.0215 - mean_absolute_error: 0.0965 - val_loss: 8308.1557 - val_mean_absolute_error: 0.0932
+Epoch 154/300
+
+Epoch 00154: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0154.hdf5
+ - 51s - loss: 8847.4009 - mean_absolute_error: 0.0960 - val_loss: 8277.4631 - val_mean_absolute_error: 0.0911
+Epoch 155/300
+
+Epoch 00155: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0155.hdf5
+ - 51s - loss: 8834.3812 - mean_absolute_error: 0.0961 - val_loss: 8221.8414 - val_mean_absolute_error: 0.0911
+Epoch 156/300
+
+Epoch 00156: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0156.hdf5
+ - 51s - loss: 8825.3204 - mean_absolute_error: 0.0963 - val_loss: 8317.5594 - val_mean_absolute_error: 0.0910
+Epoch 157/300
+
+Epoch 00157: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0157.hdf5
+ - 51s - loss: 8841.8531 - mean_absolute_error: 0.0960 - val_loss: 8275.9549 - val_mean_absolute_error: 0.0912
+Epoch 158/300
+
+Epoch 00158: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0158.hdf5
+ - 51s - loss: 8819.5153 - mean_absolute_error: 0.0957 - val_loss: 8239.0874 - val_mean_absolute_error: 0.0909
+Epoch 159/300
+
+Epoch 00159: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0159.hdf5
+ - 51s - loss: 8832.3927 - mean_absolute_error: 0.0963 - val_loss: 8283.2134 - val_mean_absolute_error: 0.0920
+Epoch 160/300
+
+Epoch 00160: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0160.hdf5
+ - 51s - loss: 8839.2103 - mean_absolute_error: 0.0972 - val_loss: 8281.2280 - val_mean_absolute_error: 0.0921
+Epoch 161/300
+
+Epoch 00161: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0161.hdf5
+ - 51s - loss: 8824.7637 - mean_absolute_error: 0.0958 - val_loss: 8299.1553 - val_mean_absolute_error: 0.0917
+Epoch 162/300
+
+Epoch 00162: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0162.hdf5
+ - 51s - loss: 8850.1528 - mean_absolute_error: 0.0962 - val_loss: 8252.7749 - val_mean_absolute_error: 0.0919
+Epoch 163/300
+
+Epoch 00163: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0163.hdf5
+ - 51s - loss: 8815.6735 - mean_absolute_error: 0.0961 - val_loss: 8265.5493 - val_mean_absolute_error: 0.0899
+Epoch 164/300
+
+Epoch 00164: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0164.hdf5
+ - 51s - loss: 8814.2014 - mean_absolute_error: 0.0962 - val_loss: 8287.1606 - val_mean_absolute_error: 0.0907
+Epoch 165/300
+
+Epoch 00165: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0165.hdf5
+ - 51s - loss: 8821.0482 - mean_absolute_error: 0.0958 - val_loss: 8247.6989 - val_mean_absolute_error: 0.0925
+Epoch 166/300
+
+Epoch 00166: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0166.hdf5
+ - 51s - loss: 8804.9783 - mean_absolute_error: 0.0969 - val_loss: 8292.6743 - val_mean_absolute_error: 0.0924
+Epoch 167/300
+
+Epoch 00167: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0167.hdf5
+ - 51s - loss: 8817.9112 - mean_absolute_error: 0.0981 - val_loss: 8247.2534 - val_mean_absolute_error: 0.0911
+Epoch 168/300
+
+Epoch 00168: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0168.hdf5
+ - 51s - loss: 8811.4298 - mean_absolute_error: 0.0967 - val_loss: 8254.7513 - val_mean_absolute_error: 0.0927
+Epoch 169/300
+
+Epoch 00169: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0169.hdf5
+ - 51s - loss: 8815.9336 - mean_absolute_error: 0.0971 - val_loss: 8221.5150 - val_mean_absolute_error: 0.0909
+Epoch 170/300
+
+Epoch 00170: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0170.hdf5
+ - 51s - loss: 8807.7399 - mean_absolute_error: 0.0969 - val_loss: 8236.6110 - val_mean_absolute_error: 0.0898
+Epoch 171/300
+
+Epoch 00171: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0171.hdf5
+ - 51s - loss: 8781.1159 - mean_absolute_error: 0.0966 - val_loss: 8225.7841 - val_mean_absolute_error: 0.0910
+Epoch 172/300
+
+Epoch 00172: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0172.hdf5
+ - 51s - loss: 8798.7520 - mean_absolute_error: 0.0966 - val_loss: 8263.9446 - val_mean_absolute_error: 0.0931
+Epoch 173/300
+
+Epoch 00173: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0173.hdf5
+ - 51s - loss: 8786.0603 - mean_absolute_error: 0.0971 - val_loss: 8333.4143 - val_mean_absolute_error: 0.0911
+Epoch 174/300
+
+Epoch 00174: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0174.hdf5
+ - 51s - loss: 8793.6274 - mean_absolute_error: 0.0973 - val_loss: 8233.5328 - val_mean_absolute_error: 0.0921
+Epoch 175/300
+
+Epoch 00175: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0175.hdf5
+ - 51s - loss: 8802.6195 - mean_absolute_error: 0.0966 - val_loss: 8212.6773 - val_mean_absolute_error: 0.0911
+Epoch 176/300
+
+Epoch 00176: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0176.hdf5
+ - 51s - loss: 8809.1673 - mean_absolute_error: 0.0969 - val_loss: 8243.6266 - val_mean_absolute_error: 0.0925
+Epoch 177/300
+
+Epoch 00177: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0177.hdf5
+ - 51s - loss: 8791.6004 - mean_absolute_error: 0.0963 - val_loss: 8276.4219 - val_mean_absolute_error: 0.0916
+Epoch 178/300
+
+Epoch 00178: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0178.hdf5
+ - 51s - loss: 8815.8422 - mean_absolute_error: 0.0971 - val_loss: 8237.2150 - val_mean_absolute_error: 0.0910
+Epoch 179/300
+
+Epoch 00179: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0179.hdf5
+ - 51s - loss: 8768.1158 - mean_absolute_error: 0.0969 - val_loss: 8258.6482 - val_mean_absolute_error: 0.0928
+Epoch 180/300
+
+Epoch 00180: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0180.hdf5
+ - 51s - loss: 8793.0289 - mean_absolute_error: 0.0975 - val_loss: 8241.6032 - val_mean_absolute_error: 0.0909
+Epoch 181/300
+
+Epoch 00181: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0181.hdf5
+ - 51s - loss: 8780.5802 - mean_absolute_error: 0.0967 - val_loss: 8196.1918 - val_mean_absolute_error: 0.0912
+Epoch 182/300
+
+Epoch 00182: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0182.hdf5
+ - 51s - loss: 8771.9654 - mean_absolute_error: 0.0971 - val_loss: 8235.8171 - val_mean_absolute_error: 0.0927
+Epoch 183/300
+
+Epoch 00183: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0183.hdf5
+ - 51s - loss: 8781.8204 - mean_absolute_error: 0.0971 - val_loss: 8231.3821 - val_mean_absolute_error: 0.0925
+Epoch 184/300
+
+Epoch 00184: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0184.hdf5
+ - 51s - loss: 8785.3403 - mean_absolute_error: 0.0972 - val_loss: 8261.3466 - val_mean_absolute_error: 0.0959
+Epoch 185/300
+
+Epoch 00185: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0185.hdf5
+ - 51s - loss: 8771.0629 - mean_absolute_error: 0.0974 - val_loss: 8197.3765 - val_mean_absolute_error: 0.0923
+Epoch 186/300
+
+Epoch 00186: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0186.hdf5
+ - 51s - loss: 8771.1792 - mean_absolute_error: 0.0979 - val_loss: 8217.1336 - val_mean_absolute_error: 0.0919
+Epoch 187/300
+
+Epoch 00187: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0187.hdf5
+ - 51s - loss: 8775.4329 - mean_absolute_error: 0.0974 - val_loss: 8210.5715 - val_mean_absolute_error: 0.0917
+Epoch 188/300
+
+Epoch 00188: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0188.hdf5
+ - 51s - loss: 8770.2265 - mean_absolute_error: 0.0972 - val_loss: 8250.8375 - val_mean_absolute_error: 0.0934
+Epoch 189/300
+
+Epoch 00189: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0189.hdf5
+ - 51s - loss: 8762.2563 - mean_absolute_error: 0.0976 - val_loss: 8268.9672 - val_mean_absolute_error: 0.0934
+Epoch 190/300
+
+Epoch 00190: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0190.hdf5
+ - 51s - loss: 8764.5446 - mean_absolute_error: 0.0969 - val_loss: 8281.9557 - val_mean_absolute_error: 0.0917
+Epoch 191/300
+
+Epoch 00191: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0191.hdf5
+ - 51s - loss: 8760.9055 - mean_absolute_error: 0.0966 - val_loss: 8193.7788 - val_mean_absolute_error: 0.0927
+Epoch 192/300
+
+Epoch 00192: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0192.hdf5
+ - 51s - loss: 8753.7389 - mean_absolute_error: 0.0973 - val_loss: 8187.8183 - val_mean_absolute_error: 0.0931
+Epoch 193/300
+
+Epoch 00193: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0193.hdf5
+ - 51s - loss: 8722.0083 - mean_absolute_error: 0.0977 - val_loss: 8192.3015 - val_mean_absolute_error: 0.0915
+Epoch 194/300
+
+Epoch 00194: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0194.hdf5
+ - 51s - loss: 8748.6812 - mean_absolute_error: 0.0974 - val_loss: 8231.8010 - val_mean_absolute_error: 0.0924
+Epoch 195/300
+
+Epoch 00195: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0195.hdf5
+ - 51s - loss: 8757.4347 - mean_absolute_error: 0.0976 - val_loss: 8241.1314 - val_mean_absolute_error: 0.0925
+Epoch 196/300
+
+Epoch 00196: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0196.hdf5
+ - 51s - loss: 8767.2368 - mean_absolute_error: 0.0971 - val_loss: 8215.3041 - val_mean_absolute_error: 0.0932
+Epoch 197/300
+
+Epoch 00197: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0197.hdf5
+ - 51s - loss: 8769.8598 - mean_absolute_error: 0.0975 - val_loss: 8223.2212 - val_mean_absolute_error: 0.0930
+Epoch 198/300
+
+Epoch 00198: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0198.hdf5
+ - 51s - loss: 8742.5092 - mean_absolute_error: 0.0966 - val_loss: 8211.5058 - val_mean_absolute_error: 0.0906
+Epoch 199/300
+
+Epoch 00199: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0199.hdf5
+ - 51s - loss: 8753.4773 - mean_absolute_error: 0.0966 - val_loss: 8305.4726 - val_mean_absolute_error: 0.0933
+Epoch 200/300
+
+Epoch 00200: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0200.hdf5
+ - 51s - loss: 8729.2401 - mean_absolute_error: 0.0967 - val_loss: 8226.4534 - val_mean_absolute_error: 0.0927
+Epoch 201/300
+
+Epoch 00201: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0201.hdf5
+ - 51s - loss: 8730.4686 - mean_absolute_error: 0.0966 - val_loss: 8186.4404 - val_mean_absolute_error: 0.0899
+Epoch 202/300
+
+Epoch 00202: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0202.hdf5
+ - 51s - loss: 8742.6229 - mean_absolute_error: 0.0969 - val_loss: 8175.9686 - val_mean_absolute_error: 0.0917
+Epoch 203/300
+
+Epoch 00203: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0203.hdf5
+ - 51s - loss: 8729.2859 - mean_absolute_error: 0.0970 - val_loss: 8221.4903 - val_mean_absolute_error: 0.0920
+Epoch 204/300
+
+Epoch 00204: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0204.hdf5
+ - 51s - loss: 8737.2721 - mean_absolute_error: 0.0971 - val_loss: 8208.9465 - val_mean_absolute_error: 0.0918
+Epoch 205/300
+
+Epoch 00205: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0205.hdf5
+ - 51s - loss: 8739.8291 - mean_absolute_error: 0.0969 - val_loss: 8223.3395 - val_mean_absolute_error: 0.0913
+Epoch 206/300
+
+Epoch 00206: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0206.hdf5
+ - 51s - loss: 8745.0376 - mean_absolute_error: 0.0972 - val_loss: 8200.6549 - val_mean_absolute_error: 0.0917
+Epoch 207/300
+
+Epoch 00207: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0207.hdf5
+ - 51s - loss: 8713.4613 - mean_absolute_error: 0.0965 - val_loss: 8257.7034 - val_mean_absolute_error: 0.0922
+Epoch 208/300
+
+Epoch 00208: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0208.hdf5
+ - 51s - loss: 8732.5945 - mean_absolute_error: 0.0959 - val_loss: 8199.9235 - val_mean_absolute_error: 0.0918
+Epoch 209/300
+
+Epoch 00209: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0209.hdf5
+ - 51s - loss: 8726.4040 - mean_absolute_error: 0.0972 - val_loss: 8193.6894 - val_mean_absolute_error: 0.0906
+Epoch 210/300
+
+Epoch 00210: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0210.hdf5
+ - 51s - loss: 8715.4785 - mean_absolute_error: 0.0966 - val_loss: 8189.5475 - val_mean_absolute_error: 0.0923
+Epoch 211/300
+
+Epoch 00211: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0211.hdf5
+ - 51s - loss: 8715.8049 - mean_absolute_error: 0.0966 - val_loss: 8204.7638 - val_mean_absolute_error: 0.0908
+Epoch 212/300
+
+Epoch 00212: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0212.hdf5
+ - 51s - loss: 8724.4975 - mean_absolute_error: 0.0972 - val_loss: 8218.8138 - val_mean_absolute_error: 0.0922
+Epoch 213/300
+
+Epoch 00213: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0213.hdf5
+ - 51s - loss: 8734.3981 - mean_absolute_error: 0.0973 - val_loss: 8189.2403 - val_mean_absolute_error: 0.0925
+Epoch 214/300
+
+Epoch 00214: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0214.hdf5
+ - 51s - loss: 8716.0810 - mean_absolute_error: 0.0981 - val_loss: 8176.0971 - val_mean_absolute_error: 0.0919
+Epoch 215/300
+
+Epoch 00215: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0215.hdf5
+ - 51s - loss: 8709.0702 - mean_absolute_error: 0.0976 - val_loss: 8160.6712 - val_mean_absolute_error: 0.0908
+Epoch 216/300
+
+Epoch 00216: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0216.hdf5
+ - 51s - loss: 8721.8819 - mean_absolute_error: 0.0970 - val_loss: 8178.3055 - val_mean_absolute_error: 0.0921
+Epoch 217/300
+
+Epoch 00217: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0217.hdf5
+ - 51s - loss: 8697.7923 - mean_absolute_error: 0.0975 - val_loss: 8186.5193 - val_mean_absolute_error: 0.0925
+Epoch 218/300
+
+Epoch 00218: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0218.hdf5
+ - 51s - loss: 8692.3169 - mean_absolute_error: 0.0975 - val_loss: 8204.0758 - val_mean_absolute_error: 0.0932
+Epoch 219/300
+
+Epoch 00219: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0219.hdf5
+ - 51s - loss: 8715.0536 - mean_absolute_error: 0.0972 - val_loss: 8169.9321 - val_mean_absolute_error: 0.0916
+Epoch 220/300
+
+Epoch 00220: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0220.hdf5
+ - 51s - loss: 8673.9834 - mean_absolute_error: 0.0972 - val_loss: 8174.6919 - val_mean_absolute_error: 0.0923
+Epoch 221/300
+
+Epoch 00221: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0221.hdf5
+ - 51s - loss: 8712.0901 - mean_absolute_error: 0.0968 - val_loss: 8200.1698 - val_mean_absolute_error: 0.0907
+Epoch 222/300
+
+Epoch 00222: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0222.hdf5
+ - 51s - loss: 8702.0800 - mean_absolute_error: 0.0974 - val_loss: 8185.1941 - val_mean_absolute_error: 0.0924
+Epoch 223/300
+
+Epoch 00223: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0223.hdf5
+ - 51s - loss: 8695.5981 - mean_absolute_error: 0.0965 - val_loss: 8167.5986 - val_mean_absolute_error: 0.0911
+Epoch 224/300
+
+Epoch 00224: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0224.hdf5
+ - 51s - loss: 8691.9342 - mean_absolute_error: 0.0972 - val_loss: 8187.4300 - val_mean_absolute_error: 0.0916
+Epoch 225/300
+
+Epoch 00225: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0225.hdf5
+ - 51s - loss: 8696.4710 - mean_absolute_error: 0.0975 - val_loss: 8160.6181 - val_mean_absolute_error: 0.0928
+Epoch 226/300
+
+Epoch 00226: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0226.hdf5
+ - 51s - loss: 8689.2306 - mean_absolute_error: 0.0985 - val_loss: 8233.7479 - val_mean_absolute_error: 0.0934
+Epoch 227/300
+
+Epoch 00227: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0227.hdf5
+ - 51s - loss: 8698.3225 - mean_absolute_error: 0.0969 - val_loss: 8235.1553 - val_mean_absolute_error: 0.0927
+Epoch 228/300
+
+Epoch 00228: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0228.hdf5
+ - 51s - loss: 8679.6545 - mean_absolute_error: 0.0979 - val_loss: 8207.7969 - val_mean_absolute_error: 0.0923
+Epoch 229/300
+
+Epoch 00229: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0229.hdf5
+ - 51s - loss: 8687.7826 - mean_absolute_error: 0.0979 - val_loss: 8186.1260 - val_mean_absolute_error: 0.0927
+Epoch 230/300
+
+Epoch 00230: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0230.hdf5
+ - 51s - loss: 8682.0397 - mean_absolute_error: 0.0983 - val_loss: 8145.3239 - val_mean_absolute_error: 0.0959
+Epoch 231/300
+
+Epoch 00231: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0231.hdf5
+ - 51s - loss: 8683.1557 - mean_absolute_error: 0.0986 - val_loss: 8198.6110 - val_mean_absolute_error: 0.0935
+Epoch 232/300
+
+Epoch 00232: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0232.hdf5
+ - 51s - loss: 8688.3409 - mean_absolute_error: 0.0984 - val_loss: 8172.7798 - val_mean_absolute_error: 0.0933
+Epoch 233/300
+
+Epoch 00233: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0233.hdf5
+ - 51s - loss: 8694.4862 - mean_absolute_error: 0.0975 - val_loss: 8167.9220 - val_mean_absolute_error: 0.0935
+Epoch 234/300
+
+Epoch 00234: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0234.hdf5
+ - 51s - loss: 8656.1376 - mean_absolute_error: 0.0982 - val_loss: 8212.5433 - val_mean_absolute_error: 0.0972
+Epoch 235/300
+
+Epoch 00235: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0235.hdf5
+ - 51s - loss: 8694.8601 - mean_absolute_error: 0.0989 - val_loss: 8183.4140 - val_mean_absolute_error: 0.0945
+Epoch 236/300
+
+Epoch 00236: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0236.hdf5
+ - 51s - loss: 8666.7467 - mean_absolute_error: 0.0976 - val_loss: 8163.2187 - val_mean_absolute_error: 0.0941
+Epoch 237/300
+
+Epoch 00237: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0237.hdf5
+ - 51s - loss: 8686.0803 - mean_absolute_error: 0.0975 - val_loss: 8228.5789 - val_mean_absolute_error: 0.0947
+Epoch 238/300
+
+Epoch 00238: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0238.hdf5
+ - 51s - loss: 8653.5381 - mean_absolute_error: 0.0979 - val_loss: 8161.1319 - val_mean_absolute_error: 0.0933
+Epoch 239/300
+
+Epoch 00239: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0239.hdf5
+ - 51s - loss: 8664.6863 - mean_absolute_error: 0.0987 - val_loss: 8163.3386 - val_mean_absolute_error: 0.0947
+Epoch 240/300
+
+Epoch 00240: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0240.hdf5
+ - 51s - loss: 8675.1833 - mean_absolute_error: 0.0997 - val_loss: 8165.7253 - val_mean_absolute_error: 0.0955
+Epoch 241/300
+
+Epoch 00241: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0241.hdf5
+ - 51s - loss: 8658.6769 - mean_absolute_error: 0.0987 - val_loss: 8173.4319 - val_mean_absolute_error: 0.0945
+Epoch 242/300
+
+Epoch 00242: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0242.hdf5
+ - 51s - loss: 8676.6942 - mean_absolute_error: 0.0989 - val_loss: 8159.1409 - val_mean_absolute_error: 0.0918
+Epoch 243/300
+
+Epoch 00243: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0243.hdf5
+ - 51s - loss: 8684.4667 - mean_absolute_error: 0.0980 - val_loss: 8176.8598 - val_mean_absolute_error: 0.0936
+Epoch 244/300
+
+Epoch 00244: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0244.hdf5
+ - 51s - loss: 8650.4780 - mean_absolute_error: 0.0976 - val_loss: 8167.8606 - val_mean_absolute_error: 0.0921
+Epoch 245/300
+
+Epoch 00245: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0245.hdf5
+ - 51s - loss: 8674.9946 - mean_absolute_error: 0.0975 - val_loss: 8128.5361 - val_mean_absolute_error: 0.0934
+Epoch 246/300
+
+Epoch 00246: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0246.hdf5
+ - 51s - loss: 8662.5247 - mean_absolute_error: 0.0980 - val_loss: 8174.2211 - val_mean_absolute_error: 0.0948
+Epoch 247/300
+
+Epoch 00247: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0247.hdf5
+ - 51s - loss: 8656.6035 - mean_absolute_error: 0.0985 - val_loss: 8154.3795 - val_mean_absolute_error: 0.0947
+Epoch 248/300
+
+Epoch 00248: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0248.hdf5
+ - 51s - loss: 8662.3754 - mean_absolute_error: 0.0980 - val_loss: 8178.7864 - val_mean_absolute_error: 0.0918
+Epoch 249/300
+
+Epoch 00249: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0249.hdf5
+ - 51s - loss: 8659.7153 - mean_absolute_error: 0.0975 - val_loss: 8169.0143 - val_mean_absolute_error: 0.0937
+Epoch 250/300
+
+Epoch 00250: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0250.hdf5
+ - 51s - loss: 8642.7263 - mean_absolute_error: 0.0980 - val_loss: 8193.2811 - val_mean_absolute_error: 0.0960
+Epoch 251/300
+
+Epoch 00251: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0251.hdf5
+ - 51s - loss: 8655.2475 - mean_absolute_error: 0.0999 - val_loss: 8204.6641 - val_mean_absolute_error: 0.0963
+Epoch 252/300
+
+Epoch 00252: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0252.hdf5
+ - 51s - loss: 8654.3546 - mean_absolute_error: 0.0999 - val_loss: 8142.9147 - val_mean_absolute_error: 0.0948
+Epoch 253/300
+
+Epoch 00253: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0253.hdf5
+ - 51s - loss: 8672.3367 - mean_absolute_error: 0.0984 - val_loss: 8201.1749 - val_mean_absolute_error: 0.0935
+Epoch 254/300
+
+Epoch 00254: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0254.hdf5
+ - 51s - loss: 8624.8164 - mean_absolute_error: 0.0971 - val_loss: 8162.9954 - val_mean_absolute_error: 0.0927
+Epoch 255/300
+
+Epoch 00255: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0255.hdf5
+ - 51s - loss: 8649.0392 - mean_absolute_error: 0.0992 - val_loss: 8154.1104 - val_mean_absolute_error: 0.0972
+Epoch 256/300
+
+Epoch 00256: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0256.hdf5
+ - 51s - loss: 8645.5416 - mean_absolute_error: 0.0990 - val_loss: 8200.7508 - val_mean_absolute_error: 0.0931
+Epoch 257/300
+
+Epoch 00257: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0257.hdf5
+ - 51s - loss: 8640.4769 - mean_absolute_error: 0.0991 - val_loss: 8186.4685 - val_mean_absolute_error: 0.0952
+Epoch 258/300
+
+Epoch 00258: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0258.hdf5
+ - 51s - loss: 8673.3554 - mean_absolute_error: 0.0991 - val_loss: 8146.1404 - val_mean_absolute_error: 0.0936
+Epoch 259/300
+
+Epoch 00259: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0259.hdf5
+ - 51s - loss: 8649.2261 - mean_absolute_error: 0.0981 - val_loss: 8301.8929 - val_mean_absolute_error: 0.0969
+Epoch 260/300
+
+Epoch 00260: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0260.hdf5
+ - 51s - loss: 8667.9366 - mean_absolute_error: 0.1011 - val_loss: 8152.5730 - val_mean_absolute_error: 0.0955
+Epoch 261/300
+
+Epoch 00261: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0261.hdf5
+ - 51s - loss: 8660.7962 - mean_absolute_error: 0.1005 - val_loss: 8205.7757 - val_mean_absolute_error: 0.0978
+Epoch 262/300
+
+Epoch 00262: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0262.hdf5
+ - 51s - loss: 8651.8824 - mean_absolute_error: 0.0996 - val_loss: 8163.1057 - val_mean_absolute_error: 0.0952
+Epoch 263/300
+
+Epoch 00263: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0263.hdf5
+ - 51s - loss: 8647.1652 - mean_absolute_error: 0.0998 - val_loss: 8137.6594 - val_mean_absolute_error: 0.0941
+Epoch 264/300
+
+Epoch 00264: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0264.hdf5
+ - 51s - loss: 8631.6777 - mean_absolute_error: 0.1008 - val_loss: 8146.8624 - val_mean_absolute_error: 0.1005
+Epoch 265/300
+
+Epoch 00265: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0265.hdf5
+ - 51s - loss: 8611.7591 - mean_absolute_error: 0.1009 - val_loss: 8145.2593 - val_mean_absolute_error: 0.0976
+Epoch 266/300
+
+Epoch 00266: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0266.hdf5
+ - 51s - loss: 8631.6161 - mean_absolute_error: 0.1021 - val_loss: 8294.7403 - val_mean_absolute_error: 0.0942
+Epoch 267/300
+
+Epoch 00267: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0267.hdf5
+ - 51s - loss: 8631.8748 - mean_absolute_error: 0.1003 - val_loss: 8190.8063 - val_mean_absolute_error: 0.0957
+Epoch 268/300
+
+Epoch 00268: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0268.hdf5
+ - 51s - loss: 8632.2371 - mean_absolute_error: 0.1002 - val_loss: 8138.8512 - val_mean_absolute_error: 0.0949
+Epoch 269/300
+
+Epoch 00269: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0269.hdf5
+ - 51s - loss: 8614.9832 - mean_absolute_error: 0.0990 - val_loss: 8141.3864 - val_mean_absolute_error: 0.0946
+Epoch 270/300
+
+Epoch 00270: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0270.hdf5
+ - 51s - loss: 8623.4585 - mean_absolute_error: 0.0997 - val_loss: 8173.0305 - val_mean_absolute_error: 0.0959
+Epoch 271/300
+
+Epoch 00271: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0271.hdf5
+ - 51s - loss: 8621.0454 - mean_absolute_error: 0.1002 - val_loss: 8176.0993 - val_mean_absolute_error: 0.0991
+Epoch 272/300
+
+Epoch 00272: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0272.hdf5
+ - 51s - loss: 8634.7050 - mean_absolute_error: 0.1008 - val_loss: 8162.8168 - val_mean_absolute_error: 0.0955
+Epoch 273/300
+
+Epoch 00273: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0273.hdf5
+ - 51s - loss: 8632.8658 - mean_absolute_error: 0.1000 - val_loss: 8141.8323 - val_mean_absolute_error: 0.0936
+Epoch 274/300
+
+Epoch 00274: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0274.hdf5
+ - 51s - loss: 8619.6293 - mean_absolute_error: 0.0999 - val_loss: 8136.0011 - val_mean_absolute_error: 0.0954
+Epoch 275/300
+
+Epoch 00275: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0275.hdf5
+ - 51s - loss: 8613.7421 - mean_absolute_error: 0.1002 - val_loss: 8177.1243 - val_mean_absolute_error: 0.0960
+Epoch 276/300
+
+Epoch 00276: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0276.hdf5
+ - 51s - loss: 8637.4520 - mean_absolute_error: 0.1007 - val_loss: 8144.5684 - val_mean_absolute_error: 0.0953
+Epoch 277/300
+
+Epoch 00277: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0277.hdf5
+ - 51s - loss: 8602.1871 - mean_absolute_error: 0.1012 - val_loss: 8147.4448 - val_mean_absolute_error: 0.0972
+Epoch 278/300
+
+Epoch 00278: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0278.hdf5
+ - 51s - loss: 8618.7841 - mean_absolute_error: 0.1017 - val_loss: 8170.4917 - val_mean_absolute_error: 0.0974
+Epoch 279/300
+
+Epoch 00279: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0279.hdf5
+ - 51s - loss: 8618.5354 - mean_absolute_error: 0.1022 - val_loss: 8147.5466 - val_mean_absolute_error: 0.0984
+Epoch 280/300
+
+Epoch 00280: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0280.hdf5
+ - 51s - loss: 8613.4073 - mean_absolute_error: 0.1027 - val_loss: 8135.3732 - val_mean_absolute_error: 0.0964
+Epoch 281/300
+
+Epoch 00281: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0281.hdf5
+ - 51s - loss: 8604.4465 - mean_absolute_error: 0.0990 - val_loss: 8090.8574 - val_mean_absolute_error: 0.0966
+Epoch 282/300
+
+Epoch 00282: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0282.hdf5
+ - 51s - loss: 8609.0549 - mean_absolute_error: 0.1002 - val_loss: 8151.8313 - val_mean_absolute_error: 0.0948
+Epoch 283/300
+
+Epoch 00283: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0283.hdf5
+ - 51s - loss: 8609.1070 - mean_absolute_error: 0.1004 - val_loss: 8129.9245 - val_mean_absolute_error: 0.0972
+Epoch 284/300
+
+Epoch 00284: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0284.hdf5
+ - 51s - loss: 8594.4759 - mean_absolute_error: 0.1011 - val_loss: 8125.1207 - val_mean_absolute_error: 0.0973
+Epoch 285/300
+
+Epoch 00285: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0285.hdf5
+ - 51s - loss: 8576.6651 - mean_absolute_error: 0.1010 - val_loss: 8096.2237 - val_mean_absolute_error: 0.0984
+Epoch 286/300
+
+Epoch 00286: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0286.hdf5
+ - 51s - loss: 8604.2925 - mean_absolute_error: 0.1006 - val_loss: 8134.1387 - val_mean_absolute_error: 0.0988
+Epoch 287/300
+
+Epoch 00287: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0287.hdf5
+ - 51s - loss: 8630.5881 - mean_absolute_error: 0.1006 - val_loss: 8163.7440 - val_mean_absolute_error: 0.0930
+Epoch 288/300
+
+Epoch 00288: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0288.hdf5
+ - 51s - loss: 8592.4936 - mean_absolute_error: 0.1005 - val_loss: 8157.7757 - val_mean_absolute_error: 0.0983
+Epoch 289/300
+
+Epoch 00289: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0289.hdf5
+ - 51s - loss: 8596.0924 - mean_absolute_error: 0.1010 - val_loss: 8111.9659 - val_mean_absolute_error: 0.0991
+Epoch 290/300
+
+Epoch 00290: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0290.hdf5
+ - 51s - loss: 8605.6154 - mean_absolute_error: 0.1010 - val_loss: 8140.2215 - val_mean_absolute_error: 0.1015
+Epoch 291/300
+
+Epoch 00291: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0291.hdf5
+ - 51s - loss: 8603.0267 - mean_absolute_error: 0.1027 - val_loss: 8104.3189 - val_mean_absolute_error: 0.0983
+Epoch 292/300
+
+Epoch 00292: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0292.hdf5
+ - 51s - loss: 8583.5925 - mean_absolute_error: 0.1013 - val_loss: 8135.8658 - val_mean_absolute_error: 0.0987
+Epoch 293/300
+
+Epoch 00293: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0293.hdf5
+ - 51s - loss: 8588.4842 - mean_absolute_error: 0.1005 - val_loss: 8131.6671 - val_mean_absolute_error: 0.0962
+Epoch 294/300
+
+Epoch 00294: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0294.hdf5
+ - 51s - loss: 8592.3632 - mean_absolute_error: 0.1001 - val_loss: 8141.3392 - val_mean_absolute_error: 0.0951
+Epoch 295/300
+
+Epoch 00295: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0295.hdf5
+ - 51s - loss: 8581.6263 - mean_absolute_error: 0.0996 - val_loss: 8114.4023 - val_mean_absolute_error: 0.0949
+Epoch 296/300
+
+Epoch 00296: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0296.hdf5
+ - 51s - loss: 8584.0244 - mean_absolute_error: 0.1002 - val_loss: 8106.3147 - val_mean_absolute_error: 0.0985
+Epoch 297/300
+
+Epoch 00297: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0297.hdf5
+ - 51s - loss: 8603.9435 - mean_absolute_error: 0.0992 - val_loss: 8113.8498 - val_mean_absolute_error: 0.0941
+Epoch 298/300
+
+Epoch 00298: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0298.hdf5
+ - 51s - loss: 8570.1966 - mean_absolute_error: 0.1024 - val_loss: 8133.2840 - val_mean_absolute_error: 0.0960
+Epoch 299/300
+
+Epoch 00299: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0299.hdf5
+ - 51s - loss: 8588.6189 - mean_absolute_error: 0.1014 - val_loss: 8110.2427 - val_mean_absolute_error: 0.0991
+Epoch 300/300
+
+Epoch 00300: saving model to models/unbalanced_mnist_vae_e300_L2_b64/autoencoder/cp-0300.hdf5
+ - 51s - loss: 8569.7115 - mean_absolute_error: 0.1015 - val_loss: 8154.0072 - val_mean_absolute_error: 0.0965
+Finished.

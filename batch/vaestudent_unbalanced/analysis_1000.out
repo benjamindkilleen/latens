@@ -1,0 +1,1602 @@
+Starting analysis...
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2876 - acc: 0.1387 - val_loss: 2.2962 - val_acc: 0.0956
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2328 - acc: 0.1592 - val_loss: 2.3103 - val_acc: 0.1127
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.1583 - acc: 0.2158 - val_loss: 2.2860 - val_acc: 0.2310
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 2.0541 - acc: 0.3408 - val_loss: 2.1142 - val_acc: 0.3637
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 1.7224 - acc: 0.4492 - val_loss: 1.6301 - val_acc: 0.3664
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.2998 - acc: 0.5674 - val_loss: 1.1329 - val_acc: 0.6418
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.0045 - acc: 0.6719 - val_loss: 1.0495 - val_acc: 0.6290
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 0.8751 - acc: 0.7168 - val_loss: 0.6998 - val_acc: 0.7877
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.6699 - acc: 0.7822 - val_loss: 0.7882 - val_acc: 0.7387
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.6375 - acc: 0.7969 - val_loss: 0.5506 - val_acc: 0.8228
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.5754 - acc: 0.8115 - val_loss: 0.6650 - val_acc: 0.7754
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.5239 - acc: 0.8350 - val_loss: 0.4579 - val_acc: 0.8591
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.4815 - acc: 0.8594 - val_loss: 0.5052 - val_acc: 0.8388
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.4350 - acc: 0.8516 - val_loss: 0.4587 - val_acc: 0.8524
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.4043 - acc: 0.8672 - val_loss: 0.4003 - val_acc: 0.8767
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.3803 - acc: 0.8809 - val_loss: 0.4328 - val_acc: 0.8635
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.3110 - acc: 0.8945 - val_loss: 0.4361 - val_acc: 0.8617
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.3508 - acc: 0.8887 - val_loss: 0.3600 - val_acc: 0.8943
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.3120 - acc: 0.8955 - val_loss: 0.3535 - val_acc: 0.8835
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.2706 - acc: 0.9141 - val_loss: 0.3173 - val_acc: 0.9021
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.2639 - acc: 0.9141 - val_loss: 0.3561 - val_acc: 0.8901
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.2479 - acc: 0.9189 - val_loss: 0.3114 - val_acc: 0.9041
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.2411 - acc: 0.9287 - val_loss: 0.3361 - val_acc: 0.8911
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2499 - acc: 0.9131 - val_loss: 0.3234 - val_acc: 0.9048
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.2019 - acc: 0.9316 - val_loss: 0.3227 - val_acc: 0.8943
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.1971 - acc: 0.9346 - val_loss: 0.3244 - val_acc: 0.9044
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.1675 - acc: 0.9512 - val_loss: 0.3036 - val_acc: 0.9104
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.1615 - acc: 0.9492 - val_loss: 0.2790 - val_acc: 0.9198
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1667 - acc: 0.9473 - val_loss: 0.3219 - val_acc: 0.9053
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1395 - acc: 0.9561 - val_loss: 0.2896 - val_acc: 0.9175
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1371 - acc: 0.9580 - val_loss: 0.2698 - val_acc: 0.9218
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.1581 - acc: 0.9434 - val_loss: 0.3094 - val_acc: 0.9107
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1303 - acc: 0.9580 - val_loss: 0.2662 - val_acc: 0.9228
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.1080 - acc: 0.9697 - val_loss: 0.3374 - val_acc: 0.9076
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.1302 - acc: 0.9521 - val_loss: 0.2691 - val_acc: 0.9232
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0994 - acc: 0.9688 - val_loss: 0.3089 - val_acc: 0.9137
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.1094 - acc: 0.9678 - val_loss: 0.2793 - val_acc: 0.9211
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0924 - acc: 0.9678 - val_loss: 0.2876 - val_acc: 0.9216
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0992 - acc: 0.9727 - val_loss: 0.2726 - val_acc: 0.9255
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0807 - acc: 0.9756 - val_loss: 0.2851 - val_acc: 0.9223
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0890 - acc: 0.9707 - val_loss: 0.2617 - val_acc: 0.9292
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0676 - acc: 0.9814 - val_loss: 0.2747 - val_acc: 0.9261
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0665 - acc: 0.9785 - val_loss: 0.2770 - val_acc: 0.9280
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0667 - acc: 0.9824 - val_loss: 0.2700 - val_acc: 0.9271
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0734 - acc: 0.9814 - val_loss: 0.2766 - val_acc: 0.9254
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0772 - acc: 0.9727 - val_loss: 0.2660 - val_acc: 0.9290
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0721 - acc: 0.9805 - val_loss: 0.2560 - val_acc: 0.9335
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0669 - acc: 0.9805 - val_loss: 0.2545 - val_acc: 0.9335
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0530 - acc: 0.9854 - val_loss: 0.2667 - val_acc: 0.9309
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/random_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0602 - acc: 0.9834 - val_loss: 0.2621 - val_acc: 0.9320
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2863 - acc: 0.2119 - val_loss: 2.2951 - val_acc: 0.1903
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2156 - acc: 0.2334 - val_loss: 2.2932 - val_acc: 0.1882
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.0861 - acc: 0.2969 - val_loss: 2.2659 - val_acc: 0.2981
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 1.8682 - acc: 0.3828 - val_loss: 1.8639 - val_acc: 0.3730
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 1.5288 - acc: 0.4854 - val_loss: 1.5057 - val_acc: 0.5388
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.2743 - acc: 0.5781 - val_loss: 1.4340 - val_acc: 0.5615
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.0896 - acc: 0.6445 - val_loss: 0.9728 - val_acc: 0.6681
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 0.8986 - acc: 0.7109 - val_loss: 0.8900 - val_acc: 0.7204
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.8068 - acc: 0.7344 - val_loss: 0.8158 - val_acc: 0.7333
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.6878 - acc: 0.7744 - val_loss: 0.6931 - val_acc: 0.7747
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.6519 - acc: 0.7754 - val_loss: 0.6097 - val_acc: 0.7983
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.5493 - acc: 0.8096 - val_loss: 0.5754 - val_acc: 0.8123
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.4898 - acc: 0.8389 - val_loss: 0.5489 - val_acc: 0.8123
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.4707 - acc: 0.8584 - val_loss: 0.4446 - val_acc: 0.8603
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.4315 - acc: 0.8564 - val_loss: 0.4313 - val_acc: 0.8658
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.3700 - acc: 0.8730 - val_loss: 0.3802 - val_acc: 0.8844
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.3584 - acc: 0.8828 - val_loss: 0.4560 - val_acc: 0.8583
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.3518 - acc: 0.8701 - val_loss: 0.4111 - val_acc: 0.8638
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.3328 - acc: 0.8848 - val_loss: 0.3442 - val_acc: 0.8956
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.2904 - acc: 0.9033 - val_loss: 0.3363 - val_acc: 0.8963
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.2977 - acc: 0.8945 - val_loss: 0.3895 - val_acc: 0.8793
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.2520 - acc: 0.9082 - val_loss: 0.3638 - val_acc: 0.8897
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.2479 - acc: 0.9219 - val_loss: 0.3038 - val_acc: 0.9047
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2548 - acc: 0.8984 - val_loss: 0.3025 - val_acc: 0.9037
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.2034 - acc: 0.9355 - val_loss: 0.3191 - val_acc: 0.8987
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.2224 - acc: 0.9199 - val_loss: 0.2802 - val_acc: 0.9141
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.1899 - acc: 0.9336 - val_loss: 0.2762 - val_acc: 0.9120
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.2016 - acc: 0.9316 - val_loss: 0.2907 - val_acc: 0.9116
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1619 - acc: 0.9434 - val_loss: 0.2634 - val_acc: 0.9212
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1754 - acc: 0.9365 - val_loss: 0.2828 - val_acc: 0.9165
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1594 - acc: 0.9395 - val_loss: 0.3146 - val_acc: 0.9022
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.1510 - acc: 0.9453 - val_loss: 0.2935 - val_acc: 0.9141
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1397 - acc: 0.9443 - val_loss: 0.2910 - val_acc: 0.9131
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.1232 - acc: 0.9570 - val_loss: 0.2956 - val_acc: 0.9119
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.1221 - acc: 0.9629 - val_loss: 0.2645 - val_acc: 0.9217
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.1173 - acc: 0.9619 - val_loss: 0.2551 - val_acc: 0.9233
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.1145 - acc: 0.9590 - val_loss: 0.2643 - val_acc: 0.9223
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.1068 - acc: 0.9580 - val_loss: 0.2649 - val_acc: 0.9237
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0999 - acc: 0.9658 - val_loss: 0.2521 - val_acc: 0.9249
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0892 - acc: 0.9717 - val_loss: 0.2592 - val_acc: 0.9251
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0840 - acc: 0.9775 - val_loss: 0.2793 - val_acc: 0.9195
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0961 - acc: 0.9629 - val_loss: 0.2644 - val_acc: 0.9241
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0843 - acc: 0.9736 - val_loss: 0.2644 - val_acc: 0.9224
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0722 - acc: 0.9775 - val_loss: 0.2646 - val_acc: 0.9259
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0736 - acc: 0.9785 - val_loss: 0.2564 - val_acc: 0.9277
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0741 - acc: 0.9795 - val_loss: 0.2792 - val_acc: 0.9225
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0769 - acc: 0.9717 - val_loss: 0.2371 - val_acc: 0.9329
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0824 - acc: 0.9746 - val_loss: 0.2831 - val_acc: 0.9181
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0566 - acc: 0.9863 - val_loss: 0.2423 - val_acc: 0.9334
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0605 - acc: 0.9834 - val_loss: 0.2635 - val_acc: 0.9280
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2949 - acc: 0.1406 - val_loss: 2.3005 - val_acc: 0.0995
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2555 - acc: 0.1758 - val_loss: 2.3133 - val_acc: 0.1204
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.1560 - acc: 0.2051 - val_loss: 2.4050 - val_acc: 0.1152
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 2.0587 - acc: 0.2949 - val_loss: 2.2096 - val_acc: 0.3612
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 1.7750 - acc: 0.4453 - val_loss: 1.7499 - val_acc: 0.4536
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.4287 - acc: 0.5303 - val_loss: 1.4994 - val_acc: 0.4987
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.2095 - acc: 0.6309 - val_loss: 1.3105 - val_acc: 0.5747
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 1.0892 - acc: 0.6396 - val_loss: 0.9158 - val_acc: 0.7035
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.9236 - acc: 0.6973 - val_loss: 0.8717 - val_acc: 0.7110
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.8755 - acc: 0.6992 - val_loss: 0.8051 - val_acc: 0.7393
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.7309 - acc: 0.7607 - val_loss: 0.6694 - val_acc: 0.7773
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.7354 - acc: 0.7539 - val_loss: 0.8278 - val_acc: 0.7091
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.6611 - acc: 0.7705 - val_loss: 0.6115 - val_acc: 0.8111
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.6128 - acc: 0.8018 - val_loss: 0.6174 - val_acc: 0.8041
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.5619 - acc: 0.8076 - val_loss: 0.5667 - val_acc: 0.8085
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.4772 - acc: 0.8369 - val_loss: 0.5436 - val_acc: 0.8322
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.5045 - acc: 0.8379 - val_loss: 0.5285 - val_acc: 0.8286
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.4377 - acc: 0.8652 - val_loss: 0.4405 - val_acc: 0.8660
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.4080 - acc: 0.8623 - val_loss: 0.4167 - val_acc: 0.8770
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.3775 - acc: 0.8584 - val_loss: 0.4673 - val_acc: 0.8510
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.3643 - acc: 0.8770 - val_loss: 0.4291 - val_acc: 0.8760
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.3157 - acc: 0.8936 - val_loss: 0.4489 - val_acc: 0.8672
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.3203 - acc: 0.8906 - val_loss: 0.3868 - val_acc: 0.8852
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2872 - acc: 0.9004 - val_loss: 0.4167 - val_acc: 0.8808
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.2701 - acc: 0.9170 - val_loss: 0.4507 - val_acc: 0.8608
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.2544 - acc: 0.9160 - val_loss: 0.3922 - val_acc: 0.8876
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.2395 - acc: 0.9297 - val_loss: 0.3791 - val_acc: 0.8920
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.2429 - acc: 0.9170 - val_loss: 0.4075 - val_acc: 0.8794
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.2092 - acc: 0.9277 - val_loss: 0.3740 - val_acc: 0.8955
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.2072 - acc: 0.9248 - val_loss: 0.3945 - val_acc: 0.8944
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1761 - acc: 0.9414 - val_loss: 0.3775 - val_acc: 0.9020
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.1754 - acc: 0.9404 - val_loss: 0.4157 - val_acc: 0.8925
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1579 - acc: 0.9463 - val_loss: 0.3916 - val_acc: 0.8960
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.1495 - acc: 0.9434 - val_loss: 0.3542 - val_acc: 0.9038
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.1329 - acc: 0.9541 - val_loss: 0.3585 - val_acc: 0.9077
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.1316 - acc: 0.9609 - val_loss: 0.3855 - val_acc: 0.9045
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.1142 - acc: 0.9639 - val_loss: 0.3740 - val_acc: 0.9060
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.1317 - acc: 0.9561 - val_loss: 0.3853 - val_acc: 0.9028
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.1089 - acc: 0.9619 - val_loss: 0.3960 - val_acc: 0.9041
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.1103 - acc: 0.9619 - val_loss: 0.4048 - val_acc: 0.9011
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0884 - acc: 0.9697 - val_loss: 0.4124 - val_acc: 0.9008
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.1011 - acc: 0.9658 - val_loss: 0.3979 - val_acc: 0.9086
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0886 - acc: 0.9668 - val_loss: 0.3678 - val_acc: 0.9109
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0844 - acc: 0.9736 - val_loss: 0.3942 - val_acc: 0.9089
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0671 - acc: 0.9785 - val_loss: 0.3811 - val_acc: 0.9112
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0746 - acc: 0.9717 - val_loss: 0.3723 - val_acc: 0.9150
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0660 - acc: 0.9844 - val_loss: 0.4274 - val_acc: 0.9025
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0667 - acc: 0.9785 - val_loss: 0.4048 - val_acc: 0.9106
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0664 - acc: 0.9775 - val_loss: 0.4028 - val_acc: 0.9100
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0685 - acc: 0.9785 - val_loss: 0.3879 - val_acc: 0.9155
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2541 - acc: 0.2656 - val_loss: 2.3105 - val_acc: 0.0980
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 1.8894 - acc: 0.3018 - val_loss: 2.8729 - val_acc: 0.0978
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 1.4495 - acc: 0.5332 - val_loss: 4.0049 - val_acc: 0.2296
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 1.0521 - acc: 0.6953 - val_loss: 3.6510 - val_acc: 0.2634
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 0.7266 - acc: 0.7676 - val_loss: 3.5568 - val_acc: 0.3147
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 0.6030 - acc: 0.8184 - val_loss: 3.1871 - val_acc: 0.3621
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 0.4856 - acc: 0.8594 - val_loss: 3.5753 - val_acc: 0.3207
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 0.4201 - acc: 0.8857 - val_loss: 3.0707 - val_acc: 0.3737
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.3578 - acc: 0.9004 - val_loss: 2.9089 - val_acc: 0.4159
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.2726 - acc: 0.9297 - val_loss: 2.7992 - val_acc: 0.4285
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.2981 - acc: 0.9209 - val_loss: 2.6082 - val_acc: 0.4467
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.2312 - acc: 0.9385 - val_loss: 2.3584 - val_acc: 0.4685
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.2463 - acc: 0.9307 - val_loss: 2.8306 - val_acc: 0.4281
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.1833 - acc: 0.9502 - val_loss: 2.4213 - val_acc: 0.4637
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.1735 - acc: 0.9561 - val_loss: 2.1092 - val_acc: 0.5010
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.1741 - acc: 0.9502 - val_loss: 2.2855 - val_acc: 0.4785
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.1584 - acc: 0.9551 - val_loss: 2.1800 - val_acc: 0.5137
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.1579 - acc: 0.9521 - val_loss: 1.8563 - val_acc: 0.5385
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.1373 - acc: 0.9512 - val_loss: 1.8034 - val_acc: 0.5464
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.1314 - acc: 0.9629 - val_loss: 2.0129 - val_acc: 0.5111
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.1137 - acc: 0.9678 - val_loss: 1.8698 - val_acc: 0.5404
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.1032 - acc: 0.9707 - val_loss: 1.7691 - val_acc: 0.5589
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.1192 - acc: 0.9609 - val_loss: 1.6725 - val_acc: 0.5618
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.0950 - acc: 0.9736 - val_loss: 1.9080 - val_acc: 0.5550
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.0936 - acc: 0.9746 - val_loss: 1.8685 - val_acc: 0.5587
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.0986 - acc: 0.9648 - val_loss: 1.7166 - val_acc: 0.5674
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.0785 - acc: 0.9727 - val_loss: 1.9997 - val_acc: 0.5462
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.0717 - acc: 0.9756 - val_loss: 1.8428 - val_acc: 0.5721
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.0701 - acc: 0.9766 - val_loss: 1.8375 - val_acc: 0.5798
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.0833 - acc: 0.9707 - val_loss: 1.9460 - val_acc: 0.5724
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.0833 - acc: 0.9707 - val_loss: 1.9538 - val_acc: 0.5802
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.0764 - acc: 0.9766 - val_loss: 1.5972 - val_acc: 0.6071
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.0434 - acc: 0.9854 - val_loss: 1.7761 - val_acc: 0.5868
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.0663 - acc: 0.9785 - val_loss: 1.8700 - val_acc: 0.5756
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.0496 - acc: 0.9834 - val_loss: 1.9528 - val_acc: 0.5781
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0587 - acc: 0.9834 - val_loss: 1.9029 - val_acc: 0.5914
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.0464 - acc: 0.9824 - val_loss: 1.9240 - val_acc: 0.5880
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0438 - acc: 0.9854 - val_loss: 1.9344 - val_acc: 0.5837
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0487 - acc: 0.9873 - val_loss: 1.8865 - val_acc: 0.5941
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0461 - acc: 0.9873 - val_loss: 1.9081 - val_acc: 0.5998
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0468 - acc: 0.9834 - val_loss: 1.9984 - val_acc: 0.5875
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0469 - acc: 0.9863 - val_loss: 1.9647 - val_acc: 0.5946
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0402 - acc: 0.9863 - val_loss: 1.9898 - val_acc: 0.6022
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0365 - acc: 0.9873 - val_loss: 1.8863 - val_acc: 0.6056
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0372 - acc: 0.9873 - val_loss: 2.1138 - val_acc: 0.5878
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0382 - acc: 0.9854 - val_loss: 1.7640 - val_acc: 0.6206
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0365 - acc: 0.9863 - val_loss: 1.9340 - val_acc: 0.6102
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0269 - acc: 0.9922 - val_loss: 1.8779 - val_acc: 0.6142
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0384 - acc: 0.9863 - val_loss: 2.1112 - val_acc: 0.6029
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0301 - acc: 0.9883 - val_loss: 1.9663 - val_acc: 0.6098
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2950 - acc: 0.1211 - val_loss: 2.3004 - val_acc: 0.0984
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2445 - acc: 0.1846 - val_loss: 2.3089 - val_acc: 0.0978
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.1184 - acc: 0.1924 - val_loss: 2.4053 - val_acc: 0.0978
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 1.9968 - acc: 0.2559 - val_loss: 2.2750 - val_acc: 0.2830
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 1.7651 - acc: 0.3994 - val_loss: 1.8994 - val_acc: 0.4455
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.5743 - acc: 0.4668 - val_loss: 1.7205 - val_acc: 0.4685
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.3096 - acc: 0.5625 - val_loss: 1.5830 - val_acc: 0.4976
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 1.1760 - acc: 0.6211 - val_loss: 1.2475 - val_acc: 0.6067
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.9822 - acc: 0.6738 - val_loss: 1.0667 - val_acc: 0.6715
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.9177 - acc: 0.7070 - val_loss: 1.0325 - val_acc: 0.6666
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.8040 - acc: 0.7324 - val_loss: 0.9893 - val_acc: 0.7041
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.7123 - acc: 0.7666 - val_loss: 0.9247 - val_acc: 0.6736
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.6762 - acc: 0.7666 - val_loss: 0.8911 - val_acc: 0.6863
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.5935 - acc: 0.8184 - val_loss: 0.7317 - val_acc: 0.7560
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.5242 - acc: 0.8291 - val_loss: 0.7948 - val_acc: 0.7102
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.4720 - acc: 0.8535 - val_loss: 0.7627 - val_acc: 0.7474
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.4450 - acc: 0.8438 - val_loss: 0.6606 - val_acc: 0.7741
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.3980 - acc: 0.8770 - val_loss: 0.6557 - val_acc: 0.7739
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.3862 - acc: 0.8730 - val_loss: 0.5856 - val_acc: 0.8024
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.3109 - acc: 0.8994 - val_loss: 0.5488 - val_acc: 0.8201
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.2915 - acc: 0.9053 - val_loss: 0.6389 - val_acc: 0.7912
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.2877 - acc: 0.9053 - val_loss: 0.5099 - val_acc: 0.8408
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.3105 - acc: 0.9014 - val_loss: 0.5192 - val_acc: 0.8318
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2513 - acc: 0.9062 - val_loss: 0.4975 - val_acc: 0.8393
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.2284 - acc: 0.9238 - val_loss: 0.5432 - val_acc: 0.8273
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.1665 - acc: 0.9512 - val_loss: 0.5119 - val_acc: 0.8403
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.2100 - acc: 0.9297 - val_loss: 0.4848 - val_acc: 0.8500
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.1826 - acc: 0.9375 - val_loss: 0.5159 - val_acc: 0.8428
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1699 - acc: 0.9395 - val_loss: 0.5142 - val_acc: 0.8386
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1432 - acc: 0.9561 - val_loss: 0.4867 - val_acc: 0.8531
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1420 - acc: 0.9502 - val_loss: 0.4980 - val_acc: 0.8509
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.0997 - acc: 0.9717 - val_loss: 0.4737 - val_acc: 0.8575
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1098 - acc: 0.9717 - val_loss: 0.4968 - val_acc: 0.8545
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.0869 - acc: 0.9746 - val_loss: 0.5773 - val_acc: 0.8403
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.1013 - acc: 0.9658 - val_loss: 0.4798 - val_acc: 0.8665
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0870 - acc: 0.9727 - val_loss: 0.4833 - val_acc: 0.8657
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.0730 - acc: 0.9746 - val_loss: 0.4916 - val_acc: 0.8646
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0934 - acc: 0.9697 - val_loss: 0.5240 - val_acc: 0.8523
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0618 - acc: 0.9844 - val_loss: 0.5082 - val_acc: 0.8594
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0833 - acc: 0.9697 - val_loss: 0.4867 - val_acc: 0.8690
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0720 - acc: 0.9746 - val_loss: 0.5273 - val_acc: 0.8605
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0590 - acc: 0.9766 - val_loss: 0.5791 - val_acc: 0.8519
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0500 - acc: 0.9863 - val_loss: 0.5223 - val_acc: 0.8623
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0796 - acc: 0.9707 - val_loss: 0.5745 - val_acc: 0.8539
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0673 - acc: 0.9785 - val_loss: 0.5559 - val_acc: 0.8595
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0573 - acc: 0.9785 - val_loss: 0.5115 - val_acc: 0.8662
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0440 - acc: 0.9834 - val_loss: 0.5513 - val_acc: 0.8630
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0451 - acc: 0.9863 - val_loss: 0.5039 - val_acc: 0.8673
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0452 - acc: 0.9873 - val_loss: 0.5649 - val_acc: 0.8608
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/uniform-cluster_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0379 - acc: 0.9873 - val_loss: 0.5621 - val_acc: 0.8586
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2996 - acc: 0.1172 - val_loss: 2.2995 - val_acc: 0.1142
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2885 - acc: 0.1455 - val_loss: 2.2935 - val_acc: 0.1779
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.2638 - acc: 0.1865 - val_loss: 2.2805 - val_acc: 0.1183
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 2.2107 - acc: 0.1836 - val_loss: 2.2565 - val_acc: 0.1243
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 2.1191 - acc: 0.3008 - val_loss: 2.1042 - val_acc: 0.3617
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.8192 - acc: 0.4092 - val_loss: 1.6067 - val_acc: 0.5308
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.5342 - acc: 0.4775 - val_loss: 1.2697 - val_acc: 0.5856
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 1.2656 - acc: 0.5898 - val_loss: 1.1048 - val_acc: 0.6176
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 1.0207 - acc: 0.6650 - val_loss: 0.8397 - val_acc: 0.7298
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.9528 - acc: 0.6826 - val_loss: 0.7488 - val_acc: 0.7798
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.8266 - acc: 0.7402 - val_loss: 0.7744 - val_acc: 0.7559
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.7134 - acc: 0.7793 - val_loss: 0.7195 - val_acc: 0.7618
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.6350 - acc: 0.7998 - val_loss: 0.5783 - val_acc: 0.8313
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.6219 - acc: 0.8037 - val_loss: 0.4702 - val_acc: 0.8674
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.5427 - acc: 0.8203 - val_loss: 0.4635 - val_acc: 0.8726
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.4689 - acc: 0.8496 - val_loss: 0.4662 - val_acc: 0.8636
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.4354 - acc: 0.8662 - val_loss: 0.4013 - val_acc: 0.8751
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.4066 - acc: 0.8662 - val_loss: 0.3957 - val_acc: 0.8775
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.3597 - acc: 0.8809 - val_loss: 0.3531 - val_acc: 0.8932
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.3340 - acc: 0.8906 - val_loss: 0.3481 - val_acc: 0.8917
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.3105 - acc: 0.8975 - val_loss: 0.3721 - val_acc: 0.8861
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.2744 - acc: 0.9102 - val_loss: 0.3200 - val_acc: 0.9043
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.2180 - acc: 0.9297 - val_loss: 0.4076 - val_acc: 0.8784
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2487 - acc: 0.9180 - val_loss: 0.2886 - val_acc: 0.9142
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.1847 - acc: 0.9453 - val_loss: 0.2957 - val_acc: 0.9119
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.1804 - acc: 0.9424 - val_loss: 0.2687 - val_acc: 0.9195
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.1827 - acc: 0.9287 - val_loss: 0.3545 - val_acc: 0.9001
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.1551 - acc: 0.9453 - val_loss: 0.2949 - val_acc: 0.9126
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1581 - acc: 0.9463 - val_loss: 0.2976 - val_acc: 0.9133
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1379 - acc: 0.9521 - val_loss: 0.2832 - val_acc: 0.9170
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1057 - acc: 0.9639 - val_loss: 0.2941 - val_acc: 0.9162
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.1199 - acc: 0.9580 - val_loss: 0.3035 - val_acc: 0.9179
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.0978 - acc: 0.9688 - val_loss: 0.3129 - val_acc: 0.9150
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.0863 - acc: 0.9717 - val_loss: 0.3126 - val_acc: 0.9164
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.0877 - acc: 0.9717 - val_loss: 0.3173 - val_acc: 0.9176
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0903 - acc: 0.9648 - val_loss: 0.3239 - val_acc: 0.9137
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.0884 - acc: 0.9658 - val_loss: 0.3010 - val_acc: 0.9181
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0672 - acc: 0.9805 - val_loss: 0.3231 - val_acc: 0.9151
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0656 - acc: 0.9775 - val_loss: 0.3155 - val_acc: 0.9171
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0683 - acc: 0.9775 - val_loss: 0.3325 - val_acc: 0.9156
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0661 - acc: 0.9785 - val_loss: 0.2845 - val_acc: 0.9243
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0440 - acc: 0.9873 - val_loss: 0.3086 - val_acc: 0.9197
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0521 - acc: 0.9814 - val_loss: 0.3425 - val_acc: 0.9153
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0714 - acc: 0.9688 - val_loss: 0.2960 - val_acc: 0.9234
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0435 - acc: 0.9873 - val_loss: 0.3387 - val_acc: 0.9176
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0451 - acc: 0.9844 - val_loss: 0.3224 - val_acc: 0.9195
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0411 - acc: 0.9883 - val_loss: 0.3320 - val_acc: 0.9195
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0345 - acc: 0.9902 - val_loss: 0.3435 - val_acc: 0.9189
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0424 - acc: 0.9883 - val_loss: 0.3558 - val_acc: 0.9162
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/normal-cluster_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0324 - acc: 0.9922 - val_loss: 0.3892 - val_acc: 0.9105
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0001.hdf5
+ - 6s - loss: 2.2991 - acc: 0.1113 - val_loss: 2.3016 - val_acc: 0.1481
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 2.2839 - acc: 0.2041 - val_loss: 2.2986 - val_acc: 0.1762
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 2.2290 - acc: 0.2178 - val_loss: 2.3165 - val_acc: 0.2725
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 2.1580 - acc: 0.3076 - val_loss: 2.3333 - val_acc: 0.1744
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 2.0462 - acc: 0.3428 - val_loss: 2.0381 - val_acc: 0.2766
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 1.7017 - acc: 0.4316 - val_loss: 1.6168 - val_acc: 0.3960
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 1.4176 - acc: 0.5410 - val_loss: 1.1103 - val_acc: 0.6361
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 1.1817 - acc: 0.6152 - val_loss: 1.0933 - val_acc: 0.6661
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.9923 - acc: 0.6885 - val_loss: 0.7741 - val_acc: 0.7542
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.8485 - acc: 0.7188 - val_loss: 0.7179 - val_acc: 0.7526
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.8043 - acc: 0.7422 - val_loss: 0.5805 - val_acc: 0.8179
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.7293 - acc: 0.7559 - val_loss: 0.6380 - val_acc: 0.7670
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.6491 - acc: 0.7852 - val_loss: 0.5119 - val_acc: 0.8251
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.5945 - acc: 0.8018 - val_loss: 0.4585 - val_acc: 0.8442
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.5461 - acc: 0.8262 - val_loss: 0.4768 - val_acc: 0.8422
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.5084 - acc: 0.8428 - val_loss: 0.4852 - val_acc: 0.8284
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.4873 - acc: 0.8545 - val_loss: 0.3937 - val_acc: 0.8733
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.4169 - acc: 0.8643 - val_loss: 0.3506 - val_acc: 0.8924
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.3945 - acc: 0.8701 - val_loss: 0.3636 - val_acc: 0.8811
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.4063 - acc: 0.8623 - val_loss: 0.3382 - val_acc: 0.8900
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.3063 - acc: 0.8975 - val_loss: 0.3684 - val_acc: 0.8767
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.2823 - acc: 0.9141 - val_loss: 0.3693 - val_acc: 0.8761
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.2705 - acc: 0.9111 - val_loss: 0.2959 - val_acc: 0.9088
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.2491 - acc: 0.9121 - val_loss: 0.3218 - val_acc: 0.8972
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.2233 - acc: 0.9189 - val_loss: 0.3238 - val_acc: 0.8973
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.2123 - acc: 0.9229 - val_loss: 0.2969 - val_acc: 0.9053
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.1844 - acc: 0.9453 - val_loss: 0.2819 - val_acc: 0.9126
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.1766 - acc: 0.9414 - val_loss: 0.3051 - val_acc: 0.9068
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1569 - acc: 0.9512 - val_loss: 0.2895 - val_acc: 0.9115
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1375 - acc: 0.9541 - val_loss: 0.2607 - val_acc: 0.9225
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1402 - acc: 0.9521 - val_loss: 0.2574 - val_acc: 0.9240
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.1136 - acc: 0.9658 - val_loss: 0.2485 - val_acc: 0.9286
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1353 - acc: 0.9570 - val_loss: 0.2577 - val_acc: 0.9236
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.0996 - acc: 0.9678 - val_loss: 0.3102 - val_acc: 0.9037
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.0855 - acc: 0.9795 - val_loss: 0.2608 - val_acc: 0.9243
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0995 - acc: 0.9688 - val_loss: 0.2575 - val_acc: 0.9247
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.0764 - acc: 0.9736 - val_loss: 0.2458 - val_acc: 0.9312
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0922 - acc: 0.9658 - val_loss: 0.2761 - val_acc: 0.9186
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0762 - acc: 0.9795 - val_loss: 0.2540 - val_acc: 0.9275
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0693 - acc: 0.9795 - val_loss: 0.3004 - val_acc: 0.9133
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0518 - acc: 0.9834 - val_loss: 0.2680 - val_acc: 0.9267
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0590 - acc: 0.9824 - val_loss: 0.2894 - val_acc: 0.9202
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0461 - acc: 0.9893 - val_loss: 0.3173 - val_acc: 0.9156
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0495 - acc: 0.9854 - val_loss: 0.2759 - val_acc: 0.9273
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0492 - acc: 0.9863 - val_loss: 0.2646 - val_acc: 0.9312
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0465 - acc: 0.9854 - val_loss: 0.2620 - val_acc: 0.9323
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0396 - acc: 0.9883 - val_loss: 0.2634 - val_acc: 0.9321
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0453 - acc: 0.9854 - val_loss: 0.3020 - val_acc: 0.9221
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0323 - acc: 0.9932 - val_loss: 0.2869 - val_acc: 0.9267
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/multi-normal-cluster_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0514 - acc: 0.9824 - val_loss: 0.2947 - val_acc: 0.9256
+Epoch 1/50
+
+Epoch 00001: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0001.hdf5
+ - 5s - loss: 2.2720 - acc: 0.1924 - val_loss: 2.2985 - val_acc: 0.1952
+Epoch 2/50
+
+Epoch 00002: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0002.hdf5
+ - 3s - loss: 1.9122 - acc: 0.3271 - val_loss: 3.1152 - val_acc: 0.1826
+Epoch 3/50
+
+Epoch 00003: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0003.hdf5
+ - 3s - loss: 1.4424 - acc: 0.4443 - val_loss: 4.4770 - val_acc: 0.2013
+Epoch 4/50
+
+Epoch 00004: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0004.hdf5
+ - 3s - loss: 1.1197 - acc: 0.6201 - val_loss: 5.0928 - val_acc: 0.3856
+Epoch 5/50
+
+Epoch 00005: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0005.hdf5
+ - 3s - loss: 0.8777 - acc: 0.7090 - val_loss: 4.7245 - val_acc: 0.3907
+Epoch 6/50
+
+Epoch 00006: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0006.hdf5
+ - 3s - loss: 0.6505 - acc: 0.7852 - val_loss: 5.0477 - val_acc: 0.4411
+Epoch 7/50
+
+Epoch 00007: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0007.hdf5
+ - 3s - loss: 0.5160 - acc: 0.8369 - val_loss: 5.0311 - val_acc: 0.4480
+Epoch 8/50
+
+Epoch 00008: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0008.hdf5
+ - 3s - loss: 0.4212 - acc: 0.8662 - val_loss: 5.3972 - val_acc: 0.4617
+Epoch 9/50
+
+Epoch 00009: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0009.hdf5
+ - 3s - loss: 0.4172 - acc: 0.8594 - val_loss: 5.6242 - val_acc: 0.4331
+Epoch 10/50
+
+Epoch 00010: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0010.hdf5
+ - 3s - loss: 0.3848 - acc: 0.8799 - val_loss: 5.3921 - val_acc: 0.4689
+Epoch 11/50
+
+Epoch 00011: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0011.hdf5
+ - 3s - loss: 0.3387 - acc: 0.8877 - val_loss: 5.5081 - val_acc: 0.4723
+Epoch 12/50
+
+Epoch 00012: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0012.hdf5
+ - 3s - loss: 0.3042 - acc: 0.9062 - val_loss: 5.5594 - val_acc: 0.5047
+Epoch 13/50
+
+Epoch 00013: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0013.hdf5
+ - 3s - loss: 0.2687 - acc: 0.9238 - val_loss: 5.8306 - val_acc: 0.4836
+Epoch 14/50
+
+Epoch 00014: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0014.hdf5
+ - 3s - loss: 0.2957 - acc: 0.9004 - val_loss: 5.4354 - val_acc: 0.5643
+Epoch 15/50
+
+Epoch 00015: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0015.hdf5
+ - 3s - loss: 0.2267 - acc: 0.9336 - val_loss: 5.7533 - val_acc: 0.5590
+Epoch 16/50
+
+Epoch 00016: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0016.hdf5
+ - 3s - loss: 0.2620 - acc: 0.9150 - val_loss: 5.5309 - val_acc: 0.5486
+Epoch 17/50
+
+Epoch 00017: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0017.hdf5
+ - 3s - loss: 0.1970 - acc: 0.9395 - val_loss: 5.9011 - val_acc: 0.5386
+Epoch 18/50
+
+Epoch 00018: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0018.hdf5
+ - 3s - loss: 0.2175 - acc: 0.9287 - val_loss: 5.8355 - val_acc: 0.5693
+Epoch 19/50
+
+Epoch 00019: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0019.hdf5
+ - 3s - loss: 0.2083 - acc: 0.9434 - val_loss: 5.8914 - val_acc: 0.5581
+Epoch 20/50
+
+Epoch 00020: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0020.hdf5
+ - 3s - loss: 0.1545 - acc: 0.9492 - val_loss: 6.1451 - val_acc: 0.5355
+Epoch 21/50
+
+Epoch 00021: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0021.hdf5
+ - 3s - loss: 0.1649 - acc: 0.9463 - val_loss: 5.9642 - val_acc: 0.5755
+Epoch 22/50
+
+Epoch 00022: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0022.hdf5
+ - 3s - loss: 0.1550 - acc: 0.9531 - val_loss: 6.1854 - val_acc: 0.5530
+Epoch 23/50
+
+Epoch 00023: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0023.hdf5
+ - 3s - loss: 0.1831 - acc: 0.9531 - val_loss: 6.2261 - val_acc: 0.5541
+Epoch 24/50
+
+Epoch 00024: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0024.hdf5
+ - 3s - loss: 0.1377 - acc: 0.9590 - val_loss: 6.0597 - val_acc: 0.5761
+Epoch 25/50
+
+Epoch 00025: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0025.hdf5
+ - 3s - loss: 0.1597 - acc: 0.9463 - val_loss: 6.0992 - val_acc: 0.5740
+Epoch 26/50
+
+Epoch 00026: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0026.hdf5
+ - 3s - loss: 0.1123 - acc: 0.9688 - val_loss: 6.1365 - val_acc: 0.5780
+Epoch 27/50
+
+Epoch 00027: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0027.hdf5
+ - 3s - loss: 0.1449 - acc: 0.9473 - val_loss: 6.1582 - val_acc: 0.5758
+Epoch 28/50
+
+Epoch 00028: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0028.hdf5
+ - 3s - loss: 0.1080 - acc: 0.9639 - val_loss: 6.1987 - val_acc: 0.5767
+Epoch 29/50
+
+Epoch 00029: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0029.hdf5
+ - 3s - loss: 0.1213 - acc: 0.9600 - val_loss: 6.2189 - val_acc: 0.5760
+Epoch 30/50
+
+Epoch 00030: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0030.hdf5
+ - 3s - loss: 0.1227 - acc: 0.9570 - val_loss: 6.1590 - val_acc: 0.5774
+Epoch 31/50
+
+Epoch 00031: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0031.hdf5
+ - 3s - loss: 0.1346 - acc: 0.9619 - val_loss: 6.2208 - val_acc: 0.5788
+Epoch 32/50
+
+Epoch 00032: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0032.hdf5
+ - 3s - loss: 0.0976 - acc: 0.9658 - val_loss: 6.2458 - val_acc: 0.5757
+Epoch 33/50
+
+Epoch 00033: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0033.hdf5
+ - 3s - loss: 0.1159 - acc: 0.9697 - val_loss: 6.1785 - val_acc: 0.5808
+Epoch 34/50
+
+Epoch 00034: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0034.hdf5
+ - 3s - loss: 0.0897 - acc: 0.9717 - val_loss: 6.2870 - val_acc: 0.5773
+Epoch 35/50
+
+Epoch 00035: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0035.hdf5
+ - 3s - loss: 0.0940 - acc: 0.9736 - val_loss: 6.2948 - val_acc: 0.5772
+Epoch 36/50
+
+Epoch 00036: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0036.hdf5
+ - 3s - loss: 0.0798 - acc: 0.9805 - val_loss: 6.2813 - val_acc: 0.5819
+Epoch 37/50
+
+Epoch 00037: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0037.hdf5
+ - 3s - loss: 0.0847 - acc: 0.9766 - val_loss: 6.3271 - val_acc: 0.5799
+Epoch 38/50
+
+Epoch 00038: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0038.hdf5
+ - 3s - loss: 0.0902 - acc: 0.9775 - val_loss: 6.3477 - val_acc: 0.5787
+Epoch 39/50
+
+Epoch 00039: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0039.hdf5
+ - 3s - loss: 0.0614 - acc: 0.9824 - val_loss: 6.3536 - val_acc: 0.5792
+Epoch 40/50
+
+Epoch 00040: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0040.hdf5
+ - 3s - loss: 0.0855 - acc: 0.9746 - val_loss: 6.3728 - val_acc: 0.5755
+Epoch 41/50
+
+Epoch 00041: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0041.hdf5
+ - 3s - loss: 0.0534 - acc: 0.9883 - val_loss: 6.3867 - val_acc: 0.5751
+Epoch 42/50
+
+Epoch 00042: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0042.hdf5
+ - 3s - loss: 0.0704 - acc: 0.9834 - val_loss: 6.3620 - val_acc: 0.5831
+Epoch 43/50
+
+Epoch 00043: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0043.hdf5
+ - 3s - loss: 0.0641 - acc: 0.9863 - val_loss: 6.3800 - val_acc: 0.5819
+Epoch 44/50
+
+Epoch 00044: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0044.hdf5
+ - 3s - loss: 0.0591 - acc: 0.9824 - val_loss: 6.4012 - val_acc: 0.5796
+Epoch 45/50
+
+Epoch 00045: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0045.hdf5
+ - 3s - loss: 0.0542 - acc: 0.9814 - val_loss: 6.4102 - val_acc: 0.5793
+Epoch 46/50
+
+Epoch 00046: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0046.hdf5
+ - 3s - loss: 0.0681 - acc: 0.9805 - val_loss: 6.3866 - val_acc: 0.5827
+Epoch 47/50
+
+Epoch 00047: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0047.hdf5
+ - 3s - loss: 0.0567 - acc: 0.9854 - val_loss: 6.3923 - val_acc: 0.5847
+Epoch 48/50
+
+Epoch 00048: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0048.hdf5
+ - 3s - loss: 0.0595 - acc: 0.9834 - val_loss: 6.3988 - val_acc: 0.5834
+Epoch 49/50
+
+Epoch 00049: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0049.hdf5
+ - 3s - loss: 0.0570 - acc: 0.9854 - val_loss: 6.4281 - val_acc: 0.5760
+Epoch 50/50
+
+Epoch 00050: saving model to models/unbalanced_mnist_vaestudent_e300_L2_b64/error_classifier_1000/cp-0050.hdf5
+ - 3s - loss: 0.0582 - acc: 0.9834 - val_loss: 6.3833 - val_acc: 0.5818
+Finished.

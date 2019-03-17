@@ -1,0 +1,16 @@
+INFO:latens:tensorflow 1.12.0, keras 2.1.6-tf
+INFO:latens:command: autoencoder
+INFO:latens:model: model
+INFO:latens:layer:(None, 28, 28, 1) -> (None, 28, 28, 1):input_2
+INFO:latens:layer:(None, 28, 28, 1) -> (None, 4):sequential
+INFO:latens:layer:(None, 4) -> (None, 28, 28, 1):sequential_1
+2019-03-16 12:07:53.538174: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2019-03-16 12:07:53.989517: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: Tesla K80 major: 3 minor: 7 memoryClockRate(GHz): 0.8235
+pciBusID: 0000:08:00.0
+totalMemory: 11.17GiB freeMemory: 11.10GiB
+2019-03-16 12:07:53.989563: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2019-03-16 12:08:17.562085: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-03-16 12:08:17.562179: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-03-16 12:08:17.562200: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-03-16 12:08:17.562682: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10758 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:08:00.0, compute capability: 3.7)
