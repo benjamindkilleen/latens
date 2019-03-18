@@ -2,6 +2,7 @@
 
 An Unsupervised Learning approach to active learning.
 
+Here:
 ![Overview](https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf "Overview")
 
 ## Dependencies:
