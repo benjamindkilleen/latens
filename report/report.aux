@@ -24,19 +24,27 @@
 \newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces an overview of latent space sampling for query selection.}}{1}{figure.1}}
 \newlabel{fig:overview}{{1}{1}{an overview of latent space sampling for query selection}{figure.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2} Method}{1}{section.2}}
-\newlabel{sec:method}{{2}{1}{Method}{section.2}{}}
 \citation{krizhevsky_imagenet_2012}
 \citation{goodfellow_deep_nodate}
 \citation{nair_rectified_nodate}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Approximate a uniform sampling of the latent-space hypercube $[0,1]^L$ from the encoding $Z$.}}{2}{algorithm.1}}
-\newlabel{alg:uniform-sampling}{{1}{2}{Method}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2} Method}{2}{section.2}}
+\newlabel{sec:method}{{2}{2}{Method}{section.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3} Results}{2}{section.3}}
 \newlabel{sec:results}{{3}{2}{Results}{section.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces a visualization of the latent space $[0,1]^{10}$ learned by a simple convolutional autoencoder. The $i$th row corresponds to variation of the $i$th latent dimension from $0$ to $1$, fixing all other coordinates at $0.3$.}}{2}{figure.2}}
-\newlabel{fig:autoencoder-visualization}{{2}{2}{a visualization of the latent space $[0,1]^{10}$ learned by a simple convolutional autoencoder. The $i$th row corresponds to variation of the $i$th latent dimension from $0$ to $1$, fixing all other coordinates at $0.3$}{figure.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4} Discussion}{2}{section.4}}
 \newlabel{sec:discussion}{{4}{2}{Discussion}{section.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5} Conclusions}{2}{section.5}}
+\newlabel{sec:conclusion}{{5}{2}{Conclusions}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6} Acknowledgements}{2}{section.6}}
+\newlabel{sec:acknowledgements}{{6}{2}{Acknowledgements}{section.6}{}}
+\newlabel{fig:vae-encodings}{{2a}{2}{Subfigure 2a}{subfigure.2.1}{}}
+\newlabel{sub@fig:vae-encodings}{{(a)}{a}{Subfigure 2a\relax }{subfigure.2.1}{}}
+\newlabel{fig:classifier-losses}{{2b}{2}{Subfigure 2b}{subfigure.2.2}{}}
+\newlabel{sub@fig:classifier-losses}{{(b)}{b}{Subfigure 2b\relax }{subfigure.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Latent-space encoding for the MNIST training set using a VAE.}}{2}{figure.2}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{2}{subfigure.2.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{2}{subfigure.2.2}}
+\newlabel{fig:unbalanced-mnist-results}{{2}{2}{Latent-space encoding for the MNIST training set using a VAE}{figure.2}{}}
 \bibstyle{IEEEtran}
 \bibdata{report}
 \bibcite{zhu_semi-supervised_2005}{1}
@@ -45,4 +53,8 @@
 \bibcite{krizhevsky_imagenet_2012}{4}
 \bibcite{goodfellow_deep_nodate}{5}
 \bibcite{nair_rectified_nodate}{6}
-\@writefile{toc}{\contentsline {section}{\numberline {5} References}{3}{section.5}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Test-set accuracies (\%) for a classifier trained on sample sets from both the balanced and unbalanced MNIST data. As can be seen, the advantage of latent space sampling is most apparent when the original data is unbalanced and the sample size is small enough to reflect it.}}{3}{table.1}}
+\newlabel{tab:results}{{1}{3}{Test-set accuracies (\%) for a classifier trained on sample sets from both the balanced and unbalanced MNIST data. As can be seen, the advantage of latent space sampling is most apparent when the original data is unbalanced and the sample size is small enough to reflect it}{table.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Select examples from the clustered encoding $Z$ according to a distribution $f_S$ on each cluster $S$. Applies to sampling strategies without clustering if $\mathbf  {S} = \{[N]\}$.}}{3}{algorithm.1}}
+\newlabel{alg:sampling}{{1}{3}{Method}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7} References}{3}{section.7}}

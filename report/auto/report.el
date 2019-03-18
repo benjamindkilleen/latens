@@ -3,6 +3,8 @@
  (lambda ()
    (TeX-add-to-alist 'LaTeX-provided-class-options
                      '(("article" "a4paper")))
+   (TeX-add-to-alist 'LaTeX-provided-package-options
+                     '(("subfig" "caption=false" "font=footnotesize")))
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
@@ -23,7 +25,10 @@
     "hyperref"
     "textcomp"
     "algorithm"
-    "algpseudocode")
+    "algpseudocode"
+    "array"
+    "multirow"
+    "subfig")
    (TeX-add-symbols
     "vec"
     "mat"
@@ -32,10 +37,15 @@
     "sec:introduction"
     "sec:method"
     "fig:overview"
-    "alg:uniform-sampling"
+    "alg:sampling"
     "sec:results"
-    "fig:autoencoder-visualization"
-    "sec:discussion")
+    "fig:vae-encodings"
+    "fig:classifier-losses"
+    "fig:unbalanced-mnist-results"
+    "tab:results"
+    "sec:discussion"
+    "sec:conclusion"
+    "sec:acknowledgements")
    (LaTeX-add-bibliographies))
  :latex)
 

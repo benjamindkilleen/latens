@@ -9,16 +9,19 @@
 \usepackage{textcomp}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[caption=false,font=footnotesize]{subfig}
 
 \def\vec#1{\ensuremath{\bm{{#1}}}}
 \def\mat#1{\vec{#1}}
-\DeclareMathOperator{\unif}{Unif}
+\DeclareMathOperator{\round}{round}
 
 
 \sloppy % better line breaks
 \ninept
 
-\title{Progress Update: Query Selection based on Latent Space Sampling}
+\title{Query Selection based on Latent Space Sampling}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% If multiple authors, uncomment and edit the lines shown below.       %%
@@ -57,8 +60,8 @@
   just two dimensions. Although potentially limiting, this focus allows for an
   easy visualization of latent spaces well-suited for initial exploration of the
   topic. We evaluate each sampling strategy using a simple classifier trained on
-  just the initial query set.\footnote{Code available
-    \href{https://github.com/bendkill/latens}{here}.}
+  just the initial query set.\footnote{Code and additional figures available at
+    \href{https://github.com/bendkill/latens}{github.com/bendkill/latens}.}
 \end{abstract}
 \noindent{\bf Index Terms}: semi-supervised learning, active learning, computer
 vision
@@ -66,6 +69,7 @@ vision
 \section{Introduction}
 \label{sec:introduction}
 
+% relevance of selecting a 
 The collection and annotation of large datasets has been critical to the success
 of deep learning. Wherever such data is available, it seems, the focus of the
 community eventually results in a supervised learner with high performance, as
@@ -77,8 +81,9 @@ and obtaining labels can require significant investment, monetary- or
 labor-wise, due to task complexity. Object detection, for instance, requires
 more in-depth annotation than simple classification. In general, these scenarios
 call for an approach that minimizes the labeling required to learn a specific
-task.
+task, starting from scratch.
 
+% discuss downstream approaches this is suitable for
 Several sub-fields of machine learning confront this challenge. An active
 learning approach, firstly, iteratively selects new examples for labeling in the
 hopes of improving model performance at every step \cite{settles_active_2012}. A
@@ -95,6 +100,7 @@ semi-supervised approach, uses both labeled and unlabeled data during training
 \emph{only} query set, a well-sampled training set is of the utmost importance
 for semi-supervised learning.
 
+% define metric for success
 At this point, the meaning of ``well-sampled'' is, admittedly, not readily
 apparent. One would hope, for instance, that a well-sampled query set contains
 instances from every class, in the case of classification, or from a wide range
@@ -110,11 +116,13 @@ training set for a simple classifier. The accuracy of this classifier, measured
 on a withheld test set, serves as our measure for the ``well-sampled-ness'' of a
 query set.
 
+% narrow down to what this paper actually does (needs more work)
 In this paper, we focus on sampling strategies that rely on a latent-space
 representation of the unlabeled set. In particular, we use three types of
-auto-encoders (AEs) to learn a two-dimensional \emph{encoding} of the training
-set, which we sample according to four strategies. We compare these combinations
-with random sampling from  and error-based sampling
+auto-encoders (AEs) to learn a two-dimensional representation of the unlabeled
+set, which we sample according to distributions in the latent space
+$\mathbb{R}^2$. There are many choices of distribution in the latent space; we
+present four here that illustrate the properties of these representations.
 
 \section{Method}
 \label{sec:method}
@@ -122,14 +130,12 @@ with random sampling from  and error-based sampling
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{docs/query_selection}
-  \caption{an overview of latent space sampling for query selection.}
+  \caption{our initial query selection method (red) in relation to a downstream
+    learning method (blue) like active or semi-supervised learning.}
   \label{fig:overview}
 \end{figure}
 
-Given the nature of this report, we separate the discussion of our envisioned
-method, in Section~\ref{sec:discussion}, with the description of our current
-method, given here. This method is sub.ject to change, especially with regard to
-the auto-encoder architecture and sampling strategy.
+
 
 Latent space sampling uses a large unlabeled dataset to identify examples which
 should be labeled, according to one of several strategies (which we expound on
@@ -174,79 +180,120 @@ learning and sampling process.
 
 \begin{algorithm}
   \begin{algorithmic}[1]
-    \Require encoding $Z \in [0,1]^{N \times L}$, distance metric
-    $d : [0,1]^{2 \times L} \rightarrow \mathbb{R}$, distance threshold
-    $t \in \mathbb{R}$, $n \in \mathbb{N}$.
-    \State $Q \gets \{\}$
-    \While {$|Q| < n$}
-    \State Draw $z \in [0,1]^L \sim \unif^L(0,1)$
-    \For {$z_i \in Z$}
-    \Comment the $i$th row of $Z$
-    \If {$d(z, z_i) < t$}
-    \State $Q \gets Q \cup \{i\}$
-    \EndIf
-    \EndFor
-    \EndWhile
-    \State \Return $Q$
+    \Require \hfill %
+    \begin{itemize}
+    \item the encoding $Z \in \mathbb{R}^L$,
+    \item clustering $\mathbf{S} = \{S_1 , \dots, S_C\}$ on $Z$,
+    \item distributions
+      $\{f_S : \mathbb{R}^L \rightarrow \mathbb{R}| S \in \mathbf{S}\}$, and
+    \item distance threshold
+      $t \in \mathbb{R}$, $n \in \mathbb{N}$.
+    \end{itemize}
+
+    \State $Q \gets \{\}$ %
+    \For {Cluster $S \in \textbf{S}$} %
+    % \State Determine distribution $f : \mathbb{R}^L \rightarrow \mathbb{R}$
+    % based on cluster points $\{z_i | i \in S\}$. %
+    \State $n_S \gets \round\left(n \frac{|S|}{N}\right) $ %
+    \State $Q_S \gets \{\} $ %
+    \While {$|Q_S| < n_S$} %
+    \State Draw $z \sim f_S$ %
+    \For {$i \in S$} \Comment the $i$th row of $Z$, in cluster $S$ %
+    \If {$||z - z_i||_2 < t$} %
+    \State $Q_S \gets Q_S \cup \{i\}$ %
+    \EndIf %
+    \EndFor %
+    \EndWhile %
+    \State $Q \gets Q \cup Q_S$ %
+    \EndFor %
+    \State \Return $Q$ %
   \end{algorithmic}
-  \caption{Approximate a uniform sampling of the latent-space hypercube
-    $[0,1]^L$ from the encoding $Z$.}
-  \label{alg:uniform-sampling}
+  \caption{Select examples from the clustered encoding $Z$ according to a
+    distribution $f_S$ on each cluster $S$. Applies to sampling strategies
+    without clustering if $\mathbf{S} = \{[N]\}$.}
+  \label{alg:sampling}
 \end{algorithm}
 
 \section{Results}
 \label{sec:results}
 
-Although our main work until now has focused on implementation, we have some
-early results of training that are worth showing. Firstly, we visualize the
-behavior of an auto-encoder trained with $L = 10$. This auto-encoder was trained
-for 20 epochs on the 50,000 image training set. It achieved a mean absolute
-error on the test set of 0.0604. Figure~\ref{fig:autoencoder-visualization}
-shows decodings of points in latent-space, varying a different dimension in each
-row of the image. As can be seen, the representation produces many images that
-are meaningful, but it does not fully explore the available space as might be
-desired for our purposes.
-z
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{docs/visualize_decoding}
-  \caption{a visualization of the latent space $[0,1]^{10}$ learned by a simple
-    convolutional autoencoder. The $i$th row corresponds to variation of the
-    $i$th latent dimension from $0$ to $1$, fixing all other coordinates at
-    $0.3$.}
-  \label{fig:autoencoder-visualization}
+  \subfloat[]{
+    \includegraphics[width=\linewidth]
+    {models/unbalanced_mnist_vae_e300_L2_b64/encodings}
+    \label{fig:vae-encodings}
+  } \\
+  \subfloat[]{
+    \includegraphics[width=\linewidth]
+    {models/unbalanced_mnist_vae_e300_L2_b64/classifier_val_accs_100}
+    \label{fig:classifier-losses}
+  }
+  \caption{Latent-space encoding for the MNIST training set using a VAE.}
+  \label{fig:unbalanced-mnist-results}
 \end{figure}
 
-Sampling the latent representation $Z$ for 1000 examples according to our
-method, we trained a simple convolutional classifier from scratch. This achieved
-93.1\% accuracy on the 10,000 example test set. Although seemingly promising, we
-note that a random sampling of the training set produced similar
-results. Additionally, this preliminary finding trained the classifier from
-scratch, without using any transfer learning.
+\begin{table*}[]
+  \centering
+  \begin{tabular}{|l|l|m{3em} m{3em}|m{3em} m{3em}|}
+    \hline
+    \multicolumn{1}{|c|}{AE Type} & \multicolumn{1}{|c|}{Sampling Strategy}
+    & \multicolumn{2}{|c|}{Balanced MNIST} & \multicolumn{2}{|c|}{Unbalanced MNIST} \\
+    & & \multicolumn{1}{|c}{1000} & \multicolumn{1}{c|}{100} & \multicolumn{1}{|c}{1000} & \multicolumn{1}{c|}{100} \\
+    \hline
+    --- & Random & $94.0_{\pm .2}$ & $80.9_{\pm 1.8}$ & $92.6_{\pm .4}$ & $76.6_{\pm .6}$\\
+    \hline
+    --- & AE-error & $93.8_{\pm .3}$ & $76.6_{\pm .4}$ & $57.8_{\pm .2}$ & $46.4_{\pm .2}$ \\
+    \hline
+    \multirow{4}{4em}{Conv}
+    & Uniform
+      & 72.7 & 38.1 & 62.9 & 44.6 \\
+    & Normal
+      & 93.1 & 70.3 & 90.5 & 66.3 \\
+    & Clustered Uniform
+      & 89.6 & 71.6 & 89.2 & 71.5 \\
+    & Clustered Normal
+      & 94.4 & 80.9 & 92.8 & 79.6 \\
+    \hline
+    \multirow{4}{4em}{VAE}
+    & Uniform
+      & 68.2 & 38.8 & 62.4 & 35.3 \\
+    & Normal
+      & 92.1 & 69.9 & 91.7 & 66.5 \\
+    & Clustered Uniform
+      & 86.1 & 67.3 & 86.8 & 62.1 \\
+    & Clustered Normal
+      & 94.3 & \textbf{82.9} & 92.3 & \textbf{85.0} \\
+    \hline
+    \multirow{4}{4em}{t-SNE Style}
+    & Uniform
+      & 69.3 & 56.6 & 85.7 & 53.0 \\
+    & Normal
+      & 93.6 & 82.3 & 91.7 & 77.0 \\
+    & Clustered Uniform
+      & 87.3 & 71.6 & 91.6 & 76.6 \\
+    & Clustered Normal
+      & 94.4 & 78.9 & 92.4 & 75.9 \\
+    \hline
+  \end{tabular}
+  \caption{Test-set accuracies (\%) for a classifier trained on sample sets from
+    both the balanced and unbalanced MNIST data. As can be seen, the advantage
+    of latent space sampling is most apparent when the original data is
+    unbalanced and the sample size is small enough to reflect it.}
+  \label{tab:results}
+\end{table*}
 
 \section{Discussion}
 \label{sec:discussion}
 
-Because of the difficulties we face with a simple CAE, we plan to implement a
-variational auto-encoder (VAE) with convolution layers, restricting the
-latent-space to an even lower dimension such as $L=2$ in the hopes of producing
-a more meaningful and easily-sampled $Z$, while still using
-Algorithm~\ref{alg:uniform-sampling}. After this step, it should no longer be
-necessary to restrict the representation layer to the hypercube $[0,1]^L$.
+\section{Conclusions}
+\label{sec:conclusion}
 
-Furthermore, we have some interest in exploring latent-space points which are
-not in the original training set. If time allows, we plan to use the decodings
-of regularly sampled points in the latent space as a training set for a
-classifier, either employing an actual human annotator to provide labels for
-these novel examples or using a separate classifier trained on the full dataset
-to simulate a human labeler.
+\section{Acknowledgements}
+\label{sec:acknowledgements}
 
-% \section{Conclusions}
-% \label{sec:conclusion}
-
-% \section{Acknowledgements}
-% \label{sec:acknowledgements}
-
+Thanks to Gordon Kindlmann for computational resources. Implementation and
+sampling strategies original work, as well as t-SNE Style autoencoder.
 
 \newpage
 \eightpt
