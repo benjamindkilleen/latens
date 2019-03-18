@@ -2,6 +2,8 @@
 
 An Unsupervised Learning approach to active learning.
 
+![Overview](https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf "Overview")
+
 ## Dependencies:
 Latens uses Python 3.6 or higher; see [here](https://www.python.org/downloads/)
 for recent downloads, or install from brew. Additionally, it relies on
