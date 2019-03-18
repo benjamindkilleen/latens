@@ -2,8 +2,13 @@
 
 An Unsupervised Learning approach to active learning.
 
-Here:
-![Overview](https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf "Overview")
+<object
+    data="https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf"
+    type="application/pdf" width="700px" height="700px"> <embed
+    src="https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf">
+    <p>This browser does not support PDFs. Please download the PDF <a
+    href="https://github.com/bendkill/latens/blob/master/docs/query_selection.pdf">here</a>to
+    view it.</p> </embed> </object>
 
 ## Dependencies:
 Latens uses Python 3.6 or higher; see [here](https://www.python.org/downloads/)
