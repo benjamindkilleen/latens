@@ -13,47 +13,48 @@ Database file #1: report.bib
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 Warning--empty journal in nair_rectified_nodate
 Warning--empty year in nair_rectified_nodate
+Warning--empty journal in lecun_mnist_2010
 
 Done.
-You've used 6 entries,
+You've used 10 entries,
             4039 wiz_defined-function locations,
-            846 strings with 8467 characters,
-and the built_in function-call counts, 4104 in all, are:
-= -- 321
-> -- 90
-< -- 27
-+ -- 46
-- -- 16
-* -- 223
-:= -- 669
-add.period$ -- 14
-call.type$ -- 6
-change.case$ -- 8
-chr.to.int$ -- 63
-cite$ -- 8
-duplicate$ -- 293
-empty$ -- 331
-format.name$ -- 21
-if$ -- 898
+            872 strings with 9045 characters,
+and the built_in function-call counts, 6714 in all, are:
+= -- 548
+> -- 132
+< -- 47
++ -- 70
+- -- 22
+* -- 357
+:= -- 1105
+add.period$ -- 22
+call.type$ -- 10
+change.case$ -- 13
+chr.to.int$ -- 111
+cite$ -- 13
+duplicate$ -- 483
+empty$ -- 541
+format.name$ -- 29
+if$ -- 1483
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 56
-newline$ -- 49
-num.names$ -- 8
-pop$ -- 140
+int.to.str$ -- 10
+missing$ -- 85
+newline$ -- 67
+num.names$ -- 12
+pop$ -- 201
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 298
+skip$ -- 501
 stack$ -- 0
-substring$ -- 152
-swap$ -- 226
-text.length$ -- 6
+substring$ -- 270
+swap$ -- 376
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 6
-warning$ -- 2
-while$ -- 20
-width$ -- 7
-write$ -- 86
-(There were 2 warnings)
+type$ -- 10
+warning$ -- 3
+while$ -- 32
+width$ -- 12
+write$ -- 131
+(There were 3 warnings)
