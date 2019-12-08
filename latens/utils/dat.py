@@ -43,9 +43,6 @@ def _mnist_proto_from_example(example):
   example = tf.train.Example(features=features)
   return example.SerializeToString()
 
-def _mnist_proto_from_tensors(image, label):
-  raise NotImplementedError
-
 def _mnist_example_from_proto(proto):
   """Convert a serialized example to an mnist tensor example."""
 
@@ -168,7 +165,7 @@ class Data(object):
     """
 
     if issubclass(type(data), Data):
-      self._fname = data._dataset
+      self._dataset = data._dataset
     elif issubclass(type(data), tf.data.Dataset):
       self._dataset = data
     elif type(data) in [str, list, tuple]:
